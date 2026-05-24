@@ -1,0 +1,43 @@
+# Bounded-context isolation: a context may only reach into Shared.
+# Cross-context communication goes through application services or domain
+# events, never direct references. See ARCHITECTURE.md section 2.
+deptrac:
+  paths:
+    - ./src
+  layers:
+    - name: IAM
+      collectors:
+        - type: directory
+          value: src/IAM/.*
+    - name: Portfolio
+      collectors:
+        - type: directory
+          value: src/Portfolio/.*
+    - name: MarketData
+      collectors:
+        - type: directory
+          value: src/MarketData/.*
+    - name: Integration
+      collectors:
+        - type: directory
+          value: src/Integration/.*
+    - name: Billing
+      collectors:
+        - type: directory
+          value: src/Billing/.*
+    - name: Reporting
+      collectors:
+        - type: directory
+          value: src/Reporting/.*
+    - name: Shared
+      collectors:
+        - type: directory
+          value: src/Shared/.*
+  ruleset:
+    IAM: [Shared]
+    Portfolio: [Shared]
+    MarketData: [Shared]
+    Integration: [Shared]
+    Billing: [Shared]
+    Reporting: [Shared]
+    Shared: ~

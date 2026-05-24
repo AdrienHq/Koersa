@@ -1,0 +1,19 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon
+
+parameters:
+    level: 9
+    paths:
+        - src
+
+    # The Symfony and Doctrine extensions gain accuracy once there are
+    # services and entities to inspect. Wire these in from iteration 1
+    # onward, after a cache warmup makes the compiled container available:
+    #
+    # symfony:
+    #     containerXmlPath: var/cache/dev/Koersa_KernelDevDebugContainer.xml
+    # doctrine:
+    #     objectManagerLoader: tests/object-manager.php

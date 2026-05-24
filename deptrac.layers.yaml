@@ -1,0 +1,34 @@
+# Layered architecture, applied across every context.
+#
+# Dependencies may only point inward: UI/Infrastructure -> Application -> Domain.
+# The Domain layer is pure: no Symfony, Doctrine, or API Platform (the Framework
+# layer below). This encodes the hard rule from the project conventions.
+deptrac:
+  paths:
+    - ./src
+  layers:
+    - name: Domain
+      collectors:
+        - type: directory
+          value: src/[^/]+/Domain/.*
+    - name: Application
+      collectors:
+        - type: directory
+          value: src/[^/]+/Application/.*
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: src/[^/]+/Infrastructure/.*
+    - name: UI
+      collectors:
+        - type: directory
+          value: src/[^/]+/UI/.*
+    - name: Framework
+      collectors:
+        - type: classNameRegex
+          value: '#^(Symfony|Doctrine|ApiPlatform)\\#'
+  ruleset:
+    Domain: ~
+    Application: [Domain, Framework]
+    Infrastructure: [Domain, Application, Framework]
+    UI: [Domain, Application, Framework]
