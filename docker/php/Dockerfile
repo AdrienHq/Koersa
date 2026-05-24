@@ -18,8 +18,8 @@ RUN apk add --no-cache --virtual .build-deps \
         postgresql-dev \
         libzip-dev \
     && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql opcache zip \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
+    && pecl install redis pcov \
+    && docker-php-ext-enable redis pcov \
     && apk del .build-deps
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

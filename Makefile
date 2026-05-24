@@ -48,8 +48,11 @@ rector: ## Preview automated refactorings (no changes)
 test: ## Run the test suite
 	$(PHP) vendor/bin/phpunit
 
+coverage: ## Run the test suite with coverage (HTML report in var/coverage)
+	$(PHP) vendor/bin/phpunit --coverage-html var/coverage --coverage-text
+
 help: ## List available targets
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; /^##/ {printf "\n%s\n", substr($$0, 4)} /^[a-zA-Z_-]+:/ {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: up down build logs sh install console qa lint cs stan deptrac rector test help
+.PHONY: up down build logs sh install console qa lint cs stan deptrac rector test coverage help
