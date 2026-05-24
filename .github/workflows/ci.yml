@@ -36,7 +36,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: intl, pdo_pgsql, redis, opcache, zip
-          coverage: none
+          coverage: pcov
           tools: composer:v2
 
       - name: Validate composer.json
@@ -69,6 +69,13 @@ jobs:
         run: vendor/bin/deptrac analyse --config-file=deptrac.layers.yaml --no-progress
 
       - name: Tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
         env:
           DATABASE_URL: "postgresql://app:app@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
