@@ -3,7 +3,11 @@
 > Crypto portfolio manager with Belgian tax reporting.
 
 [![CI](https://github.com/AdrienHq/Koersa/actions/workflows/ci.yml/badge.svg)](https://github.com/AdrienHq/Koersa/actions)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%209-brightgreen)](phpstan.neon)
+[![codecov](https://codecov.io/gh/AdrienHq/Koersa/branch/main/graph/badge.svg)](https://codecov.io/gh/AdrienHq/Koersa)
+[![PHP Version](https://img.shields.io/badge/php-8.4-blue)](https://php.net)
+[![Symfony](https://img.shields.io/badge/symfony-7.4-black)](https://symfony.com)
+[![PHPStan](https://img.shields.io/badge/PHPStan-level%209-brightgreen)](phpstan.dist.neon)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **Status:** 🚧 In active development — see [roadmap](#roadmap) for current progress.
 
@@ -60,8 +64,8 @@ Application available at http://localhost:8000.
 
 | Layer            | Choice                                        |
 |------------------|-----------------------------------------------|
-| Language         | PHP 8.3                                       |
-| Framework        | Symfony 7.1                                   |
+| Language         | PHP 8.4                                       |
+| Framework        | Symfony 7.4                                   |
 | API              | API Platform 4 (REST + GraphQL)               |
 | Authentication   | LexikJWT + Symfony Security                   |
 | Database         | PostgreSQL 16                                 |
