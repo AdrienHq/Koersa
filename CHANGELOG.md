@@ -17,3 +17,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Quality tooling: PHPStan (level 9), Deptrac (context and layer boundaries), PHP-CS-Fixer, Rector
 - Makefile with stack and quality-gate targets
 - GitHub Actions CI running the quality gates on every push and pull request
+- ADR 0003: persistence and mapping strategy for Doctrine-backed contexts
+- IAM domain model — `User`, `Organization`, `Membership` with `Email`/`Role`/`Uuid` value objects and repository ports
+- IAM Doctrine persistence (an entity and a mapper per aggregate) and the database migration for the `iam_*` tables
+- Security user provider backed by the IAM user repository

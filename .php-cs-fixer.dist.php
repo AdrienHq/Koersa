@@ -18,7 +18,8 @@ return (new Config())
         'global_namespace_import' => [
             'import_classes' => true,
             'import_constants' => true,
-            'import_functions' => true,
+            // Left false to avoid clashing with native_function_invocation.
+            'import_functions' => false,
         ],
         'native_function_invocation' => [
             'include' => ['@compiler_optimized'],

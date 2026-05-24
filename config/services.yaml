@@ -23,6 +23,8 @@ services:
             # Domain classes are pure objects (aggregates, value objects),
             # not services. Keep them out of the container.
             - '../src/**/Domain/'
+            # Doctrine entities are managed by the ORM, not the container.
+            - '../src/**/Doctrine/Entity/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

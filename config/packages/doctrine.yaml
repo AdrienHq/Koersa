@@ -13,11 +13,16 @@ doctrine:
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
-        # Per-context attribute mappings are added as each context gains
-        # Doctrine-backed entities (these live in the Infrastructure layer to
-        # keep the Domain free of ORM concerns). Portfolio is event-sourced and
-        # is mapped separately; Shared holds pure value objects, not entities.
-        mappings: []
+        # Per-context attribute mappings. Entities live in the Infrastructure
+        # layer to keep the Domain free of ORM concerns. Portfolio is
+        # event-sourced and mapped separately; Shared holds value objects.
+        mappings:
+            IAM:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/IAM/Infrastructure/Persistence/Doctrine/Entity'
+                prefix: 'Koersa\IAM\Infrastructure\Persistence\Doctrine\Entity'
+                alias: IAM
 
 when@test:
     doctrine:
