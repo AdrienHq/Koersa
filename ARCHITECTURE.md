@@ -89,8 +89,8 @@ All projections are rebuildable from the event log:
 ### Runtime
 
 ```
-php             >= 8.3
-symfony         ^7.1
+php             >= 8.4
+symfony         ^7.4
 api-platform    ^4.0
 postgresql      16
 redis           7
@@ -124,7 +124,7 @@ phpstan/phpstan-doctrine
 rector/rector
 phpunit/phpunit
 symfony/test-pack
-qossmic/deptrac
+deptrac/deptrac
 friendsofphp/php-cs-fixer
 ```
 
