@@ -8,6 +8,16 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
 # IDE
 /.idea/
 /.vscode/
@@ -27,3 +37,11 @@ CLAUDE.md
 
 # Internal project log (gitignored — local-only journal)
 docs/internal/
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+# Deptrac analysis cache
+/.deptrac.cache
