@@ -1,0 +1,12 @@
+.git
+var
+vendor
+node_modules
+.idea
+.fleet
+.vscode
+public/assets
+public/bundles
+assets/vendor
+.php-cs-fixer.cache
+.phpunit.cache
