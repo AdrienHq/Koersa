@@ -13,6 +13,9 @@ jobs:
     name: Quality gates
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: "postgresql://app:app@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -68,10 +71,13 @@ jobs:
       - name: Architecture — layers
         run: vendor/bin/deptrac analyse --config-file=deptrac.layers.yaml --no-progress
 
+      - name: Prepare test database
+        run: |
+          php bin/console doctrine:database:create --env=test --if-not-exists
+          php bin/console doctrine:migrations:migrate --no-interaction --env=test
+
       - name: Tests
         run: vendor/bin/phpunit --coverage-clover coverage.xml
-        env:
-          DATABASE_URL: "postgresql://app:app@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
