@@ -16,7 +16,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            # Authenticators (login form, JWT) are wired in the auth chunk.
+            form_login:
+                login_path: login
+                check_path: login
+                enable_csrf: true
+                default_target_path: home
+            logout:
+                path: logout
+                target: home
 
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall

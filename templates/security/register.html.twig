@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register · Koersa{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Create your account</h1>
+
+        {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.organizationName) }}
+            {{ form_row(registrationForm.plainPassword.first) }}
+            {{ form_row(registrationForm.plainPassword.second) }}
+            <button type="submit">Register</button>
+        {{ form_end(registrationForm) }}
+
+        <p>Already have an account? <a href="{{ path('login') }}">Sign in</a>.</p>
+    </main>
+{% endblock %}
