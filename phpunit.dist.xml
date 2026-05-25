@@ -21,6 +21,8 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <!-- Panther E2E needs a real browser; run it explicitly (CI), not by default. -->
+            <exclude>tests/E2E</exclude>
         </testsuite>
     </testsuites>
 
@@ -41,5 +43,6 @@
     </source>
 
     <extensions>
+        <bootstrap class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
 </phpunit>
