@@ -54,11 +54,13 @@ Full architecture details in [`ARCHITECTURE.md`](ARCHITECTURE.md). Design decisi
 ```bash
 git clone https://github.com/AdrienHq/Koersa.git
 cd Koersa
-make up           # docker compose up + composer install + migrations + seed
-make test         # PHPUnit + PHPStan + Deptrac
+make setup        # build + start the Docker stack, install dependencies, migrate
+make qa           # quality gates: PHP-CS-Fixer, PHPStan, Deptrac, PHPUnit
 ```
 
-Application available at http://localhost:8000.
+The app is served at **http://localhost:8080**, Mailpit at **http://localhost:8025**.
+Run `make` (or `make help`) to list every target. On SELinux hosts (e.g. Fedora),
+the bind mounts use the `:z` label so the containers can read the project.
 
 ## Tech stack
 
