@@ -62,6 +62,15 @@ jobs:
       - name: Install JavaScript assets
         run: php bin/console importmap:install
 
+      - name: Cache Tailwind binary
+        uses: actions/cache@v4
+        with:
+          path: var/tailwind
+          key: tailwind-${{ hashFiles('composer.lock') }}
+
+      - name: Build CSS
+        run: php bin/console tailwind:build --minify
+
       - name: Coding standards
         run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
