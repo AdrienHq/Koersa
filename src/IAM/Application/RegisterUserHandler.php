@@ -36,8 +36,13 @@ final class RegisterUserHandler
 
         $now = $this->clock->now();
 
+        $organizationName = trim($command->organizationName);
+        if ('' === $organizationName) {
+            $organizationName = 'Personal';
+        }
+
         $user = User::register(Uuid::generate(), $email, $this->passwordHasher->hash($command->plainPassword), $now);
-        $organization = Organization::create(Uuid::generate(), $command->organizationName, $now);
+        $organization = Organization::create(Uuid::generate(), $organizationName, $now);
         $membership = Membership::create(Uuid::generate(), $user->id(), $organization->id(), Role::Owner, $now);
 
         // The user is saved first so a duplicate-email race fails before any

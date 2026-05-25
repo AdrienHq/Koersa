@@ -48,6 +48,26 @@ final class RegisterUserHandlerTest extends TestCase
         $handler(new RegisterUser('jane@example.com', 'secret-password', 'Acme Corp'));
     }
 
+    public function testDefaultsTheOrganizationNameWhenBlank(): void
+    {
+        $users = $this->createMock(UserRepository::class);
+        $users->method('byEmail')->willReturn(null);
+        $users->expects(self::once())->method('save');
+
+        $organizations = $this->createMock(OrganizationRepository::class);
+        $organizations->expects(self::once())->method('save')->with(self::callback(
+            static fn (Organization $organization): bool => 'Personal' === $organization->name(),
+        ));
+        $memberships = $this->createMock(MembershipRepository::class);
+        $memberships->expects(self::once())->method('save');
+
+        $hasher = $this->createStub(PasswordHasher::class);
+        $hasher->method('hash')->willReturn('hashed-password');
+
+        $handler = new RegisterUserHandler($users, $organizations, $memberships, $hasher, new MockClock());
+        $handler(new RegisterUser('jane@example.com', 'secret-password', '   '));
+    }
+
     public function testRejectsAnAlreadyRegisteredEmail(): void
     {
         $users = $this->createMock(UserRepository::class);

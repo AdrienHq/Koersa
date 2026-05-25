@@ -28,8 +28,9 @@ final class RegistrationForm extends AbstractType
                 'constraints' => [new Assert\NotBlank(), new Assert\Email()],
             ])
             ->add('organizationName', TextType::class, [
-                'label' => 'Organization name',
-                'constraints' => [new Assert\NotBlank(), new Assert\Length(max: 255)],
+                'label' => 'Organization name (optional)',
+                'required' => false,
+                'constraints' => [new Assert\Length(max: 255)],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
