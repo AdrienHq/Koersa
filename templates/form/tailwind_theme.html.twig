@@ -1,0 +1,29 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block form_row %}
+    <div class="mb-4">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock %}
+
+{% block form_label -%}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' mb-1 block text-sm font-medium text-gray-700')|trim}) -%}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block form_widget_simple -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm')|trim}) -%}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="mt-1 space-y-1 text-sm text-red-600">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock %}

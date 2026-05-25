@@ -3,18 +3,23 @@
 {% block title %}Register · Koersa{% endblock %}
 
 {% block body %}
-    <main>
-        <h1>Create your account</h1>
+    <div class="mx-auto max-w-md">
+        <div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-semibold text-gray-900">Create your account</h1>
+            <p class="mt-1 text-sm text-gray-500">Start tracking your portfolio.</p>
 
-        {# Auth flows use full-page navigation; Turbo would swallow the 302 redirect. #}
-        {{ form_start(registrationForm, {'attr': {'data-turbo': 'false'}}) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.organizationName) }}
-            {{ form_row(registrationForm.plainPassword.first) }}
-            {{ form_row(registrationForm.plainPassword.second) }}
-            <button type="submit">Register</button>
-        {{ form_end(registrationForm) }}
+            {# Auth flows use full-page navigation; Turbo would swallow the 302 redirect. #}
+            {{ form_start(registrationForm, {'attr': {'data-turbo': 'false', 'class': 'mt-6'}}) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.organizationName) }}
+                {{ form_row(registrationForm.plainPassword.first) }}
+                {{ form_row(registrationForm.plainPassword.second) }}
+                <button type="submit" class="mt-2 w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500">Register</button>
+            {{ form_end(registrationForm) }}
 
-        <p>Already have an account? <a href="{{ path('login') }}">Sign in</a>.</p>
-    </main>
+            <p class="mt-4 text-center text-sm text-gray-500">
+                Already have an account? <a href="{{ path('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>.
+            </p>
+        </div>
+    </div>
 {% endblock %}
