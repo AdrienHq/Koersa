@@ -30,6 +30,7 @@ final class RegistrationForm extends AbstractType
             ->add('organizationName', TextType::class, [
                 'label' => 'Organization name (optional)',
                 'required' => false,
+                'empty_data' => '',
                 'constraints' => [new Assert\Length(max: 255)],
             ])
             ->add('plainPassword', RepeatedType::class, [

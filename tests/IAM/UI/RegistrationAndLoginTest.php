@@ -31,6 +31,25 @@ final class RegistrationAndLoginTest extends WebTestCase
         self::assertResponseRedirects('/');
     }
 
+    public function testRegisteringWithoutAnOrganizationSucceeds(): void
+    {
+        $client = static::createClient();
+        $this->clearIamTables();
+
+        $client->request('GET', '/register');
+        $client->submitForm('Register', [
+            'registration_form[email]' => 'solo@example.com',
+            'registration_form[organizationName]' => '',
+            'registration_form[plainPassword][first]' => 'secret-password',
+            'registration_form[plainPassword][second]' => 'secret-password',
+        ]);
+
+        self::assertResponseRedirects('/login');
+        self::assertNotNull(
+            static::getContainer()->get(UserRepository::class)->byEmail(new Email('solo@example.com')),
+        );
+    }
+
     public function testRegisteringADuplicateEmailIsRejected(): void
     {
         $client = static::createClient();
