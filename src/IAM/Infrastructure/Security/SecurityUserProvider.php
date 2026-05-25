@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Koersa\IAM\Infrastructure\Security;
 
 use InvalidArgumentException;
+use Koersa\IAM\Domain\MembershipRepository;
 use Koersa\IAM\Domain\UserRepository;
 use Koersa\IAM\Domain\ValueObject\Email;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -17,8 +18,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 final class SecurityUserProvider implements UserProviderInterface
 {
-    public function __construct(private readonly UserRepository $users)
-    {
+    public function __construct(
+        private readonly UserRepository $users,
+        private readonly MembershipRepository $memberships,
+    ) {
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -35,7 +38,18 @@ final class SecurityUserProvider implements UserProviderInterface
             throw new UserNotFoundException();
         }
 
-        return new SecurityUser((string) $user->email(), $user->passwordHash());
+        $memberships = $this->memberships->forUser($user->id());
+
+        if ([] === $memberships) {
+            // A user without an organization cannot act in the app.
+            throw new UserNotFoundException();
+        }
+
+        return new SecurityUser(
+            (string) $user->email(),
+            $user->passwordHash(),
+            (string) $memberships[0]->organizationId(),
+        );
     }
 
     public function refreshUser(UserInterface $user): UserInterface

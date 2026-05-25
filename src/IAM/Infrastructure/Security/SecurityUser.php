@@ -5,25 +5,36 @@ declare(strict_types=1);
 namespace Koersa\IAM\Infrastructure\Security;
 
 use InvalidArgumentException;
+use Koersa\Shared\Domain\Uuid;
+use Koersa\Shared\Security\HasOrganization;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Adapts the domain user to Symfony Security. It carries only what the
  * security layer needs; the domain User stays free of framework interfaces.
+ * Also exposes the acting organization (see HasOrganization).
  */
-final class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
+final class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface, HasOrganization
 {
     /** @var non-empty-string */
     private readonly string $identifier;
 
-    public function __construct(string $identifier, private readonly string $passwordHash)
-    {
+    public function __construct(
+        string $identifier,
+        private readonly string $passwordHash,
+        private readonly string $organizationId,
+    ) {
         if ('' === $identifier) {
             throw new InvalidArgumentException('A security user identifier cannot be empty.');
         }
 
         $this->identifier = $identifier;
+    }
+
+    public function organizationId(): Uuid
+    {
+        return Uuid::fromString($this->organizationId);
     }
 
     /**
