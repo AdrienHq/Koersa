@@ -83,10 +83,13 @@ jobs:
       - name: Architecture — layers
         run: vendor/bin/deptrac analyse --config-file=deptrac.layers.yaml --no-progress
 
-      - name: Prepare test database
+      - name: Prepare databases
         run: |
           php bin/console doctrine:database:create --env=test --if-not-exists
           php bin/console doctrine:migrations:migrate --no-interaction --env=test
+          # The Panther E2E server runs in the "panther" env (real sessions),
+          # which uses the unsuffixed "app" database.
+          php bin/console doctrine:migrations:migrate --no-interaction --env=panther
 
       - name: Tests
         run: vendor/bin/phpunit --coverage-clover coverage.xml
@@ -100,6 +103,5 @@ jobs:
 
       - name: End-to-end (Panther, headless Chrome)
         env:
-          PANTHER_APP_ENV: test
           PANTHER_NO_SANDBOX: '1'
         run: PANTHER_CHROME_DRIVER_BINARY="$CHROMEWEBDRIVER/chromedriver" vendor/bin/phpunit tests/E2E
