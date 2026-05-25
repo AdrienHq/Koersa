@@ -7,7 +7,6 @@ namespace Koersa\Portfolio\UI\Controller;
 use DateTimeImmutable;
 use Koersa\Portfolio\Application\Query\GetHoldings;
 use Koersa\Portfolio\Application\RecordTransaction;
-use Koersa\Portfolio\Application\RecordTransactionHandler;
 use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\UI\Form\TransactionForm;
 use Koersa\Portfolio\UI\Form\TransactionFormData;
@@ -15,6 +14,7 @@ use Koersa\Shared\Security\HasOrganization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -24,7 +24,7 @@ final class PortfolioController extends AbstractController
     #[Route('/portfolio', name: 'portfolio', methods: ['GET', 'POST'])]
     public function __invoke(
         Request $request,
-        RecordTransactionHandler $recordTransaction,
+        MessageBusInterface $commandBus,
         GetHoldings $getHoldings,
         TransactionRepository $transactions,
     ): Response {
@@ -40,7 +40,7 @@ final class PortfolioController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            ($recordTransaction)(new RecordTransaction(
+            $commandBus->dispatch(new RecordTransaction(
                 $organizationId,
                 $data->asset,
                 $data->side,

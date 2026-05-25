@@ -21,7 +21,7 @@ final class TransactionMapperTest extends TestCase
         $occurredAt = new DateTimeImmutable('2026-05-25 10:00:00');
 
         $entity = $mapper->toEntity(
-            Transaction::record($id, $organizationId, 'BTC', Side::Buy, '0.5', '40000', '10', $occurredAt),
+            Transaction::reconstitute($id, $organizationId, 'BTC', Side::Buy, '0.5', '40000', '10', $occurredAt),
         );
 
         self::assertSame((string) $id, $entity->id);

@@ -7,26 +7,39 @@ namespace Koersa\Tests\Portfolio\Application;
 use DateTimeImmutable;
 use Koersa\Portfolio\Application\RecordTransaction;
 use Koersa\Portfolio\Application\RecordTransactionHandler;
-use Koersa\Portfolio\Domain\Transaction;
-use Koersa\Portfolio\Domain\TransactionRepository;
+use Koersa\Portfolio\Domain\Event\TransactionRecorded;
+use Koersa\Portfolio\Domain\PortfolioId;
+use Koersa\Portfolio\Domain\PortfolioRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
+use Koersa\Tests\Support\Portfolios;
 use PHPUnit\Framework\TestCase;
 
 final class RecordTransactionHandlerTest extends TestCase
 {
-    public function testSavesTheRecordedTransaction(): void
+    public function testRecordsTheTradeOnThePortfolioAndSavesIt(): void
     {
         $organizationId = Uuid::generate();
-        $transactions = $this->createMock(TransactionRepository::class);
-        $transactions->expects(self::once())->method('save')->with(self::callback(
-            static fn (Transaction $transaction): bool => $transaction->organizationId->equals($organizationId)
-                && 'ETH' === $transaction->asset
-                && Side::Sell === $transaction->side
-                && '2' === $transaction->quantity,
-        ));
+        $portfolio = Portfolios::empty($organizationId);
 
-        $handler = new RecordTransactionHandler($transactions);
-        $handler(new RecordTransaction($organizationId, 'ETH', Side::Sell, '2', '3000', '5', new DateTimeImmutable()));
+        $portfolios = $this->createMock(PortfolioRepository::class);
+        $portfolios->expects(self::once())->method('get')
+            ->with(self::callback(static fn (PortfolioId $id): bool => $id->toString() === $organizationId->value))
+            ->willReturn($portfolio);
+        $portfolios->expects(self::once())->method('save')->with($portfolio);
+
+        $handler = new RecordTransactionHandler($portfolios);
+        $handler(new RecordTransaction($organizationId, 'eth', Side::Sell, '2', '3000', '5', new DateTimeImmutable()));
+
+        // save() is mocked, so the recorded event is still buffered and can be inspected.
+        $events = $portfolio->releaseEvents();
+        self::assertCount(1, $events);
+
+        $event = $events[0];
+        self::assertInstanceOf(TransactionRecorded::class, $event);
+        self::assertTrue($event->organizationId->equals($organizationId));
+        self::assertSame('ETH', $event->asset);
+        self::assertSame(Side::Sell, $event->side);
+        self::assertSame('2', $event->quantity);
     }
 }

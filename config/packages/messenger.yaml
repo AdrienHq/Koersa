@@ -15,7 +15,12 @@ framework:
         default_bus: messenger.bus.default
 
         buses:
-            messenger.bus.default: []
+            # Commands are handled synchronously and wrapped in a Doctrine
+            # transaction, so appending events to the store and updating the
+            # projections either both commit or both roll back.
+            messenger.bus.default:
+                middleware:
+                    - doctrine_transaction
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async

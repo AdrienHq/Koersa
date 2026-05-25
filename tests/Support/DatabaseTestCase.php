@@ -21,7 +21,7 @@ abstract class DatabaseTestCase extends KernelTestCase
 
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
         $this->entityManager->getConnection()->executeStatement(
-            'TRUNCATE iam_memberships, iam_users, iam_organizations, portfolio_transactions',
+            'TRUNCATE iam_memberships, iam_users, iam_organizations, portfolio_transactions, portfolio_event_store',
         );
     }
 }

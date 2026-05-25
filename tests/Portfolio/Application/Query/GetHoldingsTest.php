@@ -42,11 +42,11 @@ final class GetHoldingsTest extends TestCase
 
     private function buy(Uuid $organizationId, string $asset, string $quantity, string $price): Transaction
     {
-        return Transaction::record(Uuid::generate(), $organizationId, $asset, Side::Buy, $quantity, $price, '0', new DateTimeImmutable());
+        return Transaction::reconstitute(Uuid::generate(), $organizationId, $asset, Side::Buy, $quantity, $price, '0', new DateTimeImmutable());
     }
 
     private function sell(Uuid $organizationId, string $asset, string $quantity, string $price): Transaction
     {
-        return Transaction::record(Uuid::generate(), $organizationId, $asset, Side::Sell, $quantity, $price, '0', new DateTimeImmutable());
+        return Transaction::reconstitute(Uuid::generate(), $organizationId, $asset, Side::Sell, $quantity, $price, '0', new DateTimeImmutable());
     }
 }

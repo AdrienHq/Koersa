@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Koersa\Portfolio\Application;
 
-use Koersa\Portfolio\Domain\Transaction;
-use Koersa\Portfolio\Domain\TransactionRepository;
+use Koersa\Portfolio\Domain\PortfolioId;
+use Koersa\Portfolio\Domain\PortfolioRepository;
 use Koersa\Shared\Domain\Uuid;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
+#[AsMessageHandler]
 final class RecordTransactionHandler
 {
-    public function __construct(private readonly TransactionRepository $transactions)
+    public function __construct(private readonly PortfolioRepository $portfolios)
     {
     }
 
     public function __invoke(RecordTransaction $command): void
     {
-        $this->transactions->save(Transaction::record(
+        $portfolio = $this->portfolios->get(PortfolioId::forOrganization($command->organizationId));
+
+        $portfolio->recordTransaction(
             Uuid::generate(),
             $command->organizationId,
             $command->asset,
@@ -25,6 +29,8 @@ final class RecordTransactionHandler
             $command->price,
             $command->fee,
             $command->occurredAt,
-        ));
+        );
+
+        $this->portfolios->save($portfolio);
     }
 }

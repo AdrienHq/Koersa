@@ -47,6 +47,6 @@ final class DoctrineTransactionRepositoryTest extends DatabaseTestCase
 
     private function transaction(Uuid $organizationId, string $asset, DateTimeImmutable $occurredAt): Transaction
     {
-        return Transaction::record(Uuid::generate(), $organizationId, $asset, Side::Buy, '1', '100', '0', $occurredAt);
+        return Transaction::reconstitute(Uuid::generate(), $organizationId, $asset, Side::Buy, '1', '100', '0', $occurredAt);
     }
 }

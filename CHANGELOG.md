@@ -21,3 +21,11 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - IAM domain model — `User`, `Organization`, `Membership` with `Email`/`Role`/`Uuid` value objects and repository ports
 - IAM Doctrine persistence (an entity and a mapper per aggregate) and the database migration for the `iam_*` tables
 - Security user provider backed by the IAM user repository
+- Account registration and password sign-in
+- Tailwind-based UI foundation (no Node build, via AssetMapper)
+- Portfolio: record buy/sell transactions and a per-asset holdings dashboard
+- ADR 0002: Event Sourcing library (EventSauce) and Portfolio integration
+- Portfolio event store with optimistic concurrency, synchronous projectors, and a `portfolio:projections:rebuild` console command
+
+### Changed
+- Portfolio is now event-sourced with EventSauce: trades are recorded as `TransactionRecorded` events through a command bus, and the holdings/transactions read models are rebuildable projections over the event stream (ADR 0002)

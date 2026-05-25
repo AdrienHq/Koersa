@@ -28,7 +28,7 @@ final class RecordTransactionTest extends WebTestCase
         $client = static::createClient();
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $entityManager->getConnection()->executeStatement(
-            'TRUNCATE iam_memberships, iam_users, iam_organizations, portfolio_transactions',
+            'TRUNCATE iam_memberships, iam_users, iam_organizations, portfolio_transactions, portfolio_event_store',
         );
 
         $userId = Uuid::generate();
