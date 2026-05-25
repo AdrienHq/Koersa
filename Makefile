@@ -5,7 +5,9 @@ PHP = $(DC) exec php
 
 ## —— Stack ————————————————————————————————————————————————————————————————
 up: ## Build (if needed) and start the stack in the background
-	$(DC) up -d --build
+	$(DC) up -d --build --wait
+
+setup: up install migrate ## First-time setup: start the stack, install deps, migrate
 
 down: ## Stop the stack and remove the containers
 	$(DC) down
@@ -25,6 +27,9 @@ install: ## Install Composer dependencies
 
 console: ## Run a Symfony console command, e.g. make console c="cache:clear"
 	$(PHP) php bin/console $(c)
+
+migrate: ## Run database migrations
+	$(PHP) php bin/console doctrine:migrations:migrate --no-interaction
 
 ## —— Quality gates ————————————————————————————————————————————————————————
 qa: lint stan deptrac test ## Run the full quality suite
@@ -55,4 +60,4 @@ help: ## List available targets
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; /^##/ {printf "\n%s\n", substr($$0, 4)} /^[a-zA-Z_-]+:/ {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: up down build logs sh install console qa lint cs stan deptrac rector test coverage help
+.PHONY: up setup down build logs sh install console migrate qa lint cs stan deptrac rector test coverage help
