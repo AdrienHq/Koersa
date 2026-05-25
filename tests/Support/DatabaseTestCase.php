@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Koersa\Tests\Support;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Koersa\Kernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -24,10 +23,5 @@ abstract class DatabaseTestCase extends KernelTestCase
         $this->entityManager->getConnection()->executeStatement(
             'TRUNCATE iam_memberships, iam_users, iam_organizations',
         );
-    }
-
-    protected static function getKernelClass(): string
-    {
-        return Kernel::class;
     }
 }
