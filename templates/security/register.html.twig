@@ -6,7 +6,8 @@
     <main>
         <h1>Create your account</h1>
 
-        {{ form_start(registrationForm) }}
+        {# Auth flows use full-page navigation; Turbo would swallow the 302 redirect. #}
+        {{ form_start(registrationForm, {'attr': {'data-turbo': 'false'}}) }}
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.organizationName) }}
             {{ form_row(registrationForm.plainPassword.first) }}
