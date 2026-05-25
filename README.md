@@ -59,8 +59,11 @@ make qa           # quality gates: PHP-CS-Fixer, PHPStan, Deptrac, PHPUnit
 ```
 
 The app is served at **http://localhost:8080**, Mailpit at **http://localhost:8025**.
-Run `make` (or `make help`) to list every target. On SELinux hosts (e.g. Fedora),
-the bind mounts use the `:z` label so the containers can read the project.
+Run `make` (or `make help`) to list every target.
+
+See **[`docs/development.md`](docs/development.md)** for the full guide — what each
+service is, the everyday commands, and troubleshooting (including the Fedora
+SELinux note).
 
 ## Tech stack
 
