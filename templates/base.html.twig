@@ -16,6 +16,7 @@
                 <a href="{{ path('home') }}" class="text-lg font-semibold tracking-tight text-indigo-600">Koersa</a>
                 <div class="flex items-center gap-4 text-sm">
                     {% if app.user %}
+                        <a href="{{ path('portfolio') }}" class="font-medium text-gray-600 hover:text-gray-900">Portfolio</a>
                         <span class="hidden text-gray-500 sm:inline">{{ app.user.userIdentifier }}</span>
                         <a href="{{ path('logout') }}" class="font-medium text-gray-600 hover:text-gray-900">Log out</a>
                     {% else %}

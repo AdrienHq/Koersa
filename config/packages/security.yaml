@@ -20,7 +20,7 @@ security:
                 login_path: login
                 check_path: login
                 enable_csrf: true
-                default_target_path: home
+                default_target_path: portfolio
             logout:
                 path: logout
                 target: home

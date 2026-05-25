@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfolio · Koersa{% endblock %}
+
+{% block body %}
+    <div class="space-y-10">
+        <section>
+            <h1 class="text-2xl font-semibold text-gray-900">Holdings</h1>
+            {% if holdings is empty %}
+                <p class="mt-2 text-sm text-gray-500">No holdings yet — record your first transaction below.</p>
+            {% else %}
+                <div class="mt-4 overflow-hidden rounded-lg border border-gray-200 bg-white">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                            <tr><th class="px-4 py-2">Asset</th><th class="px-4 py-2">Quantity</th><th class="px-4 py-2">Avg cost</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {% for holding in holdings %}
+                                <tr>
+                                    <td class="px-4 py-2 font-medium text-gray-900">{{ holding.asset }}</td>
+                                    <td class="px-4 py-2 tabular-nums">{{ holding.quantity }}</td>
+                                    <td class="px-4 py-2 tabular-nums">{{ holding.averageCost }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </section>
+
+        <section class="max-w-lg">
+            <h2 class="text-lg font-semibold text-gray-900">Record a transaction</h2>
+            <div class="mt-4 rounded-lg border border-gray-200 bg-white p-6">
+                {{ form_start(transactionForm, {'attr': {'data-turbo': 'false'}}) }}
+                    {{ form_row(transactionForm.asset) }}
+                    {{ form_row(transactionForm.side) }}
+                    {{ form_row(transactionForm.quantity) }}
+                    {{ form_row(transactionForm.price) }}
+                    {{ form_row(transactionForm.fee) }}
+                    {{ form_row(transactionForm.occurredAt) }}
+                    <button type="submit" class="mt-2 w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500">Record</button>
+                {{ form_end(transactionForm) }}
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-lg font-semibold text-gray-900">Transactions</h2>
+            {% if transactions is empty %}
+                <p class="mt-2 text-sm text-gray-500">No transactions yet.</p>
+            {% else %}
+                <div class="mt-4 overflow-hidden rounded-lg border border-gray-200 bg-white">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                            <tr>
+                                <th class="px-4 py-2">Date</th><th class="px-4 py-2">Asset</th><th class="px-4 py-2">Side</th>
+                                <th class="px-4 py-2">Quantity</th><th class="px-4 py-2">Price</th><th class="px-4 py-2">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {% for transaction in transactions %}
+                                <tr>
+                                    <td class="px-4 py-2 text-gray-500">{{ transaction.occurredAt|date('Y-m-d H:i') }}</td>
+                                    <td class="px-4 py-2 font-medium text-gray-900">{{ transaction.asset }}</td>
+                                    <td class="px-4 py-2">
+                                        <span class="rounded px-2 py-0.5 text-xs font-medium {{ transaction.side.value == 'buy' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                            {{ transaction.side.value|capitalize }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-2 tabular-nums">{{ transaction.quantity }}</td>
+                                    <td class="px-4 py-2 tabular-nums">{{ transaction.price }}</td>
+                                    <td class="px-4 py-2 tabular-nums">{{ transaction.fee }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

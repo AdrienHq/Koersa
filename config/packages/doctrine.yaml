@@ -23,6 +23,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/IAM/Infrastructure/Persistence/Doctrine/Entity'
                 prefix: 'Koersa\IAM\Infrastructure\Persistence\Doctrine\Entity'
                 alias: IAM
+            Portfolio:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Portfolio/Infrastructure/Persistence/Doctrine/Entity'
+                prefix: 'Koersa\Portfolio\Infrastructure\Persistence\Doctrine\Entity'
+                alias: Portfolio
 
 when@test:
     doctrine:
