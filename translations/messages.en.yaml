@@ -2,3 +2,7 @@
 # landing page is served in French and Dutch only.
 layout:
     footer_tagline: "Koersa — crypto portfolio & Belgian tax tracker"
+    nav_sign_in: "Sign in"
+    nav_register: "Register"
+    nav_portfolio: "Portfolio"
+    nav_log_out: "Log out"

@@ -16,12 +16,12 @@
                 <a href="{{ path('home') }}" class="text-lg font-semibold tracking-tight text-indigo-600">Koersa</a>
                 <div class="flex items-center gap-4 text-sm">
                     {% if app.user %}
-                        <a href="{{ path('portfolio') }}" class="font-medium text-gray-600 hover:text-gray-900">Portfolio</a>
+                        <a href="{{ path('portfolio') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_portfolio'|trans }}</a>
                         <span class="hidden text-gray-500 sm:inline">{{ app.user.userIdentifier }}</span>
-                        <a href="{{ path('logout') }}" class="font-medium text-gray-600 hover:text-gray-900">Log out</a>
+                        <a href="{{ path('logout') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_log_out'|trans }}</a>
                     {% else %}
-                        <a href="{{ path('login') }}" class="font-medium text-gray-600 hover:text-gray-900">Sign in</a>
-                        <a href="{{ path('register') }}" class="rounded-md bg-indigo-600 px-3 py-1.5 font-medium text-white hover:bg-indigo-500">Register</a>
+                        <a href="{{ path('login') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_sign_in'|trans }}</a>
+                        <a href="{{ path('register') }}" class="rounded-md bg-indigo-600 px-3 py-1.5 font-medium text-white hover:bg-indigo-500">{{ 'layout.nav_register'|trans }}</a>
                     {% endif %}
                 </div>
             </nav>

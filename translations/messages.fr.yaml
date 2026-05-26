@@ -17,3 +17,7 @@ landing:
 
 layout:
     footer_tagline: "Koersa — suivi de portefeuille crypto & fiscalité belge"
+    nav_sign_in: "Se connecter"
+    nav_register: "S'inscrire"
+    nav_portfolio: "Portefeuille"
+    nav_log_out: "Se déconnecter"
