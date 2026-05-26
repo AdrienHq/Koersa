@@ -29,6 +29,23 @@ final class DoctrineTransactionRepository implements TransactionRepository
         $this->entityManager->flush();
     }
 
+    public function remove(Uuid $transactionId): void
+    {
+        $entity = $this->entityManager->find(TransactionEntity::class, (string) $transactionId);
+
+        if (null !== $entity) {
+            $this->entityManager->remove($entity);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function find(Uuid $transactionId): ?Transaction
+    {
+        $entity = $this->entityManager->find(TransactionEntity::class, (string) $transactionId);
+
+        return null === $entity ? null : $this->mapper->toDomain($entity);
+    }
+
     public function forOrganization(Uuid $organizationId): array
     {
         $entities = $this->entityManager

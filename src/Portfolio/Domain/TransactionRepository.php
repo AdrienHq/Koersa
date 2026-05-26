@@ -10,6 +10,10 @@ interface TransactionRepository
 {
     public function save(Transaction $transaction): void;
 
+    public function remove(Uuid $transactionId): void;
+
+    public function find(Uuid $transactionId): ?Transaction;
+
     /**
      * Transactions for an organization, most recent first.
      *

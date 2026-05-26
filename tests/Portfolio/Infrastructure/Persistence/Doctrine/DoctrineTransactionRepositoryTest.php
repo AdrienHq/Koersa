@@ -45,6 +45,33 @@ final class DoctrineTransactionRepositoryTest extends DatabaseTestCase
         self::assertSame([], $this->repository->forOrganization(Uuid::generate()));
     }
 
+    public function testFindsATransactionByIdAndReturnsNullForUnknownOnes(): void
+    {
+        $id = Uuid::generate();
+        $this->repository->save(Transaction::reconstitute($id, Uuid::generate(), 'ETH', Side::Sell, '2', '200', '0', new DateTimeImmutable()));
+        $this->entityManager->clear();
+
+        $found = $this->repository->find($id);
+        self::assertNotNull($found);
+        self::assertSame('ETH', $found->asset);
+
+        self::assertNull($this->repository->find(Uuid::generate()));
+    }
+
+    public function testRemovesATransaction(): void
+    {
+        $id = Uuid::generate();
+        $organizationId = Uuid::generate();
+        $this->repository->save(Transaction::reconstitute($id, $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable()));
+        $this->entityManager->clear();
+
+        $this->repository->remove($id);
+        $this->entityManager->clear();
+
+        self::assertNull($this->repository->find($id));
+        self::assertSame([], $this->repository->forOrganization($organizationId));
+    }
+
     private function transaction(Uuid $organizationId, string $asset, DateTimeImmutable $occurredAt): Transaction
     {
         return Transaction::reconstitute(Uuid::generate(), $organizationId, $asset, Side::Buy, '1', '100', '0', $occurredAt);

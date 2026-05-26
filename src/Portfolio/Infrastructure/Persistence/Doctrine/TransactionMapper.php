@@ -17,11 +17,24 @@ final class TransactionMapper
             Uuid::fromString($entity->organizationId),
             $entity->asset,
             $entity->side,
-            $entity->quantity,
-            $entity->price,
-            $entity->fee,
+            self::normalizeDecimal($entity->quantity),
+            self::normalizeDecimal($entity->price),
+            self::normalizeDecimal($entity->fee),
             $entity->occurredAt,
         );
+    }
+
+    /**
+     * Postgres returns NUMERIC at full scale (e.g. "5.000000000000000000"); trim
+     * the trailing zeros so the read model carries the value as it was entered.
+     */
+    private static function normalizeDecimal(string $value): string
+    {
+        if (!str_contains($value, '.')) {
+            return $value;
+        }
+
+        return rtrim(rtrim($value, '0'), '.');
     }
 
     public function toEntity(Transaction $transaction, ?TransactionEntity $entity = null): TransactionEntity

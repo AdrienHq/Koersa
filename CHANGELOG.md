@@ -24,8 +24,12 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Account registration and password sign-in
 - Tailwind-based UI foundation (no Node build, via AssetMapper)
 - Portfolio: record buy/sell transactions and a per-asset holdings dashboard
+- Portfolio: edit and remove recorded transactions
 - ADR 0002: Event Sourcing library (EventSauce) and Portfolio integration
 - Portfolio event store with optimistic concurrency, synchronous projectors, and a `portfolio:projections:rebuild` console command
 
 ### Changed
-- Portfolio is now event-sourced with EventSauce: trades are recorded as `TransactionRecorded` events through a command bus, and the holdings/transactions read models are rebuildable projections over the event stream (ADR 0002)
+- Portfolio is now event-sourced with EventSauce: trades are recorded, amended, and removed as events through a command bus, and the holdings/transactions read models are rebuildable projections over the event stream (ADR 0002)
+
+### Fixed
+- Transaction quantities, prices, and fees no longer render with trailing zeros from the NUMERIC column

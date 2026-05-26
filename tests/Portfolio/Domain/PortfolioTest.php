@@ -6,7 +6,9 @@ namespace Koersa\Tests\Portfolio\Domain;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Koersa\Portfolio\Domain\Event\TransactionAmended;
 use Koersa\Portfolio\Domain\Event\TransactionRecorded;
+use Koersa\Portfolio\Domain\Event\TransactionRemoved;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 use Koersa\Tests\Support\Portfolios;
@@ -39,6 +41,78 @@ final class PortfolioTest extends TestCase
         self::assertSame(Side::Buy, $event->side);
         self::assertSame('0.5', $event->quantity);
         self::assertSame(1, $portfolio->aggregateRootVersion());
+    }
+
+    public function testAmendingAKnownTradeEmitsAnAmendedEvent(): void
+    {
+        $organizationId = Uuid::generate();
+        $transactionId = Uuid::generate();
+        $portfolio = Portfolios::empty($organizationId);
+        $portfolio->recordTransaction($transactionId, $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable());
+
+        $portfolio->amendTransaction($transactionId, $organizationId, ' eth ', Side::Sell, '2', '200', '1', new DateTimeImmutable());
+
+        $events = $portfolio->releaseEvents();
+        self::assertCount(2, $events);
+
+        $amended = $events[1];
+        self::assertInstanceOf(TransactionAmended::class, $amended);
+        self::assertTrue($amended->transactionId->equals($transactionId));
+        self::assertSame('ETH', $amended->asset);
+        self::assertSame(Side::Sell, $amended->side);
+        self::assertSame('2', $amended->quantity);
+    }
+
+    public function testRemovingAKnownTradeEmitsARemovedEvent(): void
+    {
+        $organizationId = Uuid::generate();
+        $transactionId = Uuid::generate();
+        $portfolio = Portfolios::empty($organizationId);
+        $portfolio->recordTransaction($transactionId, $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable());
+
+        $portfolio->removeTransaction($transactionId);
+
+        $events = $portfolio->releaseEvents();
+        self::assertCount(2, $events);
+
+        $removed = $events[1];
+        self::assertInstanceOf(TransactionRemoved::class, $removed);
+        self::assertTrue($removed->transactionId->equals($transactionId));
+    }
+
+    public function testCannotAmendAnUnknownTransaction(): void
+    {
+        $organizationId = Uuid::generate();
+
+        $this->expectException(InvalidArgumentException::class);
+        Portfolios::empty($organizationId)->amendTransaction(
+            Uuid::generate(),
+            $organizationId,
+            'BTC',
+            Side::Buy,
+            '1',
+            '100',
+            '0',
+            new DateTimeImmutable(),
+        );
+    }
+
+    public function testCannotRemoveAnUnknownTransaction(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        Portfolios::empty(Uuid::generate())->removeTransaction(Uuid::generate());
+    }
+
+    public function testCannotAmendARemovedTransaction(): void
+    {
+        $organizationId = Uuid::generate();
+        $transactionId = Uuid::generate();
+        $portfolio = Portfolios::empty($organizationId);
+        $portfolio->recordTransaction($transactionId, $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable());
+        $portfolio->removeTransaction($transactionId);
+
+        $this->expectException(InvalidArgumentException::class);
+        $portfolio->amendTransaction($transactionId, $organizationId, 'BTC', Side::Buy, '2', '100', '0', new DateTimeImmutable());
     }
 
     public function testRejectsAnInvalidAssetSymbol(): void
