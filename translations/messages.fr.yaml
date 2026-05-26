@@ -14,3 +14,6 @@ landing:
     cta: "Je m'inscris"
     reassurance: "On vous prévient dès l'ouverture de la bêta."
     success: "Merci ! Vous êtes sur la liste."
+
+layout:
+    footer_tagline: "Koersa — suivi de portefeuille crypto & fiscalité belge"

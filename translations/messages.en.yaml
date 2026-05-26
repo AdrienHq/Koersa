@@ -1,0 +1,4 @@
+# English catalog. The app shell (nav, footer) defaults to English; the public
+# landing page is served in French and Dutch only.
+layout:
+    footer_tagline: "Koersa — crypto portfolio & Belgian tax tracker"

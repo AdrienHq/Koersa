@@ -14,3 +14,6 @@ landing:
     cta: "Inschrijven"
     reassurance: "We verwittigen u zodra de bèta opengaat."
     success: "Bedankt! U staat op de lijst."
+
+layout:
+    footer_tagline: "Koersa — crypto-portfolio & Belgische belastingtracker"
