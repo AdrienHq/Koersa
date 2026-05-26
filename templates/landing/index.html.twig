@@ -9,6 +9,9 @@
     <meta property="og:title" content="{{ 'landing.headline'|trans }}">
     <meta property="og:description" content="{{ 'landing.subheadline'|trans }}">
     <meta property="og:locale" content="{{ app.request.locale == 'nl' ? 'nl_BE' : 'fr_BE' }}">
+    <link rel="alternate" hreflang="fr" href="{{ url('landing', {'_locale': 'fr'}) }}">
+    <link rel="alternate" hreflang="nl" href="{{ url('landing', {'_locale': 'nl'}) }}">
+    <link rel="alternate" hreflang="x-default" href="{{ url('landing', {'_locale': 'fr'}) }}">
 {% endblock %}
 
 {% block main %}
