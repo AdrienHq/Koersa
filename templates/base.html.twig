@@ -27,17 +27,21 @@
             </nav>
         </header>
 
-        <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="mb-4 rounded-md border px-4 py-3 text-sm {{ label == 'success' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
+        {% block main %}
+            <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+                {% block flashes %}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="mb-4 rounded-md border px-4 py-3 text-sm {{ label == 'success' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endblock %}
 
-            {% block body %}{% endblock %}
-        </main>
+                {% block body %}{% endblock %}
+            </main>
+        {% endblock %}
 
         <footer class="border-t border-gray-200 py-6 text-center text-xs text-gray-400">
             Koersa — crypto portfolio &amp; Belgian tax tracker

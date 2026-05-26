@@ -12,4 +12,5 @@ landing:
     email_label: "Adresse e-mail"
     email_placeholder: "vous@exemple.be"
     cta: "Je m'inscris"
+    reassurance: "On vous prévient dès l'ouverture de la bêta."
     success: "Merci ! Vous êtes sur la liste."
