@@ -1,0 +1,12 @@
+* text=auto eol=lf
+
+/.github            export-ignore
+/docs               export-ignore
+/tests              export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/phpstan.dist.neon  export-ignore
+/phpunit.dist.xml   export-ignore
+/deptrac.yaml       export-ignore
+/deptrac.layers.yaml export-ignore
+/Makefile           export-ignore
+/compose.yaml       export-ignore
