@@ -88,6 +88,19 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "stan": "phpstan analyse --no-progress",
+        "deptrac": [
+            "deptrac analyse --no-progress",
+            "deptrac analyse --config-file=deptrac.layers.yaml --no-progress"
+        ],
+        "test": "phpunit",
+        "qa": [
+            "@lint",
+            "@stan",
+            "@deptrac",
+            "@test"
         ]
     },
     "conflict": {
