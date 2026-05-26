@@ -2,6 +2,10 @@
 
 {% block title %}Koersa{% endblock %}
 
+{% block metadata %}
+    <meta name="description" content="{{ 'landing.meta_description'|trans }}">
+{% endblock %}
+
 {% block main %}
     <main class="flex-1">
         {% block flashes %}

@@ -14,6 +14,7 @@ landing:
     cta: "Je m'inscris"
     reassurance: "On vous prévient dès l'ouverture de la bêta."
     success: "Merci ! Vous êtes sur la liste."
+    meta_description: "Koersa transforme l'historique de vos échanges crypto en une déclaration fiscale belge conforme, prête pour Tax-on-web et MyMinfin."
 
 layout:
     footer_tagline: "Koersa — suivi de portefeuille crypto & fiscalité belge"
