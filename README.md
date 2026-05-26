@@ -27,6 +27,7 @@ The product targets traders who want auditable records, accurate P&L, and tax re
 - Historical P&L computation, replayable when cost-basis method or tax rules change
 - Configurable price alerts
 - Belgian tax reports generated as PDF, with full audit trail
+- French and Dutch language support, built for the Belgian market
 - Multi-tenant SaaS architecture with role-based access control
 
 ## Architecture
