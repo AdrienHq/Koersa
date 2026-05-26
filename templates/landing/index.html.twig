@@ -4,6 +4,11 @@
 
 {% block metadata %}
     <meta name="description" content="{{ 'landing.meta_description'|trans }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Koersa">
+    <meta property="og:title" content="{{ 'landing.headline'|trans }}">
+    <meta property="og:description" content="{{ 'landing.subheadline'|trans }}">
+    <meta property="og:locale" content="{{ app.request.locale == 'nl' ? 'nl_BE' : 'fr_BE' }}">
 {% endblock %}
 
 {% block main %}
