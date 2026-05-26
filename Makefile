@@ -31,6 +31,10 @@ console: ## Run a Symfony console command, e.g. make console c="cache:clear"
 migrate: ## Run database migrations
 	$(PHP) php bin/console doctrine:migrations:migrate --no-interaction
 
+assets: ## Build front-end assets (importmap + Tailwind CSS)
+	$(PHP) php bin/console importmap:install
+	$(PHP) php bin/console tailwind:build
+
 ## —— Quality gates ————————————————————————————————————————————————————————
 qa: lint stan deptrac test ## Run the full quality suite
 
@@ -60,4 +64,4 @@ help: ## List available targets
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; /^##/ {printf "\n%s\n", substr($$0, 4)} /^[a-zA-Z_-]+:/ {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: up setup down build logs sh install console migrate qa lint cs stan deptrac rector test coverage help
+.PHONY: up setup down build logs sh install console migrate assets qa lint cs stan deptrac rector test coverage help
