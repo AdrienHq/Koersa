@@ -1,0 +1,15 @@
+# Landing page (Dutch). Headlines are final; bullets and the founder note are
+# drafts for Adrien to reword in his own voice.
+landing:
+    headline: "Geef uw crypto-meerwaarden aan zonder gedoe. Conform de Belgische regels."
+    subheadline: "Koersa zet uw transactiegeschiedenis om in een Belgische belastingaangifte, klaar om in te dienen."
+    features_title: "Wat Koersa doet"
+    bullet_import: "Importeer uw Kraken- en Binance-transacties in enkele seconden."
+    bullet_report: "Rapport klaar voor Tax-on-web en MyMinfin (vakken VII en XV)."
+    bullet_profiles: "Berekening onder de drie Belgische regimes, met volledige audittrail."
+    founder_note: "Ik bouw Koersa omdat het aangeven van mijn eigen crypto in België een nachtmerrie was. — Adrien"
+    signup_title: "Doe mee aan de bèta"
+    email_label: "E-mailadres"
+    email_placeholder: "u@voorbeeld.be"
+    cta: "Inschrijven"
+    success: "Bedankt! U staat op de lijst."

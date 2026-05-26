@@ -27,6 +27,8 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Portfolio: edit and remove recorded transactions
 - ADR 0002: Event Sourcing library (EventSauce) and Portfolio integration
 - Portfolio event store with optimistic concurrency, synchronous projectors, and a `portfolio:projections:rebuild` console command
+- Bilingual (French/Dutch) public landing page with a beta-access signup form
+- Internationalisation foundation (FR/NL message catalogs, locale-prefixed routing)
 
 ### Changed
 - Portfolio is now event-sourced with EventSauce: trades are recorded, amended, and removed as events through a command bus, and the holdings/transactions read models are rebuildable projections over the event stream (ADR 0002)
