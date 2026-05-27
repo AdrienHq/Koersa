@@ -26,10 +26,7 @@ final class TransactionMapper
         );
     }
 
-    /**
-     * Postgres returns NUMERIC at full scale (e.g. "5.000000000000000000"); trim
-     * the trailing zeros so the read model carries the value as it was entered.
-     */
+    // Postgres returns NUMERIC at full scale ("5.000000000000000000"); trim trailing zeros.
     private static function normalizeDecimal(string $value): string
     {
         if (!str_contains($value, '.')) {

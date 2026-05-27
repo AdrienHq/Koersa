@@ -12,12 +12,7 @@ use Koersa\Portfolio\Domain\PortfolioId;
 use Koersa\Portfolio\Domain\PortfolioRepository;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
-/**
- * Adapts EventSauce's generic aggregate repository to the Portfolio port, so the
- * application layer depends only on the domain interface. Persisting an
- * aggregate appends its new events to the store and dispatches them to the
- * projectors in one go.
- */
+// Adapts EventSauce's aggregate repository to the Portfolio port.
 #[AsAlias(PortfolioRepository::class)]
 final class EventSourcingPortfolioRepository implements PortfolioRepository
 {

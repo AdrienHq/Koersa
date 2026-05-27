@@ -15,11 +15,7 @@ use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Projects the Portfolio event stream into the transactions read model that the
- * dashboard and the holdings query read from. Keyed by transaction id, so
- * replaying the whole stream during a rebuild reproduces the same rows.
- */
+// Projects the event stream into the transactions read model; rebuildable.
 final class TransactionProjector implements MessageConsumer
 {
     public function __construct(private readonly TransactionRepository $transactions)
@@ -37,8 +33,7 @@ final class TransactionProjector implements MessageConsumer
         }
 
         if ($event instanceof TransactionAmended) {
-            // Provenance is set at creation and never amended, so it is kept
-            // from the existing row rather than carried on the amend event.
+            // provenance is set at creation, so keep it from the existing row
             $existing = $this->transactions->find($event->transactionId);
             $source = null !== $existing ? $existing->source : 'manual';
             $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt, $source, $existing?->externalId);

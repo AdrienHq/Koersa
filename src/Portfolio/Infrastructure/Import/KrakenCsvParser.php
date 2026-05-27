@@ -11,13 +11,8 @@ use Koersa\Portfolio\Application\StatementParser;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use RuntimeException;
 
-/**
- * Parses a Kraken "Trades" CSV export. Only crypto buy/sell rows are kept; fiat
- * pairs (e.g. EUR/USD) and any non-trade rows are skipped. Times are UTC.
- *
- * Prices and fees are recorded in the pair's quote currency as-is; converting
- * mixed quote currencies to EUR is the tax engine's job (deferred).
- */
+// Kraken "Trades" export: crypto buy/sell rows only (fiat pairs skipped), UTC times.
+// Prices/fees stay in the pair's quote currency; EUR conversion is the tax engine's job.
 final class KrakenCsvParser implements StatementParser
 {
     private const array COLUMNS = ['txid', 'pair', 'subclass', 'time', 'type', 'price', 'fee', 'vol'];

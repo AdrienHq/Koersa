@@ -14,11 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * Rebuilds the Portfolio read models from the event store. Truncating the
- * projection tables and replaying the stream must reproduce the exact same
- * dashboard — that round-trip is the proof the events are the source of truth.
- */
 #[AsCommand(
     name: 'portfolio:projections:rebuild',
     description: 'Rebuild the Portfolio read models from the event store',

@@ -9,11 +9,7 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 use ZipArchive;
 
-/**
- * Returns the CSV text from an uploaded file. A plain CSV is read as-is; a zip
- * is opened and the CSV inside is extracted (preferring a "trades" file when an
- * archive holds several), capped so a malicious archive cannot exhaust memory.
- */
+// Plain CSV as-is, or the CSV extracted from a zip (prefers a "trades" entry, size-capped).
 #[AsAlias(StatementReader::class)]
 final class ZipAwareStatementReader implements StatementReader
 {

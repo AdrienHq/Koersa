@@ -21,12 +21,8 @@ use const JSON_THROW_ON_ERROR;
 
 use Throwable;
 
-/**
- * Append-only event store backed by a single Postgres table. Each row is one
- * domain event. The unique (aggregate_root_id, aggregate_root_version) index
- * gives optimistic-concurrency protection: two writers racing to append the
- * same version collide, and the second one fails instead of silently winning.
- */
+// Append-only event store; the unique (aggregate_root_id, version) index gives
+// optimistic concurrency.
 final class DoctrineMessageRepository implements MessageRepository
 {
     private const string TABLE = 'portfolio_event_store';
