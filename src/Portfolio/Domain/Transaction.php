@@ -13,6 +13,9 @@ use Koersa\Shared\Domain\Uuid;
  * Iteration 2 the write side is the event-sourced Portfolio aggregate; this is
  * a projection row rebuilt from TransactionRecorded events, so it carries no
  * behaviour or validation of its own — the aggregate already guarded the data.
+ *
+ * `source`/`externalId` carry the trade's provenance (manual entry or an
+ * exchange import).
  */
 final readonly class Transaction
 {
@@ -25,6 +28,8 @@ final readonly class Transaction
         public string $price,
         public string $fee,
         public DateTimeImmutable $occurredAt,
+        public string $source = 'manual',
+        public ?string $externalId = null,
     ) {
     }
 
@@ -37,7 +42,9 @@ final readonly class Transaction
         string $price,
         string $fee,
         DateTimeImmutable $occurredAt,
+        string $source = 'manual',
+        ?string $externalId = null,
     ): self {
-        return new self($id, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt);
+        return new self($id, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId);
     }
 }

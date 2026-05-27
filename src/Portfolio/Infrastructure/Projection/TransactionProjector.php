@@ -31,13 +31,17 @@ final class TransactionProjector implements MessageConsumer
         $event = $message->payload();
 
         if ($event instanceof TransactionRecorded) {
-            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt);
+            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt, $event->source, $event->externalId);
 
             return;
         }
 
         if ($event instanceof TransactionAmended) {
-            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt);
+            // Provenance is set at creation and never amended, so it is kept
+            // from the existing row rather than carried on the amend event.
+            $existing = $this->transactions->find($event->transactionId);
+            $source = null !== $existing ? $existing->source : 'manual';
+            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt, $source, $existing?->externalId);
 
             return;
         }
@@ -56,6 +60,8 @@ final class TransactionProjector implements MessageConsumer
         string $price,
         string $fee,
         DateTimeImmutable $occurredAt,
+        string $source,
+        ?string $externalId,
     ): void {
         $this->transactions->save(Transaction::reconstitute(
             $transactionId,
@@ -66,6 +72,8 @@ final class TransactionProjector implements MessageConsumer
             $price,
             $fee,
             $occurredAt,
+            $source,
+            $externalId,
         ));
     }
 }

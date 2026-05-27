@@ -35,6 +35,14 @@ final class Portfolio implements AggregateRoot
      */
     private array $transactions = [];
 
+    /**
+     * "source:externalId" of every imported trade seen, so re-importing the
+     * same exchange row is a no-op.
+     *
+     * @var array<string, true>
+     */
+    private array $importedReferences = [];
+
     public function recordTransaction(
         Uuid $transactionId,
         Uuid $organizationId,
@@ -44,10 +52,16 @@ final class Portfolio implements AggregateRoot
         string $price,
         string $fee,
         DateTimeImmutable $occurredAt,
+        string $source = 'manual',
+        ?string $externalId = null,
     ): void {
+        if (null !== $externalId && isset($this->importedReferences[$source.':'.$externalId])) {
+            return;
+        }
+
         $asset = $this->validateTrade($asset, $quantity, $price, $fee);
 
-        $this->recordThat(new TransactionRecorded($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt));
+        $this->recordThat(new TransactionRecorded($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId));
     }
 
     public function amendTransaction(
@@ -76,6 +90,10 @@ final class Portfolio implements AggregateRoot
     protected function applyTransactionRecorded(TransactionRecorded $event): void
     {
         $this->transactions[$event->transactionId->value] = true;
+
+        if (null !== $event->externalId) {
+            $this->importedReferences[$event->source.':'.$event->externalId] = true;
+        }
     }
 
     protected function applyTransactionAmended(TransactionAmended $event): void

@@ -37,4 +37,10 @@ class TransactionEntity
 
     #[ORM\Column(name: 'occurred_at', type: 'datetime_immutable')]
     public DateTimeImmutable $occurredAt;
+
+    #[ORM\Column(length: 16, options: ['default' => 'manual'])]
+    public string $source = 'manual';
+
+    #[ORM\Column(name: 'external_id', length: 255, nullable: true)]
+    public ?string $externalId = null;
 }

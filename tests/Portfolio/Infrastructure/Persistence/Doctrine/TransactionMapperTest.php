@@ -36,5 +36,23 @@ final class TransactionMapperTest extends TestCase
         self::assertSame(Side::Buy, $restored->side);
         self::assertSame('0.5', $restored->quantity);
         self::assertEquals($occurredAt, $restored->occurredAt);
+        self::assertSame('manual', $restored->source);
+        self::assertNull($restored->externalId);
+    }
+
+    public function testRoundTripPreservesProvenance(): void
+    {
+        $mapper = new TransactionMapper();
+
+        $entity = $mapper->toEntity(
+            Transaction::reconstitute(Uuid::generate(), Uuid::generate(), 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable(), 'kraken', 'LEDGER-9'),
+        );
+
+        self::assertSame('kraken', $entity->source);
+        self::assertSame('LEDGER-9', $entity->externalId);
+
+        $restored = $mapper->toDomain($entity);
+        self::assertSame('kraken', $restored->source);
+        self::assertSame('LEDGER-9', $restored->externalId);
     }
 }

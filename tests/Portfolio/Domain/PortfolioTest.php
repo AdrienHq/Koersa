@@ -115,6 +115,34 @@ final class PortfolioTest extends TestCase
         $portfolio->amendTransaction($transactionId, $organizationId, 'BTC', Side::Buy, '2', '100', '0', new DateTimeImmutable());
     }
 
+    public function testIgnoresAnAlreadyImportedExchangeRow(): void
+    {
+        $organizationId = Uuid::generate();
+        $portfolio = Portfolios::empty($organizationId);
+
+        $portfolio->recordTransaction(Uuid::generate(), $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable(), 'kraken', 'TX-1');
+        $portfolio->recordTransaction(Uuid::generate(), $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable(), 'kraken', 'TX-1');
+
+        self::assertCount(1, $portfolio->releaseEvents());
+    }
+
+    public function testDistinctExchangeRowsAreBothRecorded(): void
+    {
+        $organizationId = Uuid::generate();
+        $portfolio = Portfolios::empty($organizationId);
+
+        $portfolio->recordTransaction(Uuid::generate(), $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable(), 'kraken', 'TX-1');
+        $portfolio->recordTransaction(Uuid::generate(), $organizationId, 'BTC', Side::Buy, '1', '100', '0', new DateTimeImmutable(), 'kraken', 'TX-2');
+
+        $events = $portfolio->releaseEvents();
+        self::assertCount(2, $events);
+
+        $first = $events[0];
+        self::assertInstanceOf(TransactionRecorded::class, $first);
+        self::assertSame('kraken', $first->source);
+        self::assertSame('TX-1', $first->externalId);
+    }
+
     public function testRejectsAnInvalidAssetSymbol(): void
     {
         $this->expectException(InvalidArgumentException::class);

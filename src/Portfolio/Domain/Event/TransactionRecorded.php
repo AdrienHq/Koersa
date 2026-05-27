@@ -13,6 +13,10 @@ use Koersa\Shared\Domain\Uuid;
  * Raised when a trade is recorded in a portfolio. This event is the source of
  * truth for the Portfolio context; the holdings and transactions read models
  * are projected from the stream of these. Amounts stay decimal strings.
+ *
+ * `source` records where the trade came from (manual entry or an exchange
+ * import) and `externalId` the originating exchange row id, used to keep
+ * re-imports idempotent. Both are creation-time and immutable.
  */
 final readonly class TransactionRecorded implements SerializablePayload
 {
@@ -25,11 +29,13 @@ final readonly class TransactionRecorded implements SerializablePayload
         public string $price,
         public string $fee,
         public DateTimeImmutable $occurredAt,
+        public string $source = 'manual',
+        public ?string $externalId = null,
     ) {
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, string|null>
      */
     public function toPayload(): array
     {
@@ -42,6 +48,8 @@ final readonly class TransactionRecorded implements SerializablePayload
             'price' => $this->price,
             'fee' => $this->fee,
             'occurredAt' => $this->occurredAt->format(DateTimeImmutable::ATOM),
+            'source' => $this->source,
+            'externalId' => $this->externalId,
         ];
     }
 
@@ -50,6 +58,12 @@ final readonly class TransactionRecorded implements SerializablePayload
      */
     public static function fromPayload(array $payload): static
     {
+        $source = $payload['source'] ?? 'manual';
+        \assert(\is_string($source));
+
+        $externalId = $payload['externalId'] ?? null;
+        \assert(null === $externalId || \is_string($externalId));
+
         return new self(
             Uuid::fromString(self::string($payload, 'transactionId')),
             Uuid::fromString(self::string($payload, 'organizationId')),
@@ -59,6 +73,8 @@ final readonly class TransactionRecorded implements SerializablePayload
             self::string($payload, 'price'),
             self::string($payload, 'fee'),
             new DateTimeImmutable(self::string($payload, 'occurredAt')),
+            $source,
+            $externalId,
         );
     }
 

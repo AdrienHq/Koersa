@@ -21,6 +21,8 @@ final class TransactionMapper
             self::normalizeDecimal($entity->price),
             self::normalizeDecimal($entity->fee),
             $entity->occurredAt,
+            $entity->source,
+            $entity->externalId,
         );
     }
 
@@ -48,6 +50,8 @@ final class TransactionMapper
         $entity->price = $transaction->price;
         $entity->fee = $transaction->fee;
         $entity->occurredAt = $transaction->occurredAt;
+        $entity->source = $transaction->source;
+        $entity->externalId = $transaction->externalId;
 
         return $entity;
     }

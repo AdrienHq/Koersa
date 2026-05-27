@@ -35,5 +35,28 @@ final class TransactionRecordedTest extends TestCase
         self::assertSame('40000', $restored->price);
         self::assertSame('10', $restored->fee);
         self::assertEquals($event->occurredAt, $restored->occurredAt);
+        self::assertSame('manual', $restored->source);
+        self::assertNull($restored->externalId);
+    }
+
+    public function testPayloadRoundTripPreservesProvenance(): void
+    {
+        $event = new TransactionRecorded(
+            Uuid::generate(),
+            Uuid::generate(),
+            'BTC',
+            Side::Buy,
+            '0.5',
+            '40000',
+            '10',
+            new DateTimeImmutable('2026-05-25T10:00:00+00:00'),
+            'kraken',
+            'LEDGER-123',
+        );
+
+        $restored = TransactionRecorded::fromPayload($event->toPayload());
+
+        self::assertSame('kraken', $restored->source);
+        self::assertSame('LEDGER-123', $restored->externalId);
     }
 }
