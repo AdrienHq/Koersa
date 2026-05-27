@@ -8,11 +8,7 @@ use DateTimeImmutable;
 use Koersa\IAM\Domain\ValueObject\Role;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Associates a user with an organization and the role they hold there.
- * References the user and organization by identity, not by object reference,
- * since each is its own aggregate.
- */
+// Links a user and an organization by id (each is its own aggregate), with a role.
 final class Membership
 {
     private function __construct(
@@ -29,10 +25,6 @@ final class Membership
         return new self($id, $userId, $organizationId, $role, $joinedAt);
     }
 
-    /**
-     * Rebuild a membership from stored state. Used by the persistence mapper
-     * only.
-     */
     public static function reconstitute(Uuid $id, Uuid $userId, Uuid $organizationId, Role $role, DateTimeImmutable $joinedAt): self
     {
         return new self($id, $userId, $organizationId, $role, $joinedAt);

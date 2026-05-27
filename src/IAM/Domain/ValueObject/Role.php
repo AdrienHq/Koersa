@@ -10,10 +10,6 @@ enum Role: string
     case Admin = 'ADMIN';
     case Member = 'MEMBER';
 
-    /**
-     * Whether this role may add, remove, or re-role other members of its
-     * organization. Used by authorization voters (Iteration 4).
-     */
     public function canManageMembers(): bool
     {
         return self::Owner === $this || self::Admin === $this;

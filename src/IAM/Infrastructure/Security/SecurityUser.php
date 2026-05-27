@@ -10,11 +10,7 @@ use Koersa\Shared\Security\HasOrganization;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * Adapts the domain user to Symfony Security. It carries only what the
- * security layer needs; the domain User stays free of framework interfaces.
- * Also exposes the acting organization (see HasOrganization).
- */
+// Adapts the domain user to Symfony Security, keeping the domain free of framework interfaces.
 final class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface, HasOrganization
 {
     /** @var non-empty-string */
@@ -57,7 +53,6 @@ final class SecurityUser implements UserInterface, PasswordAuthenticatedUserInte
 
     public function eraseCredentials(): void
     {
-        // No transient credentials to erase: the password hash is the only
-        // secret carried, and it is needed to re-authenticate.
+        // nothing transient to erase
     }
 }

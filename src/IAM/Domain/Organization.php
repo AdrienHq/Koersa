@@ -23,10 +23,6 @@ final class Organization
         return new self($id, $name, self::slugify($name), $createdAt);
     }
 
-    /**
-     * Rebuild an organization from stored state. Used by the persistence
-     * mapper only.
-     */
     public static function reconstitute(Uuid $id, string $name, string $slug, DateTimeImmutable $createdAt): self
     {
         return new self($id, $name, $slug, $createdAt);

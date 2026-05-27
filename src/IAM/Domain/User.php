@@ -23,10 +23,6 @@ final class User
         return new self($id, $email, $passwordHash, $registeredAt);
     }
 
-    /**
-     * Rebuild a user from stored state. Used by the persistence mapper only;
-     * it bypasses the invariants enforced when registering a new user.
-     */
     public static function reconstitute(Uuid $id, Email $email, string $passwordHash, DateTimeImmutable $registeredAt): self
     {
         return new self($id, $email, $passwordHash, $registeredAt);
