@@ -27,10 +27,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-/**
- * Base for Portfolio web tests: boots a client, clears the tables, and signs in
- * a user who owns one organization. Subclasses act as that signed-in user.
- */
+// Signs in a user who owns one organization; subclasses act as that user.
 abstract class PortfolioWebTestCase extends WebTestCase
 {
     protected KernelBrowser $client;
@@ -57,9 +54,6 @@ abstract class PortfolioWebTestCase extends WebTestCase
         $this->client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $this->organizationId));
     }
 
-    /**
-     * Records a transaction through the command bus and returns its id.
-     */
     protected function recordTransaction(string $asset = 'BTC', Side $side = Side::Buy, string $quantity = '1', string $price = '100'): Uuid
     {
         static::getContainer()->get(MessageBusInterface::class)->dispatch(

@@ -7,10 +7,7 @@ namespace Koersa\Tests\Support;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * Base class for tests that hit a real database. Boots the kernel and clears
- * the IAM tables before each test so cases stay independent.
- */
+// Boots the kernel and truncates the tables before each test for isolation.
 abstract class DatabaseTestCase extends KernelTestCase
 {
     protected EntityManagerInterface $entityManager;
