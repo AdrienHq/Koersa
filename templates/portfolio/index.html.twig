@@ -29,7 +29,10 @@
         </section>
 
         <section class="max-w-lg">
-            <h2 class="text-lg font-semibold text-gray-900">Record a transaction</h2>
+            <div class="flex items-baseline justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Record a transaction</h2>
+                <a href="{{ path('portfolio_import') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Import from exchange</a>
+            </div>
             <div class="mt-4 rounded-lg border border-gray-200 bg-white p-6">
                 {{ form_start(transactionForm, {'attr': {'data-turbo': 'false'}}) }}
                     {{ form_row(transactionForm.asset) }}
