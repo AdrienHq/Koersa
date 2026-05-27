@@ -8,9 +8,6 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * Adds baseline hardening headers to every main response.
- */
 #[AsEventListener(event: KernelEvents::RESPONSE)]
 final class SecurityHeadersListener
 {

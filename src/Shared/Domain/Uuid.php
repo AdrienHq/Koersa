@@ -7,10 +7,7 @@ namespace Koersa\Shared\Domain;
 use InvalidArgumentException;
 use Stringable;
 
-/**
- * RFC 4122 version-4 identifier. Generated without an external library so the
- * domain layer stays dependency-free.
- */
+// RFC 4122 v4 id, generated without an external lib to keep the domain dependency-free.
 final readonly class Uuid implements Stringable
 {
     private const string PATTERN = '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/';

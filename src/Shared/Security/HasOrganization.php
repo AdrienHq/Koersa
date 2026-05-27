@@ -6,11 +6,7 @@ namespace Koersa\Shared\Security;
 
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Contract for an authenticated user that acts within an organization. Lives in
- * Shared so other contexts can read the current tenant from the security user
- * without depending on IAM. IAM's SecurityUser implements it.
- */
+// Lets a context read the current tenant from the security user without depending on IAM.
 interface HasOrganization
 {
     public function organizationId(): Uuid;

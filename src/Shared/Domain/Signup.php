@@ -10,12 +10,7 @@ use const FILTER_VALIDATE_EMAIL;
 
 use InvalidArgumentException;
 
-/**
- * A beta-access request from the landing page. Lives in Shared because lead
- * capture does not belong to any of the seven product contexts and does not (on
- * its own) justify an eighth. If marketing grows beyond this, it graduates to
- * its own context.
- */
+// Beta-access lead. In Shared because it is too small to justify its own context.
 final readonly class Signup
 {
     private const array LOCALES = ['fr', 'nl'];

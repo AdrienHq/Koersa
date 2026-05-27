@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-/**
- * Minimal XML sitemap listing the localised landing pages for search engines.
- */
 final class SitemapController extends AbstractController
 {
     #[Route('/sitemap.xml', name: 'sitemap', methods: ['GET'])]
