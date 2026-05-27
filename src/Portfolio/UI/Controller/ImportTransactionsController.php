@@ -6,6 +6,7 @@ namespace Koersa\Portfolio\UI\Controller;
 
 use Koersa\Portfolio\Application\ImportTransactions;
 use Koersa\Portfolio\Application\StatementParserRegistry;
+use Koersa\Portfolio\Application\StatementReader;
 use Koersa\Portfolio\UI\Form\ImportForm;
 use Koersa\Portfolio\UI\Form\ImportFormData;
 use Koersa\Shared\Security\HasOrganization;
@@ -26,6 +27,7 @@ final class ImportTransactionsController extends AbstractController
         Request $request,
         MessageBusInterface $commandBus,
         StatementParserRegistry $parsers,
+        StatementReader $reader,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -41,7 +43,7 @@ final class ImportTransactionsController extends AbstractController
 
             if ($file instanceof UploadedFile) {
                 try {
-                    $contents = (string) file_get_contents($file->getPathname());
+                    $contents = $reader->read($file->getPathname());
                     $trades = $parsers->parserFor($data->exchange)->parse($contents);
                     $commandBus->dispatch(new ImportTransactions($user->organizationId(), $data->exchange, $trades));
                 } catch (Throwable) {

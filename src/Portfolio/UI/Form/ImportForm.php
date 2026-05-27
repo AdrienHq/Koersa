@@ -27,7 +27,7 @@ final class ImportForm extends AbstractType
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('file', FileType::class, [
-                'label' => 'CSV export',
+                'label' => 'CSV or ZIP export',
                 'constraints' => [
                     new Assert\NotNull(),
                     new Assert\File(maxSize: '5M'),
