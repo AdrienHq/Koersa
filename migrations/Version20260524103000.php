@@ -8,13 +8,6 @@ use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * IAM context: users, organizations, and memberships.
- *
- * Hand-written to match the Doctrine mapping (no database was available to run
- * doctrine:migrations:diff). Index names are pinned in the entities so a diff
- * against a live PostgreSQL reports no changes.
- */
 final class Version20260524103000 extends AbstractMigration
 {
     public function getDescription(): string

@@ -8,10 +8,7 @@ use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Portfolio context: the event store (ADR 0002). portfolio_transactions stays
- * as-is but is now a read-model projection rebuilt from this stream.
- */
+// Portfolio event store (ADR 0002); portfolio_transactions becomes a projection.
 final class Version20260525140000 extends AbstractMigration
 {
     public function getDescription(): string
