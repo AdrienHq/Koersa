@@ -14,10 +14,6 @@ interface TransactionRepository
 
     public function find(Uuid $transactionId): ?Transaction;
 
-    /**
-     * Transactions for an organization, most recent first.
-     *
-     * @return list<Transaction>
-     */
+    /** @return list<Transaction> most recent first */
     public function forOrganization(Uuid $organizationId): array;
 }

@@ -9,11 +9,6 @@ use EventSauce\EventSourcing\Serialization\SerializablePayload;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Raised when a recorded trade is corrected. Carries the full new state (a
- * correction replaces the values rather than patching them), so a projector can
- * rebuild the read-model row from this event alone.
- */
 final readonly class TransactionAmended implements SerializablePayload
 {
     public function __construct(

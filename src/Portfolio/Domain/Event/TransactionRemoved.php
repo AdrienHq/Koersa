@@ -7,10 +7,6 @@ namespace Koersa\Portfolio\Domain\Event;
 use EventSauce\EventSourcing\Serialization\SerializablePayload;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Raised when a recorded trade is removed. The transaction is not erased from
- * history — the removal is itself an event; only the read-model row goes away.
- */
 final readonly class TransactionRemoved implements SerializablePayload
 {
     public function __construct(public Uuid $transactionId)

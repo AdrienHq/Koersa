@@ -9,15 +9,6 @@ use EventSauce\EventSourcing\Serialization\SerializablePayload;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Raised when a trade is recorded in a portfolio. This event is the source of
- * truth for the Portfolio context; the holdings and transactions read models
- * are projected from the stream of these. Amounts stay decimal strings.
- *
- * `source` records where the trade came from (manual entry or an exchange
- * import) and `externalId` the originating exchange row id, used to keep
- * re-imports idempotent. Both are creation-time and immutable.
- */
 final readonly class TransactionRecorded implements SerializablePayload
 {
     public function __construct(

@@ -15,11 +15,6 @@ use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
 /**
- * The event-sourced aggregate for a single organization's portfolio. Trades are
- * recorded, amended, and removed as events; the holdings and transactions read
- * models are projected from the stream. Invariants live here, not on the read
- * models. See ADR 0002.
- *
  * @implements AggregateRoot<PortfolioId>
  */
 final class Portfolio implements AggregateRoot
@@ -27,20 +22,10 @@ final class Portfolio implements AggregateRoot
     /** @use AggregateRootBehaviour<PortfolioId> */
     use AggregateRootBehaviour;
 
-    /**
-     * Ids of the trades currently in the portfolio, rebuilt by replaying events.
-     * Amend/remove are only valid against one of these.
-     *
-     * @var array<string, true>
-     */
+    /** @var array<string, true> */
     private array $transactions = [];
 
-    /**
-     * "source:externalId" of every imported trade seen, so re-importing the
-     * same exchange row is a no-op.
-     *
-     * @var array<string, true>
-     */
+    /** @var array<string, true> imported "source:externalId" references, for dedup */
     private array $importedReferences = [];
 
     public function recordTransaction(
@@ -98,8 +83,7 @@ final class Portfolio implements AggregateRoot
 
     protected function applyTransactionAmended(TransactionAmended $event): void
     {
-        // Amending changes a trade's values, not whether it exists; the new
-        // values live in the projection, so there is no aggregate state to move.
+        // an amendment changes values, not which transactions exist
     }
 
     protected function applyTransactionRemoved(TransactionRemoved $event): void
@@ -107,9 +91,6 @@ final class Portfolio implements AggregateRoot
         unset($this->transactions[$event->transactionId->value]);
     }
 
-    /**
-     * Validates a trade and returns the normalized asset symbol.
-     */
     private function validateTrade(string $asset, string $quantity, string $price, string $fee): string
     {
         $asset = strtoupper(trim($asset));

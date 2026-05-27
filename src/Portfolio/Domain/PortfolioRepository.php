@@ -6,10 +6,7 @@ namespace Koersa\Portfolio\Domain;
 
 interface PortfolioRepository
 {
-    /**
-     * Reconstitutes the portfolio from its event stream. A portfolio that has
-     * never recorded anything comes back empty (version 0), never null.
-     */
+    /** An unknown portfolio comes back empty, never null. */
     public function get(PortfolioId $id): Portfolio;
 
     public function save(Portfolio $portfolio): void;

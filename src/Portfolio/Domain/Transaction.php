@@ -8,15 +8,6 @@ use DateTimeImmutable;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * A single recorded trade as it appears in the transactions read model. Since
- * Iteration 2 the write side is the event-sourced Portfolio aggregate; this is
- * a projection row rebuilt from TransactionRecorded events, so it carries no
- * behaviour or validation of its own — the aggregate already guarded the data.
- *
- * `source`/`externalId` carry the trade's provenance (manual entry or an
- * exchange import).
- */
 final readonly class Transaction
 {
     private function __construct(

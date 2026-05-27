@@ -7,10 +7,7 @@ namespace Koersa\Portfolio\Domain;
 use EventSauce\EventSourcing\AggregateRootId;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Identifies a Portfolio aggregate. There is one portfolio per organization, so
- * the identifier is simply the organization's id — no extra mapping to keep.
- */
+// One portfolio per organization, so the id is the organization id.
 final readonly class PortfolioId implements AggregateRootId
 {
     private function __construct(private Uuid $id)
