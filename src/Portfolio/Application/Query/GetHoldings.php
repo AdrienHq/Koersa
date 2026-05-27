@@ -9,12 +9,8 @@ use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
 /**
- * Computes per-asset holdings from an organization's transactions: net quantity
- * (buys − sells) and the weighted-average buy cost.
- *
- * MVP note: the aggregation uses floats for display only. Exact decimal math
- * (the tax engine, Iteration 5) will work off the stored NUMERIC values. In
- * Iteration 2 this becomes a rebuildable projection over the event stream.
+ * Per-asset holdings (net quantity, weighted-average buy cost). Floats here are
+ * display-only; exact decimal math belongs to the tax engine.
  */
 final class GetHoldings
 {

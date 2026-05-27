@@ -7,19 +7,12 @@ namespace Koersa\Portfolio\Application;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
-/**
- * Resolves the right {@see StatementParser} for an exchange.
- */
 final class StatementParserRegistry
 {
-    /**
-     * @var array<string, StatementParser>
-     */
+    /** @var array<string, StatementParser> */
     private array $parsers = [];
 
-    /**
-     * @param iterable<StatementParser> $parsers
-     */
+    /** @param iterable<StatementParser> $parsers */
     public function __construct(
         #[AutowireIterator('portfolio.statement_parser')]
         iterable $parsers,

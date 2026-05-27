@@ -8,9 +8,6 @@ use DateTimeImmutable;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 
-/**
- * Command: record a trade in an organization's portfolio.
- */
 final readonly class RecordTransaction
 {
     public function __construct(
