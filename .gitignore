@@ -27,6 +27,9 @@
 .DS_Store
 Thumbs.db
 
+# Local scratch folder (e.g. real exchange exports for import work — never committed)
+/tmp/
+
 # Node (for asset tooling later)
 /node_modules/
 /public/build/
