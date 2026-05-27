@@ -64,8 +64,7 @@ final class RebuildProjectionsCommandTest extends DatabaseTestCase
         $commandBus->dispatch(new RemoveTransaction($organizationId, $idByAsset['ETH']));
         $this->entityManager->clear();
 
-        // After truncating, replaying record + amend + remove must reproduce the
-        // final state: a single BTC row with the amended quantity.
+        // replaying record + amend + remove must reproduce the final state
         $this->entityManager->getConnection()->executeStatement('TRUNCATE TABLE portfolio_transactions');
         $this->entityManager->clear();
 
