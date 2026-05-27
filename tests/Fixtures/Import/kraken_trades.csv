@@ -1,0 +1,5 @@
+"txid","ordertxid","pair","aclass","subclass","time","type","ordertype","price","cost","fee","vol","margin","misc","ledgers","posttxid","posstatuscode","cprice","ccost","cfee","cvol","cmargin","net","trades"
+"FAKE001-AAAAA-BBBBB","FAKEO1-AAAAA-BBBBB","BTC/EUR","forex","crypto","2025-02-01 10:00:00.0000","buy","limit",80000.00000,80.00000,0.20000,0.00100000,0.00000,"","FAKEL1-XXXXX-YYYYY","FAKEP1-AAAAA-BBBBB","","","","","","","",""
+"FAKE002-CCCCC-DDDDD","FAKEO2-CCCCC-DDDDD","XRP/USD","forex","crypto","2025-02-02 11:30:00.0000","sell","limit",0.50000000,50.00000000,0.10000000,100.00000000,0.00000000,"","FAKEL2-XXXXX-YYYYY","FAKEP1-AAAAA-BBBBB","","","","","","","",""
+"FAKE003-EEEEE-FFFFF","FAKEO3-EEEEE-FFFFF","EUR/USD","forex","fiat","2025-02-03 12:00:00.0000","buy","limit",1.10000,110.00000,0.20000,100.00000,0.00000,"","FAKEL3-XXXXX-YYYYY","FAKEP1-AAAAA-BBBBB","","","","","","","",""
+"FAKE004-GGGGG-HHHHH","FAKEO4-GGGGG-HHHHH","DOGE/EUR","forex","crypto","2025-02-04 09:15:00.0000","buy","limit",0.40000000,40.00000000,0.08000000,100.00000000,0.00000000,"","FAKEL4-XXXXX-YYYYY","FAKEP1-AAAAA-BBBBB","","","","","","","",""

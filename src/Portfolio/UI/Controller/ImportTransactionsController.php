@@ -43,13 +43,13 @@ final class ImportTransactionsController extends AbstractController
                 try {
                     $contents = (string) file_get_contents($file->getPathname());
                     $trades = $parsers->parserFor($data->exchange)->parse($contents);
+                    $commandBus->dispatch(new ImportTransactions($user->organizationId(), $data->exchange, $trades));
                 } catch (Throwable) {
                     $this->addFlash('error', 'That file could not be read as a valid export. Please check the exchange and the file.');
 
                     return $this->redirectToRoute('portfolio_import');
                 }
 
-                $commandBus->dispatch(new ImportTransactions($user->organizationId(), $data->exchange, $trades));
                 $this->addFlash('success', \sprintf('Imported your %s statement.', ucfirst($data->exchange)));
 
                 return $this->redirectToRoute('portfolio');
