@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Koersa\Portfolio\Application;
 
 use InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 /**
  * Resolves the right {@see StatementParser} for an exchange.
@@ -21,7 +21,7 @@ final class StatementParserRegistry
      * @param iterable<StatementParser> $parsers
      */
     public function __construct(
-        #[TaggedIterator('portfolio.statement_parser')]
+        #[AutowireIterator('portfolio.statement_parser')]
         iterable $parsers,
     ) {
         foreach ($parsers as $parser) {
