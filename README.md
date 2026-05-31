@@ -35,6 +35,7 @@ What actually ships right now — the rest is on the roadmap.
 - **How-to-declare guidance per regime**: which Cadre / Vak and code numbers go on the Belgian tax-on-web declaration, with the amount pre-computed
 - **Accountant-ready PDF report** — one page covering realized gains per asset, regime scenarios, filing guidance and methodology, in the user's language
 - Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent, and the quote currency is read from the pair
+- Binance Spot Trade History CSV import — built from the documented format; first real export will validate any post-2023 layout drift
 - Event-sourced Portfolio context (EventSauce) with rebuildable projections and a `portfolio:projections:rebuild` command
 
 ## Architecture
@@ -51,7 +52,7 @@ Full architecture details in [`ARCHITECTURE.md`](ARCHITECTURE.md). Design decisi
 
 - [x] **Iteration 1** — Skeleton: authentication, organizations, manual transactions, basic dashboard
 - [x] **Iteration 2** — Event Sourcing on the Portfolio aggregate with projections and replay
-- [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger (Binance CSV import: framework ready, blocked on a real export)
+- [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger (Kraken + Binance CSV import shipped; async API sync deferred until paying users)
 - [ ] **Iteration 4** — Multi-tenancy enforcement and Stripe billing
 - [x] **Iteration 5** — Belgian tax engine with PDF report generation: Money VO, ECB historical FX, FIFO realized gains, regime-aware tax estimates, Tax-on-web box mapping, accountant-ready PDF report
 
