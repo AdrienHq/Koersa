@@ -11,6 +11,7 @@ use Koersa\Portfolio\Application\Query\RealizedGainsReport;
 use Koersa\Portfolio\Domain\Transaction;
 use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
+use Koersa\Shared\Domain\Tax\BelgianTaxEstimator;
 use Koersa\Shared\Domain\Uuid;
 use Koersa\Shared\Security\HasOrganization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,7 @@ final class PortfolioController extends AbstractController
         GetHoldings $getHoldings,
         GetRealizedGains $getRealizedGains,
         TransactionRepository $transactions,
+        BelgianTaxEstimator $taxEstimator,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -52,12 +54,17 @@ final class PortfolioController extends AbstractController
         // without the report in that case.
         [$report, $reportYear] = $this->computeRealizedGains($getRealizedGains, $organizationId, $allTransactions);
 
+        // Three regime scenarios — never picks one (ADR 0007). Hidden when no report.
+        $taxEstimates = null !== $report ? $taxEstimator->estimate($report->totalGainEur) : null;
+
         return $this->render('portfolio/index.html.twig', [
             'holdings' => $holdings,
             'transactions' => $allTransactions,
             'portfolioValueEur' => $hasPrices ? number_format($totalEur, 2, '.', '') : null,
             'realizedGainsYear' => $reportYear,
             'realizedGains' => $report,
+            'taxEstimates' => $taxEstimates,
+            'realizedGainIsLoss' => null !== $report && $report->totalGainEur->isNegative(),
         ]);
     }
 
