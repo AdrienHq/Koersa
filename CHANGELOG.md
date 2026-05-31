@@ -30,6 +30,11 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Bilingual (French/Dutch) public landing page with a beta-access signup form
 - Internationalisation foundation (FR/NL message catalogs, locale-prefixed routing)
 - English UI alongside French and Dutch, with a footer toggle that remembers the visitor's choice for the rest of their session
+- Realized gains in EUR on the dashboard (year-to-date), computed FIFO from the trade history with each leg converted at the ECB reference rate of the trade date
+- Per-asset realized-gains table with cost basis, proceeds, and net result
+- `Shared\Domain\Money` value object (decimal amount + ISO currency, bcmath arithmetic, no float exposure)
+- Historical EUR FX rates via the European Central Bank (`Shared\Market\FxRateProvider` + ECB adapter; cached daily)
+- Transaction events now carry the price and fee currency; the Kraken parser reads it from the pair (e.g. `XBT/USD` is settled in USD), and legacy events default to EUR
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`

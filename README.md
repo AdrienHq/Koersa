@@ -25,11 +25,12 @@ The product targets traders who want auditable records, accurate P&L, and tax re
 
 What actually ships right now — the rest is on the roadmap.
 
-- Bilingual public landing page (French + Dutch) with beta signup
+- Public landing page in French, Dutch, and English with beta signup; the rest of the UI follows the same three languages, switchable from the footer and remembered for the session
 - Account registration and password sign-in
 - Record, amend, and remove portfolio transactions
-- Per-asset holdings dashboard (net quantity + weighted-average buy cost)
-- Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent
+- Per-asset holdings dashboard with live EUR prices (CoinGecko, cached 5 minutes)
+- **Realized gains in EUR**, computed FIFO over the trade history, with every leg converted at the ECB reference rate of the trade date — the number you'd plug into a Belgian tax return
+- Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent, and the quote currency is read from the pair
 - Event-sourced Portfolio context (EventSauce) with rebuildable projections and a `portfolio:projections:rebuild` command
 
 ## Architecture
@@ -46,9 +47,9 @@ Full architecture details in [`ARCHITECTURE.md`](ARCHITECTURE.md). Design decisi
 
 - [x] **Iteration 1** — Skeleton: authentication, organizations, manual transactions, basic dashboard
 - [x] **Iteration 2** — Event Sourcing on the Portfolio aggregate with projections and replay
-- [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger
+- [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger (Binance CSV import: framework ready, blocked on a real export)
 - [ ] **Iteration 4** — Multi-tenancy enforcement and Stripe billing
-- [ ] **Iteration 5** — Belgian tax engine with PDF report generation
+- [ ] **Iteration 5** — Belgian tax engine with PDF report generation (foundations shipped: Money VO, ECB historical FX, FIFO realized gains; remaining: regime classification, Tax-on-web box mapping, PDF export)
 
 ## Running locally
 
