@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+{% import '_macros/info_tooltip.html.twig' as ui %}
+
+{% block title %}{{ 'tax.page_title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'tax.title'|trans }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ 'tax.subtitle'|trans }}</p>
+        </div>
+
+        {% if realizedGains is null or realizedGains.perAsset|length == 0 %}
+            <div class="rounded-xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
+                <h2 class="text-lg font-semibold text-gray-900">{{ 'tax.empty_title'|trans }}</h2>
+                <p class="mt-2 text-sm text-gray-500">{{ 'tax.empty_body'|trans }}</p>
+            </div>
+        {% else %}
+            {# Realized-gains hero stats #}
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+                    <p class="flex items-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                        <span>{{ 'portfolio.realized_gains_hero_gain'|trans({'%year%': realizedGainsYear}) }}</span>
+                        {{ ui.info_tooltip('portfolio.realized_gains_hero_gain_tooltip'|trans) }}
+                    </p>
+                    <p class="mt-2 text-3xl font-semibold tabular-nums {{ realizedGains.totalGainEur.isNegative ? 'text-rose-600' : 'text-emerald-600' }}">
+                        €{{ realizedGains.totalGainEur.amount|number_format(2, '.', '') }}
+                    </p>
+                </div>
+                <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+                    <p class="flex items-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                        <span>{{ 'portfolio.realized_gains_hero_cost'|trans({'%year%': realizedGainsYear}) }}</span>
+                        {{ ui.info_tooltip('portfolio.realized_gains_hero_cost_tooltip'|trans) }}
+                    </p>
+                    <p class="mt-2 text-3xl font-semibold tabular-nums text-gray-900">
+                        €{{ realizedGains.totalCostBasisEur.amount|number_format(2, '.', '') }}
+                    </p>
+                </div>
+            </div>
+
+            {# Potential tax owed — three Belgian regimes #}
+            {% if taxEstimates is not null %}
+                <section>
+                    <h2 class="flex items-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        <span>{{ 'portfolio.tax_estimates_title'|trans({'%year%': realizedGainsYear}) }}</span>
+                        {{ ui.info_tooltip('portfolio.tax_estimates_tooltip'|trans) }}
+                    </h2>
+
+                    <div class="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                        <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead class="bg-gray-50/80 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                                <tr>
+                                    <th class="px-6 py-3">{{ 'portfolio.tax_estimates_th_regime'|trans }}</th>
+                                    <th class="px-6 py-3">{{ 'portfolio.tax_estimates_th_rate'|trans }}</th>
+                                    <th class="px-6 py-3 text-right">{{ 'portfolio.tax_estimates_th_amount'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                {% for estimate in taxEstimates %}
+                                    <tr class="align-top">
+                                        <td class="px-6 py-3">
+                                            <div class="font-medium text-gray-900">{{ ('portfolio.tax_regime_' ~ estimate.regime.value)|trans }}</div>
+                                            <div class="mt-0.5 text-xs text-gray-500">{{ ('portfolio.tax_regime_' ~ estimate.regime.value ~ '_who')|trans }}</div>
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-3 text-gray-700 tabular-nums">{{ ('portfolio.tax_regime_' ~ estimate.regime.value ~ '_rate')|trans }}</td>
+                                        <td class="px-6 py-3 text-right tabular-nums font-medium text-gray-900">
+                                            {% if estimate.amountEur is null %}
+                                                <span class="text-gray-500">{{ 'portfolio.tax_estimates_amount_varies'|trans }}</span>
+                                            {% else %}
+                                                €{{ estimate.amountEur.amount|number_format(2, '.', '') }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if realizedGainIsLoss %}
+                        <p class="mt-2 text-xs text-amber-600">{{ 'portfolio.tax_estimates_loss_note'|trans({'%year%': realizedGainsYear}) }}</p>
+                    {% endif %}
+                    <p class="mt-1 text-xs text-gray-400">{{ 'portfolio.tax_estimates_disclaimer'|trans }}</p>
+                </section>
+            {% endif %}
+
+            {# Realized gains by asset #}
+            <section>
+                <h2 class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ 'portfolio.realized_gains_title'|trans({'%year%': realizedGainsYear}) }}</h2>
+                <div class="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50/80 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                            <tr>
+                                <th class="px-6 py-3">{{ 'portfolio.realized_gains_th_asset'|trans }}</th>
+                                <th class="px-6 py-3 text-right">{{ 'portfolio.realized_gains_th_proceeds'|trans }}</th>
+                                <th class="px-6 py-3 text-right">{{ 'portfolio.realized_gains_th_cost'|trans }}</th>
+                                <th class="px-6 py-3 text-right">{{ 'portfolio.realized_gains_th_gain'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            {% for line in realizedGains.perAsset %}
+                                <tr class="transition hover:bg-gray-50">
+                                    <td class="px-6 py-3 font-medium text-gray-900">{{ line.asset }}</td>
+                                    <td class="px-6 py-3 text-right tabular-nums text-gray-700">€{{ line.proceedsEur.amount|number_format(2, '.', '') }}</td>
+                                    <td class="px-6 py-3 text-right tabular-nums text-gray-700">€{{ line.costBasisEur.amount|number_format(2, '.', '') }}</td>
+                                    <td class="px-6 py-3 text-right tabular-nums font-medium {{ line.gainEur.isNegative ? 'text-rose-600' : 'text-emerald-600' }}">€{{ line.gainEur.amount|number_format(2, '.', '') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-2 text-xs text-gray-400">{{ 'portfolio.realized_gains_method_note'|trans }}</p>
+                {% if realizedGains.unmatchedSellCount > 0 %}
+                    <p class="mt-1 text-xs text-amber-600">{{ 'portfolio.realized_gains_unmatched_note'|trans({'%count%': realizedGains.unmatchedSellCount}) }}</p>
+                {% endif %}
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -29,8 +29,35 @@ layout:
     footer_tagline: "Koersa — crypto portfolio & Belgian tax tracker"
     nav_sign_in: "Sign in"
     nav_register: "Register"
+    nav_overview: "Overview"
     nav_portfolio: "Portfolio"
+    nav_tax: "Tax"
     nav_log_out: "Log out"
+
+overview:
+    page_title: "Overview · Koersa"
+    title: "Overview"
+    subtitle: "Your portfolio at a glance."
+    portfolio_value_label: "Portfolio value"
+    portfolio_value_empty: "No holdings tracked yet."
+    realized_gain_label: "Realized gains %year%"
+    realized_gain_empty: "No sells recorded yet."
+    things_to_check_title: "Things to check"
+    things_to_check_unmatched: "{1}1 sell exceeded the lots Koersa knows about — likely missing import history.|]1,Inf[%count% sells exceeded the lots Koersa knows about — likely missing import history."
+    things_to_check_no_transactions: "No transactions yet. Record a trade or import a CSV to start."
+    things_to_check_all_clear: "Everything looks consistent."
+    card_portfolio_title: "Portfolio"
+    card_portfolio_subtitle: "Holdings, transactions, imports."
+    card_tax_title: "Tax"
+    card_tax_subtitle: "Realized gains and regime estimates."
+    cta_open: "Open"
+
+tax:
+    page_title: "Tax · Koersa"
+    title: "Tax"
+    subtitle: "Realized gains and what they might cost under each Belgian regime."
+    empty_title: "Nothing to report yet"
+    empty_body: "Once you record or import a sell, Koersa computes realized gains in EUR and shows what tax could apply under each regime."
 
 portfolio:
     page_title: "Portfolio · Koersa"

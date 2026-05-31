@@ -30,8 +30,35 @@ layout:
     footer_tagline: "Koersa — crypto-portfolio & Belgische belastingtracker"
     nav_sign_in: "Aanmelden"
     nav_register: "Registreren"
+    nav_overview: "Overzicht"
     nav_portfolio: "Portefeuille"
+    nav_tax: "Belastingen"
     nav_log_out: "Afmelden"
+
+overview:
+    page_title: "Overzicht · Koersa"
+    title: "Overzicht"
+    subtitle: "Uw portefeuille in één oogopslag."
+    portfolio_value_label: "Waarde portefeuille"
+    portfolio_value_empty: "Nog geen posities."
+    realized_gain_label: "Gerealiseerde meerwaarden %year%"
+    realized_gain_empty: "Nog geen verkopen geregistreerd."
+    things_to_check_title: "Te controleren"
+    things_to_check_unmatched: "{1}1 verkoop overschrijdt de lots die Koersa kent — wellicht ontbrekende importgeschiedenis.|]1,Inf[%count% verkopen overschrijden de lots die Koersa kent — wellicht ontbrekende importgeschiedenis."
+    things_to_check_no_transactions: "Nog geen transacties. Registreer een handel of importeer een CSV om te beginnen."
+    things_to_check_all_clear: "Alles ziet er consistent uit."
+    card_portfolio_title: "Portefeuille"
+    card_portfolio_subtitle: "Posities, transacties, imports."
+    card_tax_title: "Belastingen"
+    card_tax_subtitle: "Gerealiseerde meerwaarden en raming per regime."
+    cta_open: "Openen"
+
+tax:
+    page_title: "Belastingen · Koersa"
+    title: "Belastingen"
+    subtitle: "Gerealiseerde meerwaarden en hun geschatte fiscale impact onder elk Belgisch regime."
+    empty_title: "Nog niets te rapporteren"
+    empty_body: "Zodra u een verkoop registreert of importeert, berekent Koersa de meerwaarde in EUR en toont de mogelijke belasting onder elk regime."
 
 portfolio:
     page_title: "Portefeuille · Koersa"

@@ -19,7 +19,10 @@
                 <a href="{{ path('home') }}" class="text-lg font-semibold tracking-tight text-indigo-600">Koersa</a>
                 <div class="flex items-center gap-4 text-sm">
                     {% if app.user %}
-                        <a href="{{ path('portfolio') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_portfolio'|trans }}</a>
+                        {% set _route = app.request.attributes.get('_route') %}
+                        <a href="{{ path('overview') }}" class="font-medium {{ _route == 'overview' ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_overview'|trans }}</a>
+                        <a href="{{ path('portfolio') }}" class="font-medium {{ _route in ['portfolio', 'portfolio_transaction_new', 'portfolio_transaction_edit', 'portfolio_import'] ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_portfolio'|trans }}</a>
+                        <a href="{{ path('tax') }}" class="font-medium {{ _route == 'tax' ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_tax'|trans }}</a>
                         <span class="hidden text-gray-500 sm:inline">{{ app.user.userIdentifier }}</span>
                         <a href="{{ path('logout') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_log_out'|trans }}</a>
                     {% else %}

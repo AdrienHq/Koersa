@@ -30,8 +30,35 @@ layout:
     footer_tagline: "Koersa — suivi de portefeuille crypto & fiscalité belge"
     nav_sign_in: "Se connecter"
     nav_register: "S'inscrire"
+    nav_overview: "Vue d'ensemble"
     nav_portfolio: "Portefeuille"
+    nav_tax: "Impôts"
     nav_log_out: "Se déconnecter"
+
+overview:
+    page_title: "Vue d'ensemble · Koersa"
+    title: "Vue d'ensemble"
+    subtitle: "Votre portefeuille en un coup d'œil."
+    portfolio_value_label: "Valeur du portefeuille"
+    portfolio_value_empty: "Aucune position pour l'instant."
+    realized_gain_label: "Plus-values réalisées %year%"
+    realized_gain_empty: "Aucune vente enregistrée pour l'instant."
+    things_to_check_title: "À vérifier"
+    things_to_check_unmatched: "{1}1 vente dépasse les lots connus par Koersa — historique d'import probablement incomplet.|]1,Inf[%count% ventes dépassent les lots connus par Koersa — historique d'import probablement incomplet."
+    things_to_check_no_transactions: "Aucune transaction. Enregistrez une opération ou importez un CSV pour commencer."
+    things_to_check_all_clear: "Tout semble cohérent."
+    card_portfolio_title: "Portefeuille"
+    card_portfolio_subtitle: "Positions, transactions, imports."
+    card_tax_title: "Impôts"
+    card_tax_subtitle: "Plus-values réalisées et estimations par régime."
+    cta_open: "Ouvrir"
+
+tax:
+    page_title: "Impôts · Koersa"
+    title: "Impôts"
+    subtitle: "Plus-values réalisées et leur impact estimé sous chaque régime fiscal belge."
+    empty_title: "Rien à déclarer pour l'instant"
+    empty_body: "Dès que vous enregistrez ou importez une vente, Koersa calcule la plus-value en EUR et affiche l'impôt potentiel sous chaque régime."
 
 portfolio:
     page_title: "Portefeuille · Koersa"

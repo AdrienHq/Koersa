@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'overview.page_title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'overview.title'|trans }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ 'overview.subtitle'|trans }}</p>
+        </div>
+
+        {# Hero stats: portfolio value + most-recent-year realized gain #}
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+                <p class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ 'overview.portfolio_value_label'|trans }}</p>
+                {% if portfolioValueEur is not null %}
+                    <p class="mt-2 text-3xl font-semibold tabular-nums text-gray-900">€{{ portfolioValueEur }}</p>
+                {% else %}
+                    <p class="mt-2 text-sm text-gray-500">{{ 'overview.portfolio_value_empty'|trans }}</p>
+                {% endif %}
+            </div>
+
+            <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+                {% if realizedGains is not null and realizedGainsYear is not null %}
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ 'overview.realized_gain_label'|trans({'%year%': realizedGainsYear}) }}</p>
+                    <p class="mt-2 text-3xl font-semibold tabular-nums {{ realizedGains.totalGainEur.isNegative ? 'text-rose-600' : 'text-emerald-600' }}">
+                        €{{ realizedGains.totalGainEur.amount|number_format(2, '.', '') }}
+                    </p>
+                {% else %}
+                    <p class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ 'overview.realized_gain_label'|trans({'%year%': ''})|trim }}</p>
+                    <p class="mt-2 text-sm text-gray-500">{{ 'overview.realized_gain_empty'|trans }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {# Things to check #}
+        <section>
+            <h2 class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ 'overview.things_to_check_title'|trans }}</h2>
+            <div class="mt-3 rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
+                {% if transactions|length == 0 %}
+                    <p class="text-sm text-gray-700">{{ 'overview.things_to_check_no_transactions'|trans }}</p>
+                {% elseif unmatchedSellCount > 0 %}
+                    <p class="text-sm text-amber-600">{{ 'overview.things_to_check_unmatched'|trans({'%count%': unmatchedSellCount}) }}</p>
+                {% else %}
+                    <p class="text-sm text-emerald-700">{{ 'overview.things_to_check_all_clear'|trans }}</p>
+                {% endif %}
+            </div>
+        </section>
+
+        {# Card-links into the two tabs #}
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <a href="{{ path('portfolio') }}" class="group rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-base font-semibold text-gray-900">{{ 'overview.card_portfolio_title'|trans }}</p>
+                        <p class="mt-1 text-sm text-gray-500">{{ 'overview.card_portfolio_subtitle'|trans }}</p>
+                    </div>
+                    <span class="text-sm font-medium text-indigo-600 transition group-hover:translate-x-0.5">{{ 'overview.cta_open'|trans }} →</span>
+                </div>
+            </a>
+            <a href="{{ path('tax') }}" class="group rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm transition hover:border-indigo-300 hover:shadow-md">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-base font-semibold text-gray-900">{{ 'overview.card_tax_title'|trans }}</p>
+                        <p class="mt-1 text-sm text-gray-500">{{ 'overview.card_tax_subtitle'|trans }}</p>
+                    </div>
+                    <span class="text-sm font-medium text-indigo-600 transition group-hover:translate-x-0.5">{{ 'overview.cta_open'|trans }} →</span>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

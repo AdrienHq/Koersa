@@ -27,6 +27,26 @@ final class GetRealizedGains
     }
 
     /**
+     * Picks the most recent calendar year that had a sell and computes the
+     * report scoped to that year. Returns [null, null] for an organisation
+     * with no sells. Centralises the year-detection logic so every page that
+     * shows realized-gains numbers picks the same year.
+     *
+     * @return array{0: ?RealizedGainsReport, 1: ?int}
+     */
+    public function forMostRecentYear(Uuid $organizationId): array
+    {
+        $year = $this->mostRecentSellYear($organizationId);
+        if (null === $year) {
+            return [null, null];
+        }
+
+        $since = new DateTimeImmutable($year.'-01-01T00:00:00+00:00');
+
+        return [$this->__invoke($organizationId, $since), $year];
+    }
+
+    /**
      * @param ?DateTimeImmutable $since when set, only sells on or after this
      *                                  date contribute to the totals; earlier
      *                                  buys still feed the lot queue
@@ -146,6 +166,22 @@ final class GetRealizedGains
             $proceeds->subtract($cost),
             $unmatched,
         );
+    }
+
+    private function mostRecentSellYear(Uuid $organizationId): ?int
+    {
+        $best = null;
+        foreach ($this->transactions->forOrganization($organizationId) as $transaction) {
+            if (Side::Sell !== $transaction->side) {
+                continue;
+            }
+            $year = (int) $transaction->occurredAt->format('Y');
+            if (null === $best || $year > $best) {
+                $best = $year;
+            }
+        }
+
+        return $best;
     }
 
     private function convertToEur(string $amount, string $currency, DateTimeImmutable $on): Money
