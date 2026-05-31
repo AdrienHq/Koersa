@@ -42,7 +42,7 @@ final class RecordTransactionTest extends WebTestCase
 
         $client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $organizationId));
 
-        $client->request('GET', '/portfolio');
+        $client->request('GET', '/portfolio/transactions/new');
         self::assertResponseIsSuccessful();
 
         $client->submitForm('Record', [
