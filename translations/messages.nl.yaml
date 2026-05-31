@@ -52,6 +52,11 @@ overview:
     card_tax_title: "Belastingen"
     card_tax_subtitle: "Gerealiseerde meerwaarden en raming per regime."
     cta_open: "Openen"
+    chart_cumulative_gain_title: "Gecumuleerde gerealiseerde meerwaarde"
+    chart_holdings_title: "Samenstelling portefeuille"
+    chart_activity_title: "Activiteit (laatste 12 maanden)"
+    chart_legend_buys: "Aankopen"
+    chart_legend_sells: "Verkopen"
 
 tax:
     page_title: "Belastingen · Koersa"

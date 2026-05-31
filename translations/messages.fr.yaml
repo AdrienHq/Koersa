@@ -52,6 +52,11 @@ overview:
     card_tax_title: "Impôts"
     card_tax_subtitle: "Plus-values réalisées et estimations par régime."
     cta_open: "Ouvrir"
+    chart_cumulative_gain_title: "Plus-value réalisée cumulée"
+    chart_holdings_title: "Composition du portefeuille"
+    chart_activity_title: "Activité (12 derniers mois)"
+    chart_legend_buys: "Achats"
+    chart_legend_sells: "Ventes"
 
 tax:
     page_title: "Impôts · Koersa"

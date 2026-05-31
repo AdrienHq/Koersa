@@ -51,6 +51,11 @@ overview:
     card_tax_title: "Tax"
     card_tax_subtitle: "Realized gains and regime estimates."
     cta_open: "Open"
+    chart_cumulative_gain_title: "Cumulative realized gain"
+    chart_holdings_title: "Holdings composition"
+    chart_activity_title: "Activity (last 12 months)"
+    chart_legend_buys: "Buys"
+    chart_legend_sells: "Sells"
 
 tax:
     page_title: "Tax · Koersa"
