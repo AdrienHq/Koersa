@@ -19,6 +19,10 @@ final class LandingController extends AbstractController
     #[Route('/{_locale}', name: 'landing', requirements: ['_locale' => 'fr|nl'], methods: ['GET', 'POST'])]
     public function __invoke(Request $request, MessageBusInterface $commandBus, TranslatorInterface $translator): Response
     {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('portfolio');
+        }
+
         $form = $this->createForm(BetaSignupForm::class, new BetaSignupData());
         $form->handleRequest($request);
 

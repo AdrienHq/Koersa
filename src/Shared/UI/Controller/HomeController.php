@@ -14,6 +14,10 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function __invoke(Request $request): Response
     {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('portfolio');
+        }
+
         $locale = $request->getPreferredLanguage(['fr', 'nl']) ?? 'fr';
 
         return $this->redirectToRoute('landing', ['_locale' => $locale]);
