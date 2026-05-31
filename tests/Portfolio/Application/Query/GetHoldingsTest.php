@@ -40,6 +40,26 @@ final class GetHoldingsTest extends TestCase
         self::assertSame([], (new GetHoldings($transactions))(Uuid::generate()));
     }
 
+    public function testHidesClosedAndNegativePositions(): void
+    {
+        $organizationId = Uuid::generate();
+        $transactions = $this->createStub(TransactionRepository::class);
+        $transactions->method('forOrganization')->willReturn([
+            // BTC fully closed (bought 1, sold 1)
+            $this->buy($organizationId, 'BTC', '1', '100'),
+            $this->sell($organizationId, 'BTC', '1', '120'),
+            // DOGE oversold (no buy in the dataset, just a sell)
+            $this->sell($organizationId, 'DOGE', '50', '0.1'),
+            // ETH still open
+            $this->buy($organizationId, 'ETH', '2', '3000'),
+        ]);
+
+        $holdings = (new GetHoldings($transactions))($organizationId);
+
+        self::assertCount(1, $holdings);
+        self::assertSame('ETH', $holdings[0]->asset);
+    }
+
     private function buy(Uuid $organizationId, string $asset, string $quantity, string $price): Transaction
     {
         return Transaction::reconstitute(Uuid::generate(), $organizationId, $asset, Side::Buy, $quantity, $price, '0', new DateTimeImmutable());

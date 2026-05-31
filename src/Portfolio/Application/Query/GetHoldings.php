@@ -45,6 +45,12 @@ final class GetHoldings
 
         $holdings = [];
         foreach ($netQuantity as $asset => $net) {
+            // Hide closed or "negative" positions (more sold than we know was
+            // bought — usually means imports miss earlier wallet history).
+            if ($net <= 0.0) {
+                continue;
+            }
+
             $boughtQuantity = $buyQuantity[$asset] ?? 0.0;
             $averageCost = $boughtQuantity > 0.0 ? ($buyValue[$asset] ?? 0.0) / $boughtQuantity : 0.0;
 
