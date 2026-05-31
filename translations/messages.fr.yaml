@@ -32,3 +32,80 @@ layout:
     nav_register: "S'inscrire"
     nav_portfolio: "Portefeuille"
     nav_log_out: "Se déconnecter"
+
+portfolio:
+    page_title: "Portefeuille · Koersa"
+    title: "Votre portefeuille"
+    back_link: "← Retour au portefeuille"
+    holdings_count: "{0}Aucun actif détenu|{1}1 actif détenu|]1,Inf[%count% actifs détenus"
+    transactions_count: "{0}aucune transaction|{1}1 transaction|]1,Inf[%count% transactions"
+    last_activity: "dernière activité %date%"
+    cta_import: "Importer depuis un exchange"
+    cta_record: "Enregistrer une transaction"
+    modal_close: "Fermer"
+
+    holdings_title: "Positions"
+    holdings_empty: "Rien en portefeuille pour l'instant. Enregistrez une transaction ou importez un CSV pour commencer."
+    holdings_th_asset: "Actif"
+    holdings_th_quantity: "Quantité"
+    holdings_th_avg_cost: "Coût moyen"
+    holdings_th_price: "Prix (EUR)"
+    holdings_th_value: "Valeur (EUR)"
+    holdings_price_note: "Prix via CoinGecko, mis en cache jusqu'à 5 minutes."
+
+    transactions_title: "Transactions"
+    transactions_empty: "Aucune transaction pour l'instant."
+    transactions_th_date: "Date"
+    transactions_th_asset: "Actif"
+    transactions_th_side: "Sens"
+    transactions_th_quantity: "Quantité"
+    transactions_th_price: "Prix"
+    transactions_th_fee: "Frais"
+    transactions_th_source: "Source"
+    transactions_actions: "Actions"
+    transactions_edit: "Modifier"
+
+    record_page_title: "Enregistrer une transaction · Koersa"
+    record_title: "Enregistrer une transaction"
+    record_submit: "Enregistrer"
+    record_success: "Transaction enregistrée."
+
+    edit_page_title: "Modifier la transaction · Koersa"
+    edit_title: "Modifier la transaction"
+    edit_submit: "Enregistrer les modifications"
+    edit_success: "Transaction mise à jour."
+    edit_remove_title: "Supprimer la transaction"
+    edit_remove_help: "Cette action retire la transaction de votre portefeuille."
+    edit_remove_submit: "Supprimer"
+    remove_success: "Transaction supprimée."
+
+    import_page_title: "Importer des transactions · Koersa"
+    import_title: "Importer depuis un exchange"
+    import_intro: "Importez le CSV — ou le ZIP fourni par votre exchange. Les achats et ventes sont importés ; les dépôts, retraits et transferts sont ignorés pour l'instant."
+    import_submit: "Importer"
+    import_success: "Relevé %exchange% importé."
+    import_error: "Ce fichier n'a pas pu être lu comme un export valide. Vérifiez l'exchange et le fichier."
+
+form:
+    transaction:
+        asset_label: "Actif"
+        asset_help: "Ticker, par ex. BTC"
+        asset_regex_error: "Utilisez uniquement des lettres et des chiffres."
+        side_label: "Sens"
+        quantity_label: "Quantité"
+        price_label: "Prix"
+        price_help: "Prix unitaire"
+        fee_label: "Frais"
+        occurred_at_label: "Date et heure"
+    import:
+        exchange_label: "Exchange"
+        file_label: "Export CSV ou ZIP"
+
+transaction:
+    side:
+        buy: "Achat"
+        sell: "Vente"
+    source:
+        manual: "Manuelle"
+        kraken: "Kraken"
+        binance: "Binance"

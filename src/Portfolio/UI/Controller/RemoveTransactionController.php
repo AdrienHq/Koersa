@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 final class RemoveTransactionController extends AbstractController
@@ -24,6 +25,7 @@ final class RemoveTransactionController extends AbstractController
         Request $request,
         MessageBusInterface $commandBus,
         TransactionRepository $transactions,
+        TranslatorInterface $translator,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -42,7 +44,7 @@ final class RemoveTransactionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commandBus->dispatch(new RemoveTransaction($organizationId, $transactionId));
-            $this->addFlash('success', 'Transaction removed.');
+            $this->addFlash('success', $translator->trans('portfolio.remove_success'));
         }
 
         return $this->redirectToRoute('portfolio');

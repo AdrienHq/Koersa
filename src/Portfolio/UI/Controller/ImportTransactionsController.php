@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -28,6 +29,7 @@ final class ImportTransactionsController extends AbstractController
         MessageBusInterface $commandBus,
         StatementParserRegistry $parsers,
         StatementReader $reader,
+        TranslatorInterface $translator,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -47,12 +49,12 @@ final class ImportTransactionsController extends AbstractController
                     $trades = $parsers->parserFor($data->exchange)->parse($contents);
                     $commandBus->dispatch(new ImportTransactions($user->organizationId(), $data->exchange, $trades));
                 } catch (Throwable) {
-                    $this->addFlash('error', 'That file could not be read as a valid export. Please check the exchange and the file.');
+                    $this->addFlash('error', $translator->trans('portfolio.import_error'));
 
                     return $this->redirectToRoute('portfolio_import');
                 }
 
-                $this->addFlash('success', \sprintf('Imported your %s statement.', ucfirst($data->exchange)));
+                $this->addFlash('success', $translator->trans('portfolio.import_success', ['%exchange%' => ucfirst($data->exchange)]));
 
                 return $this->redirectToRoute('portfolio');
             }

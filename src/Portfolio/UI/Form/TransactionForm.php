@@ -25,25 +25,31 @@ final class TransactionForm extends AbstractType
     {
         $builder
             ->add('asset', TextType::class, [
-                'help' => 'Ticker, e.g. BTC',
+                'label' => 'form.transaction.asset_label',
+                'help' => 'form.transaction.asset_help',
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(max: 12),
-                    new Assert\Regex(pattern: '/^[A-Za-z0-9]+$/', message: 'Use letters and digits only.'),
+                    new Assert\Regex(pattern: '/^[A-Za-z0-9]+$/', message: 'form.transaction.asset_regex_error'),
                 ],
             ])
             ->add('side', EnumType::class, [
                 'class' => Side::class,
-                'choice_label' => static fn (Side $side): string => ucfirst($side->value),
+                'label' => 'form.transaction.side_label',
+                'choice_label' => static fn (Side $side): string => 'transaction.side.'.$side->value,
+                'choice_translation_domain' => 'messages',
             ])
             ->add('quantity', TextType::class, [
+                'label' => 'form.transaction.quantity_label',
                 'constraints' => [new Assert\NotBlank(), new Assert\Type('numeric'), new Assert\Positive()],
             ])
             ->add('price', TextType::class, [
-                'help' => 'Unit price',
+                'label' => 'form.transaction.price_label',
+                'help' => 'form.transaction.price_help',
                 'constraints' => [new Assert\NotBlank(), new Assert\Type('numeric'), new Assert\PositiveOrZero()],
             ])
             ->add('fee', TextType::class, [
+                'label' => 'form.transaction.fee_label',
                 'required' => false,
                 'empty_data' => '0',
                 'constraints' => [new Assert\Type('numeric'), new Assert\PositiveOrZero()],
@@ -51,7 +57,7 @@ final class TransactionForm extends AbstractType
             ->add('occurredAt', DateTimeType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
-                'label' => 'Occurred at',
+                'label' => 'form.transaction.occurred_at_label',
                 'constraints' => [new Assert\NotNull()],
             ]);
     }

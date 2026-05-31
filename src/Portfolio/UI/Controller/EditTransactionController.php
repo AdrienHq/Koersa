@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 final class EditTransactionController extends AbstractController
@@ -28,6 +29,7 @@ final class EditTransactionController extends AbstractController
         Request $request,
         MessageBusInterface $commandBus,
         TransactionRepository $transactions,
+        TranslatorInterface $translator,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -63,7 +65,7 @@ final class EditTransactionController extends AbstractController
                 $data->fee,
                 $data->occurredAt ?? new DateTimeImmutable(),
             ));
-            $this->addFlash('success', 'Transaction updated.');
+            $this->addFlash('success', $translator->trans('portfolio.edit_success'));
 
             return $this->redirectToRoute('portfolio');
         }

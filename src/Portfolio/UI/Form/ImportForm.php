@@ -23,11 +23,13 @@ final class ImportForm extends AbstractType
     {
         $builder
             ->add('exchange', ChoiceType::class, [
+                'label' => 'form.import.exchange_label',
                 'choices' => ['Kraken' => 'kraken', 'Binance' => 'binance'],
+                'choice_translation_domain' => false,
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('file', FileType::class, [
-                'label' => 'CSV or ZIP export',
+                'label' => 'form.import.file_label',
                 'constraints' => [
                     new Assert\NotNull(),
                     new Assert\File(maxSize: '5M'),

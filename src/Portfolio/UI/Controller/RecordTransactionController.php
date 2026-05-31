@@ -15,12 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 final class RecordTransactionController extends AbstractController
 {
     #[Route('/portfolio/transactions/new', name: 'portfolio_transaction_new', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, MessageBusInterface $commandBus): Response
+    public function __invoke(Request $request, MessageBusInterface $commandBus, TranslatorInterface $translator): Response
     {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -42,7 +43,7 @@ final class RecordTransactionController extends AbstractController
                 $data->fee,
                 $data->occurredAt ?? new DateTimeImmutable(),
             ));
-            $this->addFlash('success', 'Transaction recorded.');
+            $this->addFlash('success', $translator->trans('portfolio.record_success'));
 
             return $this->redirectToRoute('portfolio');
         }

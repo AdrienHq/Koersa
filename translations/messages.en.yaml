@@ -31,3 +31,80 @@ layout:
     nav_register: "Register"
     nav_portfolio: "Portfolio"
     nav_log_out: "Log out"
+
+portfolio:
+    page_title: "Portfolio · Koersa"
+    title: "Your portfolio"
+    back_link: "← Back to portfolio"
+    holdings_count: "{0}No assets held|{1}1 asset held|]1,Inf[%count% assets held"
+    transactions_count: "{0}no transactions|{1}1 transaction|]1,Inf[%count% transactions"
+    last_activity: "last activity %date%"
+    cta_import: "Import from exchange"
+    cta_record: "Record a transaction"
+    modal_close: "Close"
+
+    holdings_title: "Holdings"
+    holdings_empty: "Nothing held yet. Record a trade or import a CSV to get started."
+    holdings_th_asset: "Asset"
+    holdings_th_quantity: "Quantity"
+    holdings_th_avg_cost: "Avg cost"
+    holdings_th_price: "Price (EUR)"
+    holdings_th_value: "Value (EUR)"
+    holdings_price_note: "Prices via CoinGecko, cached for up to 5 minutes."
+
+    transactions_title: "Transactions"
+    transactions_empty: "No transactions yet."
+    transactions_th_date: "Date"
+    transactions_th_asset: "Asset"
+    transactions_th_side: "Side"
+    transactions_th_quantity: "Quantity"
+    transactions_th_price: "Price"
+    transactions_th_fee: "Fee"
+    transactions_th_source: "Source"
+    transactions_actions: "Actions"
+    transactions_edit: "Edit"
+
+    record_page_title: "Record a transaction · Koersa"
+    record_title: "Record a transaction"
+    record_submit: "Record"
+    record_success: "Transaction recorded."
+
+    edit_page_title: "Edit transaction · Koersa"
+    edit_title: "Edit transaction"
+    edit_submit: "Save changes"
+    edit_success: "Transaction updated."
+    edit_remove_title: "Remove transaction"
+    edit_remove_help: "This deletes the transaction from your portfolio."
+    edit_remove_submit: "Delete"
+    remove_success: "Transaction removed."
+
+    import_page_title: "Import transactions · Koersa"
+    import_title: "Import from an exchange"
+    import_intro: "Upload the CSV — or the ZIP your exchange gives you. Buy and sell trades are imported; deposits, withdrawals and transfers are skipped for now."
+    import_submit: "Import"
+    import_success: "Imported your %exchange% statement."
+    import_error: "That file could not be read as a valid export. Please check the exchange and the file."
+
+form:
+    transaction:
+        asset_label: "Asset"
+        asset_help: "Ticker, e.g. BTC"
+        asset_regex_error: "Use letters and digits only."
+        side_label: "Side"
+        quantity_label: "Quantity"
+        price_label: "Price"
+        price_help: "Unit price"
+        fee_label: "Fee"
+        occurred_at_label: "Occurred at"
+    import:
+        exchange_label: "Exchange"
+        file_label: "CSV or ZIP export"
+
+transaction:
+    side:
+        buy: "Buy"
+        sell: "Sell"
+    source:
+        manual: "Manual"
+        kraken: "Kraken"
+        binance: "Binance"

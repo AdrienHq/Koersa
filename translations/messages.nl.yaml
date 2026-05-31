@@ -32,3 +32,80 @@ layout:
     nav_register: "Registreren"
     nav_portfolio: "Portefeuille"
     nav_log_out: "Afmelden"
+
+portfolio:
+    page_title: "Portefeuille · Koersa"
+    title: "Uw portefeuille"
+    back_link: "← Terug naar de portefeuille"
+    holdings_count: "{0}Geen activa aangehouden|{1}1 actief aangehouden|]1,Inf[%count% activa aangehouden"
+    transactions_count: "{0}geen transacties|{1}1 transactie|]1,Inf[%count% transacties"
+    last_activity: "laatste activiteit %date%"
+    cta_import: "Importeren vanaf een exchange"
+    cta_record: "Transactie registreren"
+    modal_close: "Sluiten"
+
+    holdings_title: "Posities"
+    holdings_empty: "Nog niets in portefeuille. Registreer een transactie of importeer een CSV om te beginnen."
+    holdings_th_asset: "Activum"
+    holdings_th_quantity: "Hoeveelheid"
+    holdings_th_avg_cost: "Gem. kostprijs"
+    holdings_th_price: "Prijs (EUR)"
+    holdings_th_value: "Waarde (EUR)"
+    holdings_price_note: "Prijzen via CoinGecko, gecached tot 5 minuten."
+
+    transactions_title: "Transacties"
+    transactions_empty: "Nog geen transacties."
+    transactions_th_date: "Datum"
+    transactions_th_asset: "Activum"
+    transactions_th_side: "Richting"
+    transactions_th_quantity: "Hoeveelheid"
+    transactions_th_price: "Prijs"
+    transactions_th_fee: "Kosten"
+    transactions_th_source: "Bron"
+    transactions_actions: "Acties"
+    transactions_edit: "Bewerken"
+
+    record_page_title: "Transactie registreren · Koersa"
+    record_title: "Een transactie registreren"
+    record_submit: "Registreren"
+    record_success: "Transactie geregistreerd."
+
+    edit_page_title: "Transactie bewerken · Koersa"
+    edit_title: "Transactie bewerken"
+    edit_submit: "Wijzigingen opslaan"
+    edit_success: "Transactie bijgewerkt."
+    edit_remove_title: "Transactie verwijderen"
+    edit_remove_help: "Hiermee verwijdert u de transactie uit uw portefeuille."
+    edit_remove_submit: "Verwijderen"
+    remove_success: "Transactie verwijderd."
+
+    import_page_title: "Transacties importeren · Koersa"
+    import_title: "Importeren vanaf een exchange"
+    import_intro: "Upload het CSV-bestand — of de ZIP die uw exchange aanlevert. Aankopen en verkopen worden geïmporteerd; stortingen, opnames en overdrachten worden voorlopig overgeslagen."
+    import_submit: "Importeren"
+    import_success: "Uw %exchange%-uittreksel werd geïmporteerd."
+    import_error: "Dit bestand kon niet als een geldige export worden gelezen. Controleer de exchange en het bestand."
+
+form:
+    transaction:
+        asset_label: "Activum"
+        asset_help: "Ticker, bv. BTC"
+        asset_regex_error: "Gebruik alleen letters en cijfers."
+        side_label: "Richting"
+        quantity_label: "Hoeveelheid"
+        price_label: "Prijs"
+        price_help: "Eenheidsprijs"
+        fee_label: "Kosten"
+        occurred_at_label: "Datum en tijd"
+    import:
+        exchange_label: "Exchange"
+        file_label: "CSV- of ZIP-export"
+
+transaction:
+    side:
+        buy: "Aankoop"
+        sell: "Verkoop"
+    source:
+        manual: "Handmatig"
+        kraken: "Kraken"
+        binance: "Binance"
