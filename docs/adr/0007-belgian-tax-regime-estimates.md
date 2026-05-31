@@ -78,15 +78,19 @@ window-dressing — it is the honest statement of what the product does.
 
 - `Shared\Domain\Tax\Regime` enum — the three cases.
 - `Shared\Domain\Tax\TaxEstimate` value object — `Regime` + nullable
-  `Money $amountEur` + a translation-key rate description.
-- `Shared\Domain\Tax\BelgianTaxEstimator` — pure function class with one
+  `Money $amountEur`.
+- `Shared\Application\Tax\BelgianTaxEstimator` — pure function class with one
   method: `estimate(Money $gainEur): list<TaxEstimate>`. No I/O, no state,
-  no DB access.
+  no DB access. *Lives in Application* even though it's a pure function:
+  it is a service the controller autowires, and `config/services.yaml`
+  excludes `src/**/Domain/` from the DI container by design (domain layer
+  has zero framework dependencies, including DI registration). Data types
+  stay in Domain; the service-shaped calculator goes one layer up.
 
-This is Shared because a future `Reporting` context (per ARCHITECTURE.md §2)
-will read the same types when generating PDF/Tax-on-web outputs. Putting them
-in Portfolio would force Reporting to depend on Portfolio later — wrong
-direction.
+The Shared placement is deliberate: a future `Reporting` context (per
+ARCHITECTURE.md §2) will read the same types when generating PDF/Tax-on-web
+outputs. Putting them in Portfolio would force Reporting to depend on
+Portfolio later — wrong direction.
 
 The dashboard's Portfolio controller calls the estimator with the total
 gain from [ADR 0006]'s `GetRealizedGains` and passes the three estimates to

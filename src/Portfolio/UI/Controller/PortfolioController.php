@@ -11,7 +11,7 @@ use Koersa\Portfolio\Application\Query\RealizedGainsReport;
 use Koersa\Portfolio\Domain\Transaction;
 use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
-use Koersa\Shared\Domain\Tax\BelgianTaxEstimator;
+use Koersa\Shared\Application\Tax\BelgianTaxEstimator;
 use Koersa\Shared\Domain\Uuid;
 use Koersa\Shared\Security\HasOrganization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

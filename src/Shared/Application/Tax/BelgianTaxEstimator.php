@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Koersa\Shared\Domain\Tax;
+namespace Koersa\Shared\Application\Tax;
 
 use InvalidArgumentException;
 use Koersa\Shared\Domain\Money;
+use Koersa\Shared\Domain\Tax\Regime;
+use Koersa\Shared\Domain\Tax\TaxEstimate;
 
 // Pure-function estimator: realized gain in EUR -> one scenario per Belgian
 // regime. Never picks one; the user (or their accountant) does. See ADR 0007.

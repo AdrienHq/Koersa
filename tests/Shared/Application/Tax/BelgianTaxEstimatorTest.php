@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Koersa\Tests\Shared\Domain\Tax;
+namespace Koersa\Tests\Shared\Application\Tax;
 
 use InvalidArgumentException;
+use Koersa\Shared\Application\Tax\BelgianTaxEstimator;
 use Koersa\Shared\Domain\Money;
-use Koersa\Shared\Domain\Tax\BelgianTaxEstimator;
 use Koersa\Shared\Domain\Tax\Regime;
 use PHPUnit\Framework\TestCase;
 
