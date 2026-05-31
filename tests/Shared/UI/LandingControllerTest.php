@@ -13,9 +13,11 @@ final class LandingControllerTest extends WebTestCase
     public function testHomeRedirectsToALocalisedLanding(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/');
-
+        $client->request('GET', '/', server: ['HTTP_ACCEPT_LANGUAGE' => 'fr-BE,fr;q=0.9']);
         self::assertResponseRedirects('/fr');
+
+        $client->request('GET', '/', server: ['HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9']);
+        self::assertResponseRedirects('/en');
     }
 
     public function testRendersTheFrenchAndDutchHeadlines(): void

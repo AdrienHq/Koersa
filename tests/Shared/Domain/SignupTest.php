@@ -29,6 +29,6 @@ final class SignupTest extends TestCase
     public function testRejectsAnUnsupportedLocale(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        Signup::register(Uuid::generate(), 'jane@example.be', 'en', new DateTimeImmutable());
+        Signup::register(Uuid::generate(), 'jane@example.be', 'de', new DateTimeImmutable());
     }
 }

@@ -13,7 +13,7 @@ use InvalidArgumentException;
 // Beta-access lead. In Shared because it is too small to justify its own context.
 final readonly class Signup
 {
-    private const array LOCALES = ['fr', 'nl'];
+    private const array LOCALES = ['fr', 'nl', 'en'];
 
     private function __construct(
         public Uuid $id,

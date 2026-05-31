@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class LandingController extends AbstractController
 {
-    #[Route('/{_locale}', name: 'landing', requirements: ['_locale' => 'fr|nl'], methods: ['GET', 'POST'])]
+    #[Route('/{_locale}', name: 'landing', requirements: ['_locale' => 'fr|nl|en'], methods: ['GET', 'POST'])]
     public function __invoke(Request $request, MessageBusInterface $commandBus, TranslatorInterface $translator): Response
     {
         if (null !== $this->getUser()) {

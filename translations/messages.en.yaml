@@ -1,5 +1,30 @@
-# English catalog. The app shell (nav, footer) defaults to English; the public
-# landing page is served in French and Dutch only.
+# English catalog.
+landing:
+    headline: "Declare your crypto gains painlessly. Compliant with Belgian rules."
+    subheadline: "Koersa turns your exchange history into a Belgian tax filing, ready to submit."
+    features_title: "What Koersa does"
+    bullet_import: "Import your Kraken and Binance transactions in seconds."
+    bullet_report: "Report ready for Tax-on-web and MyMinfin (boxes VII and XV)."
+    bullet_profiles: "Calculation under all three Belgian regimes, with a full audit trail."
+    founder_note: "I'm building Koersa because declaring my own crypto in Belgium was a nightmare. — Adrien"
+    signup_title: "Join the beta"
+    email_label: "Email address"
+    email_placeholder: "you@example.com"
+    cta: "Sign me up"
+    reassurance: "We'll let you know as soon as the beta opens."
+    success: "Thanks! You're on the list."
+    meta_description: "Koersa turns your crypto exchange history into a compliant Belgian tax filing, ready for Tax-on-web and MyMinfin."
+    meta_title: "Koersa — Declare your crypto gains in Belgium"
+
+email:
+    beta_signup:
+        subject: "Welcome to the Koersa beta"
+        body: |
+            Thanks for signing up for the Koersa beta.
+            We'll let you know as soon as it opens.
+
+            — Adrien
+
 layout:
     footer_tagline: "Koersa — crypto portfolio & Belgian tax tracker"
     nav_sign_in: "Sign in"

@@ -18,7 +18,7 @@ final class HomeController extends AbstractController
             return $this->redirectToRoute('portfolio');
         }
 
-        $locale = $request->getPreferredLanguage(['fr', 'nl']) ?? 'fr';
+        $locale = $request->getPreferredLanguage(['fr', 'nl', 'en']) ?? 'fr';
 
         return $this->redirectToRoute('landing', ['_locale' => $locale]);
     }

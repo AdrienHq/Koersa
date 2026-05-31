@@ -50,9 +50,11 @@
             <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-2 px-4 sm:flex-row">
                 <p>{{ 'layout.footer_tagline'|trans }}</p>
                 <div class="flex items-center gap-2 font-medium">
-                    <a href="{{ path('landing', {'_locale': 'fr'}) }}" class="{{ app.request.locale == 'fr' ? 'text-indigo-600' : 'hover:text-gray-600' }}">FR</a>
+                    <a href="{{ path('change_locale', {'_locale': 'fr'}) }}" class="{{ app.request.locale == 'fr' ? 'text-indigo-600' : 'hover:text-gray-600' }}">FR</a>
                     <span aria-hidden="true">·</span>
-                    <a href="{{ path('landing', {'_locale': 'nl'}) }}" class="{{ app.request.locale == 'nl' ? 'text-indigo-600' : 'hover:text-gray-600' }}">NL</a>
+                    <a href="{{ path('change_locale', {'_locale': 'nl'}) }}" class="{{ app.request.locale == 'nl' ? 'text-indigo-600' : 'hover:text-gray-600' }}">NL</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="{{ path('change_locale', {'_locale': 'en'}) }}" class="{{ app.request.locale == 'en' ? 'text-indigo-600' : 'hover:text-gray-600' }}">EN</a>
                 </div>
             </div>
         </footer>
