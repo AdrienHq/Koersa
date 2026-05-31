@@ -15,6 +15,9 @@ final class RegistrationAndLoginE2ETest extends PantherTestCase
         $email = \sprintf('e2e-%s@example.com', uniqid());
         $password = 'secret-password';
 
+        // Pin the UI to English so the assertions below are locale-stable.
+        $client->request('GET', '/locale/en');
+
         // Register, leaving the organization blank (defaults to "Personal").
         $client->request('GET', '/register');
         $client->submitForm('Register', [

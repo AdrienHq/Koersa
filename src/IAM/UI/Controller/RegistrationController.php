@@ -14,11 +14,12 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'register', methods: ['GET', 'POST'])]
-    public function __invoke(Request $request, RegisterUserHandler $registerUser): Response
+    public function __invoke(Request $request, RegisterUserHandler $registerUser, TranslatorInterface $translator): Response
     {
         $data = new RegistrationFormData();
         $form = $this->createForm(RegistrationForm::class, $data);
@@ -27,11 +28,11 @@ final class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 ($registerUser)(new RegisterUser($data->email, $data->plainPassword, $data->organizationName));
-                $this->addFlash('success', 'Your account has been created. Please sign in.');
+                $this->addFlash('success', $translator->trans('auth.register_success_flash'));
 
                 return $this->redirectToRoute('login');
             } catch (EmailAlreadyInUse) {
-                $form->get('email')->addError(new FormError('This email address is already registered.'));
+                $form->get('email')->addError(new FormError($translator->trans('auth.register_email_in_use')));
             }
         }
 

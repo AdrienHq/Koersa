@@ -100,6 +100,12 @@ form:
     import:
         exchange_label: "Exchange"
         file_label: "CSV- of ZIP-export"
+    registration:
+        email_label: "E-mail"
+        organization_label: "Organisatienaam (optioneel)"
+        password_label: "Wachtwoord"
+        password_repeat_label: "Herhaal het wachtwoord"
+        password_mismatch: "De twee wachtwoorden moeten overeenkomen."
 
 transaction:
     side:
@@ -109,3 +115,27 @@ transaction:
         manual: "Handmatig"
         kraken: "Kraken"
         binance: "Binance"
+
+auth:
+    login_page_title: "Aanmelden · Koersa"
+    login_title: "Aanmelden"
+    login_email_label: "E-mail"
+    login_password_label: "Wachtwoord"
+    login_submit: "Aanmelden"
+    login_no_account: "Nog geen account?"
+    login_register_link: "Registreren"
+    register_page_title: "Registreren · Koersa"
+    register_title: "Maak uw account aan"
+    register_intro: "Begin met het opvolgen van uw portefeuille."
+    register_submit: "Registreren"
+    register_already_have_account: "Hebt u al een account?"
+    register_sign_in_link: "Aanmelden"
+    register_success_flash: "Uw account is aangemaakt. Meld u nu aan."
+    register_email_in_use: "Dit e-mailadres is al geregistreerd."
+
+error:
+    not_found_page_title: "Pagina niet gevonden · Koersa"
+    not_found_kicker: "404"
+    not_found_title: "Pagina niet gevonden"
+    not_found_intro: "De pagina die u zoekt bestaat niet of werd verplaatst."
+    not_found_cta: "Terug naar Koersa"

@@ -99,6 +99,12 @@ form:
     import:
         exchange_label: "Exchange"
         file_label: "CSV or ZIP export"
+    registration:
+        email_label: "Email"
+        organization_label: "Organization name (optional)"
+        password_label: "Password"
+        password_repeat_label: "Repeat password"
+        password_mismatch: "The two passwords must match."
 
 transaction:
     side:
@@ -108,3 +114,27 @@ transaction:
         manual: "Manual"
         kraken: "Kraken"
         binance: "Binance"
+
+auth:
+    login_page_title: "Sign in · Koersa"
+    login_title: "Sign in"
+    login_email_label: "Email"
+    login_password_label: "Password"
+    login_submit: "Sign in"
+    login_no_account: "No account yet?"
+    login_register_link: "Register"
+    register_page_title: "Register · Koersa"
+    register_title: "Create your account"
+    register_intro: "Start tracking your portfolio."
+    register_submit: "Register"
+    register_already_have_account: "Already have an account?"
+    register_sign_in_link: "Sign in"
+    register_success_flash: "Your account has been created. Please sign in."
+    register_email_in_use: "This email address is already registered."
+
+error:
+    not_found_page_title: "Page not found · Koersa"
+    not_found_kicker: "404"
+    not_found_title: "Page not found"
+    not_found_intro: "The page you are looking for does not exist or has moved."
+    not_found_cta: "Back to Koersa"

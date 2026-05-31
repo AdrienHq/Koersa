@@ -100,6 +100,12 @@ form:
     import:
         exchange_label: "Exchange"
         file_label: "Export CSV ou ZIP"
+    registration:
+        email_label: "E-mail"
+        organization_label: "Nom de l'organisation (facultatif)"
+        password_label: "Mot de passe"
+        password_repeat_label: "Confirmez le mot de passe"
+        password_mismatch: "Les deux mots de passe doivent être identiques."
 
 transaction:
     side:
@@ -109,3 +115,27 @@ transaction:
         manual: "Manuelle"
         kraken: "Kraken"
         binance: "Binance"
+
+auth:
+    login_page_title: "Connexion · Koersa"
+    login_title: "Connexion"
+    login_email_label: "E-mail"
+    login_password_label: "Mot de passe"
+    login_submit: "Se connecter"
+    login_no_account: "Pas encore de compte ?"
+    login_register_link: "S'inscrire"
+    register_page_title: "Inscription · Koersa"
+    register_title: "Créer votre compte"
+    register_intro: "Commencez à suivre votre portefeuille."
+    register_submit: "S'inscrire"
+    register_already_have_account: "Vous avez déjà un compte ?"
+    register_sign_in_link: "Se connecter"
+    register_success_flash: "Votre compte a été créé. Connectez-vous."
+    register_email_in_use: "Cette adresse e-mail est déjà utilisée."
+
+error:
+    not_found_page_title: "Page introuvable · Koersa"
+    not_found_kicker: "404"
+    not_found_title: "Page introuvable"
+    not_found_intro: "La page que vous cherchez n'existe pas ou a été déplacée."
+    not_found_cta: "Retour à Koersa"

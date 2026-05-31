@@ -25,19 +25,20 @@ final class RegistrationForm extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'label' => 'form.registration.email_label',
                 'constraints' => [new Assert\NotBlank(), new Assert\Email()],
             ])
             ->add('organizationName', TextType::class, [
-                'label' => 'Organization name (optional)',
+                'label' => 'form.registration.organization_label',
                 'required' => false,
                 'empty_data' => '',
                 'constraints' => [new Assert\Length(max: 255)],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat password'],
-                'invalid_message' => 'The two passwords must match.',
+                'first_options' => ['label' => 'form.registration.password_label'],
+                'second_options' => ['label' => 'form.registration.password_repeat_label'],
+                'invalid_message' => 'form.registration.password_mismatch',
                 'constraints' => [new Assert\NotBlank(), new Assert\Length(min: 8, max: 4096)],
             ]);
     }

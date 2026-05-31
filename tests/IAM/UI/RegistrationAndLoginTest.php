@@ -14,7 +14,7 @@ final class RegistrationAndLoginTest extends WebTestCase
 {
     public function testAVisitorCanRegisterThenSignIn(): void
     {
-        $client = static::createClient();
+        $client = static::createClient(server: ['HTTP_ACCEPT_LANGUAGE' => 'en']);
         $this->clearIamTables();
 
         $this->register($client, 'jane@example.com');
@@ -33,7 +33,7 @@ final class RegistrationAndLoginTest extends WebTestCase
 
     public function testRegisteringWithoutAnOrganizationSucceeds(): void
     {
-        $client = static::createClient();
+        $client = static::createClient(server: ['HTTP_ACCEPT_LANGUAGE' => 'en']);
         $this->clearIamTables();
 
         $client->request('GET', '/register');
@@ -52,7 +52,7 @@ final class RegistrationAndLoginTest extends WebTestCase
 
     public function testRegisteringADuplicateEmailIsRejected(): void
     {
-        $client = static::createClient();
+        $client = static::createClient(server: ['HTTP_ACCEPT_LANGUAGE' => 'en']);
         $this->clearIamTables();
 
         $this->register($client, 'jane@example.com');
