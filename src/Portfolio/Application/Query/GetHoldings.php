@@ -7,6 +7,7 @@ namespace Koersa\Portfolio\Application\Query;
 use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
+use Koersa\Shared\Market\PriceProvider;
 
 /**
  * Per-asset holdings (net quantity, weighted-average buy cost). Floats here are
@@ -14,8 +15,10 @@ use Koersa\Shared\Domain\Uuid;
  */
 final class GetHoldings
 {
-    public function __construct(private readonly TransactionRepository $transactions)
-    {
+    public function __construct(
+        private readonly TransactionRepository $transactions,
+        private readonly PriceProvider $prices,
+    ) {
     }
 
     /**
@@ -43,6 +46,14 @@ final class GetHoldings
             }
         }
 
+        $heldAssets = [];
+        foreach ($netQuantity as $asset => $net) {
+            if ($net > 0.0) {
+                $heldAssets[] = $asset;
+            }
+        }
+        $eurPrices = [] !== $heldAssets ? $this->prices->pricesInEur($heldAssets) : [];
+
         $holdings = [];
         foreach ($netQuantity as $asset => $net) {
             // Hide closed or "negative" positions (more sold than we know was
@@ -54,10 +65,15 @@ final class GetHoldings
             $boughtQuantity = $buyQuantity[$asset] ?? 0.0;
             $averageCost = $boughtQuantity > 0.0 ? ($buyValue[$asset] ?? 0.0) / $boughtQuantity : 0.0;
 
+            $price = $eurPrices[$asset] ?? null;
+            $value = null !== $price ? number_format($net * (float) $price, 2, '.', '') : null;
+
             $holdings[] = new Holding(
                 $asset,
                 rtrim(rtrim(number_format($net, 8, '.', ''), '0'), '.'),
                 number_format($averageCost, 2, '.', ''),
+                $price,
+                $value,
             );
         }
 

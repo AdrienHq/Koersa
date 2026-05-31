@@ -10,6 +10,8 @@ final readonly class Holding
         public string $asset,
         public string $quantity,
         public string $averageCost,
+        public ?string $pricePerUnitEur = null,
+        public ?string $valueEur = null,
     ) {
     }
 }

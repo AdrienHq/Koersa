@@ -8,6 +8,9 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Your portfolio</h1>
+                {% if portfolioValueEur is not null %}
+                    <p class="mt-2 text-3xl font-semibold tabular-nums text-gray-900">€{{ portfolioValueEur }}</p>
+                {% endif %}
                 <p class="mt-1 text-sm text-gray-500">
                     {{ holdings|length }} asset{{ holdings|length == 1 ? '' : 's' }} held
                     · {{ transactions|length }} transaction{{ transactions|length == 1 ? '' : 's' }}
@@ -37,6 +40,8 @@
                                 <th class="px-6 py-3">Asset</th>
                                 <th class="px-6 py-3 text-right">Quantity</th>
                                 <th class="px-6 py-3 text-right">Avg cost</th>
+                                <th class="px-6 py-3 text-right">Price (EUR)</th>
+                                <th class="px-6 py-3 text-right">Value (EUR)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -45,11 +50,16 @@
                                     <td class="px-6 py-3 font-medium text-gray-900">{{ holding.asset }}</td>
                                     <td class="px-6 py-3 text-right tabular-nums text-gray-700">{{ holding.quantity }}</td>
                                     <td class="px-6 py-3 text-right tabular-nums text-gray-700">{{ holding.averageCost }}</td>
+                                    <td class="px-6 py-3 text-right tabular-nums text-gray-500">{{ holding.pricePerUnitEur ?? '—' }}</td>
+                                    <td class="px-6 py-3 text-right tabular-nums font-medium text-gray-900">{{ holding.valueEur is not null ? '€' ~ holding.valueEur : '—' }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% if portfolioValueEur is not null %}
+                    <p class="mt-2 text-xs text-gray-400">Prices via CoinGecko, cached for up to 5 minutes.</p>
+                {% endif %}
             {% endif %}
         </section>
 

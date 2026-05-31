@@ -26,9 +26,21 @@ final class PortfolioController extends AbstractController
         }
         $organizationId = $user->organizationId();
 
+        $holdings = ($getHoldings)($organizationId);
+
+        $totalEur = 0.0;
+        $hasPrices = false;
+        foreach ($holdings as $holding) {
+            if (null !== $holding->valueEur) {
+                $totalEur += (float) $holding->valueEur;
+                $hasPrices = true;
+            }
+        }
+
         return $this->render('portfolio/index.html.twig', [
-            'holdings' => ($getHoldings)($organizationId),
+            'holdings' => $holdings,
             'transactions' => $transactions->forOrganization($organizationId),
+            'portfolioValueEur' => $hasPrices ? number_format($totalEur, 2, '.', '') : null,
         ]);
     }
 }
