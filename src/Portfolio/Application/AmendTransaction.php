@@ -19,6 +19,8 @@ final readonly class AmendTransaction
         public string $price,
         public string $fee,
         public DateTimeImmutable $occurredAt,
+        public string $priceCurrency = 'EUR',
+        public string $feeCurrency = 'EUR',
     ) {
     }
 }

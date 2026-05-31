@@ -59,4 +59,44 @@ final class TransactionRecordedTest extends TestCase
         self::assertSame('kraken', $restored->source);
         self::assertSame('LEDGER-123', $restored->externalId);
     }
+
+    public function testPayloadRoundTripPreservesCurrencies(): void
+    {
+        $event = new TransactionRecorded(
+            Uuid::generate(),
+            Uuid::generate(),
+            'BTC',
+            Side::Buy,
+            '0.5',
+            '40000',
+            '10',
+            new DateTimeImmutable('2026-05-25T10:00:00+00:00'),
+            priceCurrency: 'USD',
+            feeCurrency: 'USD',
+        );
+
+        $restored = TransactionRecorded::fromPayload($event->toPayload());
+
+        self::assertSame('USD', $restored->priceCurrency);
+        self::assertSame('USD', $restored->feeCurrency);
+    }
+
+    public function testLegacyPayloadWithoutCurrenciesDefaultsToEur(): void
+    {
+        $legacy = [
+            'transactionId' => Uuid::generate()->value,
+            'organizationId' => Uuid::generate()->value,
+            'asset' => 'BTC',
+            'side' => 'buy',
+            'quantity' => '0.5',
+            'price' => '40000',
+            'fee' => '10',
+            'occurredAt' => '2025-01-01T00:00:00+00:00',
+        ];
+
+        $event = TransactionRecorded::fromPayload($legacy);
+
+        self::assertSame('EUR', $event->priceCurrency);
+        self::assertSame('EUR', $event->feeCurrency);
+    }
 }

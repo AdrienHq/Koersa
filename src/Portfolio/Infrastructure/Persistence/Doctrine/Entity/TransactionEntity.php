@@ -43,4 +43,10 @@ class TransactionEntity
 
     #[ORM\Column(name: 'external_id', length: 255, nullable: true)]
     public ?string $externalId = null;
+
+    #[ORM\Column(name: 'price_currency', length: 8, options: ['default' => 'EUR'])]
+    public string $priceCurrency = 'EUR';
+
+    #[ORM\Column(name: 'fee_currency', length: 8, options: ['default' => 'EUR'])]
+    public string $feeCurrency = 'EUR';
 }

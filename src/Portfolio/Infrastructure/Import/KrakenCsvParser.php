@@ -51,14 +51,19 @@ final class KrakenCsvParser implements StatementParser
                 continue;
             }
 
+            [$base, $quote] = explode('/', $pair, 2);
+            $quoteCurrency = strtoupper($quote);
+
             $trades[] = new ParsedTrade(
                 (string) ($row[$column['txid']] ?? ''),
-                strtoupper(explode('/', $pair)[0]),
+                strtoupper($base),
                 Side::from($type),
                 (string) ($row[$column['vol']] ?? ''),
                 (string) ($row[$column['price']] ?? ''),
                 (string) ($row[$column['fee']] ?? ''),
                 new DateTimeImmutable((string) ($row[$column['time']] ?? ''), new DateTimeZone('UTC')),
+                $quoteCurrency,
+                $quoteCurrency,
             );
         }
 

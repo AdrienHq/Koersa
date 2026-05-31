@@ -28,6 +28,8 @@ final class AmendTransactionHandler
             $command->price,
             $command->fee,
             $command->occurredAt,
+            priceCurrency: $command->priceCurrency,
+            feeCurrency: $command->feeCurrency,
         );
 
         $this->portfolios->save($portfolio);

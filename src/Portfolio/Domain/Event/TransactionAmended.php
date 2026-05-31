@@ -20,6 +20,8 @@ final readonly class TransactionAmended implements SerializablePayload
         public string $price,
         public string $fee,
         public DateTimeImmutable $occurredAt,
+        public string $priceCurrency = 'EUR',
+        public string $feeCurrency = 'EUR',
     ) {
     }
 
@@ -37,6 +39,8 @@ final readonly class TransactionAmended implements SerializablePayload
             'price' => $this->price,
             'fee' => $this->fee,
             'occurredAt' => $this->occurredAt->format(DateTimeImmutable::ATOM),
+            'priceCurrency' => $this->priceCurrency,
+            'feeCurrency' => $this->feeCurrency,
         ];
     }
 
@@ -45,6 +49,13 @@ final readonly class TransactionAmended implements SerializablePayload
      */
     public static function fromPayload(array $payload): static
     {
+        // Legacy events default to EUR (see TransactionRecorded::fromPayload).
+        $priceCurrency = $payload['priceCurrency'] ?? 'EUR';
+        \assert(\is_string($priceCurrency));
+
+        $feeCurrency = $payload['feeCurrency'] ?? 'EUR';
+        \assert(\is_string($feeCurrency));
+
         return new self(
             Uuid::fromString(self::string($payload, 'transactionId')),
             Uuid::fromString(self::string($payload, 'organizationId')),
@@ -54,6 +65,8 @@ final readonly class TransactionAmended implements SerializablePayload
             self::string($payload, 'price'),
             self::string($payload, 'fee'),
             new DateTimeImmutable(self::string($payload, 'occurredAt')),
+            $priceCurrency,
+            $feeCurrency,
         );
     }
 

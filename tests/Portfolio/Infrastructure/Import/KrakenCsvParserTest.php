@@ -32,4 +32,18 @@ final class KrakenCsvParserTest extends TestCase
 
         self::assertSame(Side::Sell, $trades[1]->side);
     }
+
+    public function testQuoteCurrencyIsTakenFromThePairSuffix(): void
+    {
+        $contents = (string) file_get_contents(__DIR__.'/../../../Fixtures/Import/kraken_trades.csv');
+
+        $trades = (new KrakenCsvParser())->parse($contents);
+
+        // BTC/EUR and DOGE/EUR settle in EUR, XRP/USD in USD.
+        self::assertSame('EUR', $trades[0]->priceCurrency);
+        self::assertSame('EUR', $trades[0]->feeCurrency);
+        self::assertSame('USD', $trades[1]->priceCurrency);
+        self::assertSame('USD', $trades[1]->feeCurrency);
+        self::assertSame('EUR', $trades[2]->priceCurrency);
+    }
 }

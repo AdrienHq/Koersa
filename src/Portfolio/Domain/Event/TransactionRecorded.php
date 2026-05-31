@@ -22,6 +22,8 @@ final readonly class TransactionRecorded implements SerializablePayload
         public DateTimeImmutable $occurredAt,
         public string $source = 'manual',
         public ?string $externalId = null,
+        public string $priceCurrency = 'EUR',
+        public string $feeCurrency = 'EUR',
     ) {
     }
 
@@ -41,6 +43,8 @@ final readonly class TransactionRecorded implements SerializablePayload
             'occurredAt' => $this->occurredAt->format(DateTimeImmutable::ATOM),
             'source' => $this->source,
             'externalId' => $this->externalId,
+            'priceCurrency' => $this->priceCurrency,
+            'feeCurrency' => $this->feeCurrency,
         ];
     }
 
@@ -55,6 +59,14 @@ final readonly class TransactionRecorded implements SerializablePayload
         $externalId = $payload['externalId'] ?? null;
         \assert(null === $externalId || \is_string($externalId));
 
+        // Legacy events (pre-ADR 0006) carry no currency; EUR is the historical
+        // assumption that produced the existing data, so we default to it.
+        $priceCurrency = $payload['priceCurrency'] ?? 'EUR';
+        \assert(\is_string($priceCurrency));
+
+        $feeCurrency = $payload['feeCurrency'] ?? 'EUR';
+        \assert(\is_string($feeCurrency));
+
         return new self(
             Uuid::fromString(self::string($payload, 'transactionId')),
             Uuid::fromString(self::string($payload, 'organizationId')),
@@ -66,6 +78,8 @@ final readonly class TransactionRecorded implements SerializablePayload
             new DateTimeImmutable(self::string($payload, 'occurredAt')),
             $source,
             $externalId,
+            $priceCurrency,
+            $feeCurrency,
         );
     }
 

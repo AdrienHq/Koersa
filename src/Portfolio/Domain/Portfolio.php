@@ -39,14 +39,18 @@ final class Portfolio implements AggregateRoot
         DateTimeImmutable $occurredAt,
         string $source = 'manual',
         ?string $externalId = null,
+        string $priceCurrency = 'EUR',
+        string $feeCurrency = 'EUR',
     ): void {
         if (null !== $externalId && isset($this->importedReferences[$source.':'.$externalId])) {
             return;
         }
 
         $asset = $this->validateTrade($asset, $quantity, $price, $fee);
+        $priceCurrency = $this->normalizeCurrency($priceCurrency);
+        $feeCurrency = $this->normalizeCurrency($feeCurrency);
 
-        $this->recordThat(new TransactionRecorded($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId));
+        $this->recordThat(new TransactionRecorded($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId, $priceCurrency, $feeCurrency));
     }
 
     public function amendTransaction(
@@ -58,11 +62,15 @@ final class Portfolio implements AggregateRoot
         string $price,
         string $fee,
         DateTimeImmutable $occurredAt,
+        string $priceCurrency = 'EUR',
+        string $feeCurrency = 'EUR',
     ): void {
         $this->guardKnownTransaction($transactionId);
         $asset = $this->validateTrade($asset, $quantity, $price, $fee);
+        $priceCurrency = $this->normalizeCurrency($priceCurrency);
+        $feeCurrency = $this->normalizeCurrency($feeCurrency);
 
-        $this->recordThat(new TransactionAmended($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt));
+        $this->recordThat(new TransactionAmended($transactionId, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $priceCurrency, $feeCurrency));
     }
 
     public function removeTransaction(Uuid $transactionId): void
@@ -109,6 +117,17 @@ final class Portfolio implements AggregateRoot
         }
 
         return $asset;
+    }
+
+    private function normalizeCurrency(string $currency): string
+    {
+        $currency = strtoupper(trim($currency));
+
+        if (1 !== preg_match('/^[A-Z]{3,8}$/', $currency)) {
+            throw new InvalidArgumentException(\sprintf('"%s" is not a valid currency code.', $currency));
+        }
+
+        return $currency;
     }
 
     private function guardKnownTransaction(Uuid $transactionId): void

@@ -27,7 +27,20 @@ final class TransactionProjector implements MessageConsumer
         $event = $message->payload();
 
         if ($event instanceof TransactionRecorded) {
-            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt, $event->source, $event->externalId);
+            $this->project(
+                $event->transactionId,
+                $event->organizationId,
+                $event->asset,
+                $event->side,
+                $event->quantity,
+                $event->price,
+                $event->fee,
+                $event->occurredAt,
+                $event->source,
+                $event->externalId,
+                $event->priceCurrency,
+                $event->feeCurrency,
+            );
 
             return;
         }
@@ -36,7 +49,20 @@ final class TransactionProjector implements MessageConsumer
             // provenance is set at creation, so keep it from the existing row
             $existing = $this->transactions->find($event->transactionId);
             $source = null !== $existing ? $existing->source : 'manual';
-            $this->project($event->transactionId, $event->organizationId, $event->asset, $event->side, $event->quantity, $event->price, $event->fee, $event->occurredAt, $source, $existing?->externalId);
+            $this->project(
+                $event->transactionId,
+                $event->organizationId,
+                $event->asset,
+                $event->side,
+                $event->quantity,
+                $event->price,
+                $event->fee,
+                $event->occurredAt,
+                $source,
+                $existing?->externalId,
+                $event->priceCurrency,
+                $event->feeCurrency,
+            );
 
             return;
         }
@@ -57,6 +83,8 @@ final class TransactionProjector implements MessageConsumer
         DateTimeImmutable $occurredAt,
         string $source,
         ?string $externalId,
+        string $priceCurrency,
+        string $feeCurrency,
     ): void {
         $this->transactions->save(Transaction::reconstitute(
             $transactionId,
@@ -69,6 +97,8 @@ final class TransactionProjector implements MessageConsumer
             $occurredAt,
             $source,
             $externalId,
+            $priceCurrency,
+            $feeCurrency,
         ));
     }
 }

@@ -32,6 +32,8 @@ final class ImportTransactionsHandler
                 $trade->occurredAt,
                 $command->source,
                 $trade->externalId,
+                $trade->priceCurrency,
+                $trade->feeCurrency,
             );
         }
 

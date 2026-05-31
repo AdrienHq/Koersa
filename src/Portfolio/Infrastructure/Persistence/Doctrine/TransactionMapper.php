@@ -23,6 +23,8 @@ final class TransactionMapper
             $entity->occurredAt,
             $entity->source,
             $entity->externalId,
+            $entity->priceCurrency,
+            $entity->feeCurrency,
         );
     }
 
@@ -49,6 +51,8 @@ final class TransactionMapper
         $entity->occurredAt = $transaction->occurredAt;
         $entity->source = $transaction->source;
         $entity->externalId = $transaction->externalId;
+        $entity->priceCurrency = $transaction->priceCurrency;
+        $entity->feeCurrency = $transaction->feeCurrency;
 
         return $entity;
     }

@@ -21,6 +21,8 @@ final readonly class Transaction
         public DateTimeImmutable $occurredAt,
         public string $source = 'manual',
         public ?string $externalId = null,
+        public string $priceCurrency = 'EUR',
+        public string $feeCurrency = 'EUR',
     ) {
     }
 
@@ -35,7 +37,9 @@ final readonly class Transaction
         DateTimeImmutable $occurredAt,
         string $source = 'manual',
         ?string $externalId = null,
+        string $priceCurrency = 'EUR',
+        string $feeCurrency = 'EUR',
     ): self {
-        return new self($id, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId);
+        return new self($id, $organizationId, $asset, $side, $quantity, $price, $fee, $occurredAt, $source, $externalId, $priceCurrency, $feeCurrency);
     }
 }
