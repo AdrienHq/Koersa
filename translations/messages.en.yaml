@@ -52,6 +52,17 @@ portfolio:
     holdings_th_value: "Value (EUR)"
     holdings_price_note: "Prices via CoinGecko, cached for up to 5 minutes."
 
+    realized_gains_title: "Realized gains (%year%)"
+    realized_gains_empty: "No sells in %year% yet."
+    realized_gains_th_asset: "Asset"
+    realized_gains_th_proceeds: "Proceeds (EUR)"
+    realized_gains_th_cost: "Cost basis (EUR)"
+    realized_gains_th_gain: "Gain (EUR)"
+    realized_gains_hero_gain: "Realized gains %year%"
+    realized_gains_hero_cost: "Cost basis %year%"
+    realized_gains_unmatched_note: "{1}1 sell exceeded the lots Koersa knows about — usually a missing import. The unmatched portion isn't counted in the total.|]1,Inf[%count% sells exceeded the lots Koersa knows about — usually a missing import. The unmatched portion isn't counted in the total."
+    realized_gains_method_note: "FIFO matching, converted to EUR at ECB rates on the trade date."
+
     transactions_title: "Transactions"
     transactions_empty: "No transactions yet."
     transactions_th_date: "Date"

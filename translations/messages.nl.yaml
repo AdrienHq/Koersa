@@ -53,6 +53,17 @@ portfolio:
     holdings_th_value: "Waarde (EUR)"
     holdings_price_note: "Prijzen via CoinGecko, gecached tot 5 minuten."
 
+    realized_gains_title: "Gerealiseerde meerwaarden (%year%)"
+    realized_gains_empty: "Nog geen verkopen in %year%."
+    realized_gains_th_asset: "Activum"
+    realized_gains_th_proceeds: "Opbrengst (EUR)"
+    realized_gains_th_cost: "Kostprijs (EUR)"
+    realized_gains_th_gain: "Meerwaarde (EUR)"
+    realized_gains_hero_gain: "Gerealiseerde meerwaarden %year%"
+    realized_gains_hero_cost: "Kostprijs %year%"
+    realized_gains_unmatched_note: "{1}1 verkoop overschrijdt de lots die Koersa kent — meestal een ontbrekende import. Het niet-gedekte deel telt niet mee in het totaal.|]1,Inf[%count% verkopen overschrijden de lots die Koersa kent — meestal een ontbrekende import. Het niet-gedekte deel telt niet mee in het totaal."
+    realized_gains_method_note: "FIFO-methode, omgerekend naar EUR aan ECB-koersen op de transactiedatum."
+
     transactions_title: "Transacties"
     transactions_empty: "Nog geen transacties."
     transactions_th_date: "Datum"
