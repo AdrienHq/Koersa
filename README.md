@@ -21,31 +21,31 @@ Koersa tracks crypto holdings across multiple exchanges and self-custodied walle
 
 The product targets traders who want auditable records, accurate P&L, and tax reports they can hand to an accountant without spreadsheets.
 
-## Key capabilities
+## Today
 
-- Portfolio tracking across multiple exchanges and wallets
-- Historical P&L computation, replayable when cost-basis method or tax rules change
-- Configurable price alerts
-- Belgian tax reports generated as PDF, with full audit trail
-- French and Dutch language support, built for the Belgian market
-- Multi-tenant SaaS architecture with role-based access control
+What actually ships right now — the rest is on the roadmap.
+
+- Bilingual public landing page (French + Dutch) with beta signup
+- Account registration and password sign-in
+- Record, amend, and remove portfolio transactions
+- Per-asset holdings dashboard (net quantity + weighted-average buy cost)
+- Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent
+- Event-sourced Portfolio context (EventSauce) with rebuildable projections and a `portfolio:projections:rebuild` command
 
 ## Architecture
 
-- **Symfony 7** with **API Platform 4** exposing REST and GraphQL with OpenAPI documentation at `/api/docs`
-- **Event Sourcing** on the `Portfolio` aggregate — transactions are recorded as immutable events; holdings and P&L are projections rebuildable from the event log
-- **CQRS** through Symfony Messenger — commands write to the event store, queries read from projections
-- **Multi-tenant** with single-database isolation: every tenant-scoped table carries `organization_id`, enforced globally by a Doctrine SQL filter
-- **Server-rendered UI** with Twig, Stimulus, Turbo, and Live Components
-- **Asynchronous processing** via Messenger workers for exchange synchronization, alerts, and PDF generation
-- **Bounded contexts** organize the codebase into `IAM`, `Portfolio`, `MarketData`, `Integration`, `Billing`, `Reporting`, and `Shared`. Boundaries are enforced by Deptrac in CI.
+- **Bounded contexts**: `IAM`, `Portfolio`, `MarketData`, `Integration`, `Billing`, `Reporting`, `Shared`. Boundaries (between contexts and between layers) are enforced by Deptrac in CI.
+- **Event Sourcing** on the `Portfolio` aggregate — transactions are recorded as immutable events; the holdings and transactions read models are projections rebuilt from the event log.
+- **CQRS** through Symfony Messenger — writes go through a command bus wrapped in `doctrine_transaction` so the event append and its projection commit together. Projectors are synchronous today; async workers come later.
+- **Server-rendered UI** with Twig, Stimulus, and Turbo (Tailwind via AssetMapper, no Node build).
+- **API Platform 4** and **multi-tenancy enforcement** are planned (see roadmap).
 
 Full architecture details in [`ARCHITECTURE.md`](ARCHITECTURE.md). Design decisions are recorded as ADRs in [`docs/adr/`](docs/adr/).
 
 ## Roadmap
 
-- [ ] **Iteration 1** — Skeleton: authentication, organizations, manual transactions, basic dashboard
-- [ ] **Iteration 2** — Event Sourcing on the Portfolio aggregate with projections and replay
+- [x] **Iteration 1** — Skeleton: authentication, organizations, manual transactions, basic dashboard
+- [x] **Iteration 2** — Event Sourcing on the Portfolio aggregate with projections and replay
 - [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger
 - [ ] **Iteration 4** — Multi-tenancy enforcement and Stripe billing
 - [ ] **Iteration 5** — Belgian tax engine with PDF report generation
@@ -72,17 +72,14 @@ SELinux note).
 |------------------|-----------------------------------------------|
 | Language         | PHP 8.4                                       |
 | Framework        | Symfony 7.4                                   |
-| API              | API Platform 4 (REST + GraphQL)               |
-| Authentication   | LexikJWT + Symfony Security                   |
+| Authentication   | Symfony Security (form login)                 |
 | Database         | PostgreSQL 16                                 |
 | Cache / queues   | Redis 7                                       |
 | Event store      | EventSauce                                    |
-| Async            | Symfony Messenger                             |
-| Frontend         | Twig + Stimulus + Turbo + Live Components     |
-| PDF              | KnpSnappyBundle (wkhtmltopdf)                 |
-| Payments         | Stripe                                        |
+| Messaging        | Symfony Messenger                             |
+| Frontend         | Twig + Stimulus + Turbo, Tailwind v4 via AssetMapper |
 | Static analysis  | PHPStan level 9, Deptrac, Rector              |
-| CI               | GitHub Actions                                |
+| CI               | GitHub Actions, Codecov                       |
 
 ## Contributing
 
