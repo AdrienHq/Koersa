@@ -8,7 +8,9 @@ use DateTimeImmutable;
 use Koersa\Portfolio\Application\Query\GetHoldings;
 use Koersa\Portfolio\Application\Query\GetRealizedGains;
 use Koersa\Portfolio\Application\Query\RealizedGainsReport;
+use Koersa\Portfolio\Domain\Transaction;
 use Koersa\Portfolio\Domain\TransactionRepository;
+use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
 use Koersa\Shared\Security\HasOrganization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +35,7 @@ final class PortfolioController extends AbstractController
         $organizationId = $user->organizationId();
 
         $holdings = ($getHoldings)($organizationId);
+        $allTransactions = $transactions->forOrganization($organizationId);
 
         $totalEur = 0.0;
         $hasPrices = false;
@@ -43,26 +46,58 @@ final class PortfolioController extends AbstractController
             }
         }
 
-        // ECB fetch can fail; let the page render without the report in that case.
-        $report = $this->safelyComputeRealizedGains($getRealizedGains, $organizationId);
+        // Pick the most recent calendar year that had a sell — matches how
+        // Belgian tax review actually happens (last year's activity is what
+        // you file in May/June). The ECB fetch can fail; let the page render
+        // without the report in that case.
+        [$report, $reportYear] = $this->computeRealizedGains($getRealizedGains, $organizationId, $allTransactions);
 
         return $this->render('portfolio/index.html.twig', [
             'holdings' => $holdings,
-            'transactions' => $transactions->forOrganization($organizationId),
+            'transactions' => $allTransactions,
             'portfolioValueEur' => $hasPrices ? number_format($totalEur, 2, '.', '') : null,
-            'realizedGainsYear' => (int) (new DateTimeImmutable())->format('Y'),
+            'realizedGainsYear' => $reportYear,
             'realizedGains' => $report,
         ]);
     }
 
-    private function safelyComputeRealizedGains(GetRealizedGains $getRealizedGains, Uuid $organizationId): ?RealizedGainsReport
+    /**
+     * @param list<Transaction> $transactions
+     *
+     * @return array{0: ?RealizedGainsReport, 1: ?int}
+     */
+    private function computeRealizedGains(GetRealizedGains $getRealizedGains, Uuid $organizationId, array $transactions): array
     {
-        try {
-            $sinceJanuary = new DateTimeImmutable((new DateTimeImmutable())->format('Y').'-01-01T00:00:00+00:00');
-
-            return ($getRealizedGains)($organizationId, $sinceJanuary);
-        } catch (Throwable) {
-            return null;
+        $year = $this->mostRecentSellYear($transactions);
+        if (null === $year) {
+            return [null, null];
         }
+
+        try {
+            $since = new DateTimeImmutable($year.'-01-01T00:00:00+00:00');
+
+            return [($getRealizedGains)($organizationId, $since), $year];
+        } catch (Throwable) {
+            return [null, null];
+        }
+    }
+
+    /**
+     * @param list<Transaction> $transactions
+     */
+    private function mostRecentSellYear(array $transactions): ?int
+    {
+        $best = null;
+        foreach ($transactions as $transaction) {
+            if (Side::Sell !== $transaction->side) {
+                continue;
+            }
+            $year = (int) $transaction->occurredAt->format('Y');
+            if (null === $best || $year > $best) {
+                $best = $year;
+            }
+        }
+
+        return $best;
     }
 }
