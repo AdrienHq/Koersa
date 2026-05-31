@@ -17,6 +17,15 @@ landing:
     meta_description: "Koersa zet uw crypto-transactiegeschiedenis om in een conforme Belgische belastingaangifte, klaar voor Tax-on-web en MyMinfin."
     meta_title: "Koersa — Geef uw crypto-meerwaarden aan in België"
 
+email:
+    beta_signup:
+        subject: "Welkom bij de Koersa-bèta"
+        body: |
+            Bedankt voor uw inschrijving voor de Koersa-bèta.
+            We verwittigen u zodra het opengaat.
+
+            — Adrien
+
 layout:
     footer_tagline: "Koersa — crypto-portfolio & Belgische belastingtracker"
     nav_sign_in: "Aanmelden"

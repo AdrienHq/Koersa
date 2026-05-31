@@ -21,6 +21,6 @@ framework:
                     - doctrine_transaction
 
         routing:
-            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            # Sync for now (no worker running); switch to async at deploy time.
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async

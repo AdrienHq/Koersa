@@ -17,6 +17,15 @@ landing:
     meta_description: "Koersa transforme l'historique de vos échanges crypto en une déclaration fiscale belge conforme, prête pour Tax-on-web et MyMinfin."
     meta_title: "Koersa — Déclarez vos plus-values crypto en Belgique"
 
+email:
+    beta_signup:
+        subject: "Bienvenue dans la bêta Koersa"
+        body: |
+            Merci pour votre inscription à la bêta Koersa.
+            On vous prévient dès l'ouverture.
+
+            — Adrien
+
 layout:
     footer_tagline: "Koersa — suivi de portefeuille crypto & fiscalité belge"
     nav_sign_in: "Se connecter"
