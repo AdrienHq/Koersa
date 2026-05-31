@@ -32,6 +32,7 @@ What actually ships right now — the rest is on the roadmap.
 - Per-asset holdings dashboard with live EUR prices (CoinGecko, cached 5 minutes)
 - **Realized gains in EUR**, computed FIFO over the trade history, with every leg converted at the ECB reference rate of the trade date
 - **Potential tax owed under each Belgian regime** (normal management / speculative / professional) shown side by side — Koersa never picks one for you
+- **How-to-declare guidance per regime**: which Cadre / Vak and code numbers go on the Belgian tax-on-web declaration, with the amount pre-computed
 - Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent, and the quote currency is read from the pair
 - Event-sourced Portfolio context (EventSauce) with rebuildable projections and a `portfolio:projections:rebuild` command
 
@@ -51,7 +52,7 @@ Full architecture details in [`ARCHITECTURE.md`](ARCHITECTURE.md). Design decisi
 - [x] **Iteration 2** — Event Sourcing on the Portfolio aggregate with projections and replay
 - [ ] **Iteration 3** — Asynchronous Kraken and Binance synchronization via Messenger (Binance CSV import: framework ready, blocked on a real export)
 - [ ] **Iteration 4** — Multi-tenancy enforcement and Stripe billing
-- [ ] **Iteration 5** — Belgian tax engine with PDF report generation (foundations shipped: Money VO, ECB historical FX, FIFO realized gains, regime-aware tax estimates; remaining: Tax-on-web box mapping, accountant-ready PDF export)
+- [ ] **Iteration 5** — Belgian tax engine with PDF report generation (foundations shipped: Money VO, ECB historical FX, FIFO realized gains, regime-aware tax estimates, Tax-on-web box mapping; remaining: accountant-ready PDF export)
 
 ## Running locally
 
