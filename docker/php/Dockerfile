@@ -17,7 +17,7 @@ RUN apk add --no-cache --virtual .build-deps \
         icu-dev \
         postgresql-dev \
         libzip-dev \
-    && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql opcache zip \
+    && docker-php-ext-install -j"$(nproc)" bcmath intl pdo_pgsql opcache zip \
     && pecl install redis pcov \
     && docker-php-ext-enable redis pcov \
     && apk del .build-deps
