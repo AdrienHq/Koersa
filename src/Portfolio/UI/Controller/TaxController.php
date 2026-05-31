@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Koersa\Portfolio\UI\Controller;
 
 use Koersa\Portfolio\Application\Query\GetRealizedGains;
+use Koersa\Shared\Application\Tax\BelgianBoxMapper;
 use Koersa\Shared\Application\Tax\BelgianTaxEstimator;
+use Koersa\Shared\Domain\Money;
+use Koersa\Shared\Domain\Tax\FilingGuidance;
+use Koersa\Shared\Domain\Tax\Regime;
 use Koersa\Shared\Security\HasOrganization;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +24,7 @@ final class TaxController extends AbstractController
     public function __invoke(
         GetRealizedGains $getRealizedGains,
         BelgianTaxEstimator $taxEstimator,
+        BelgianBoxMapper $boxMapper,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
@@ -36,12 +41,28 @@ final class TaxController extends AbstractController
         }
 
         $taxEstimates = null !== $report ? $taxEstimator->estimate($report->totalGainEur) : null;
+        $filingGuidances = null !== $report && null !== $year
+            ? $this->buildFilingGuidances($boxMapper, $report->totalGainEur, $year)
+            : null;
 
         return $this->render('tax/index.html.twig', [
             'realizedGainsYear' => $year,
             'realizedGains' => $report,
             'taxEstimates' => $taxEstimates,
             'realizedGainIsLoss' => null !== $report && $report->totalGainEur->isNegative(),
+            'filingGuidances' => $filingGuidances,
         ]);
+    }
+
+    /**
+     * @return list<FilingGuidance>
+     */
+    private function buildFilingGuidances(BelgianBoxMapper $mapper, Money $gainEur, int $year): array
+    {
+        return [
+            $mapper->guide(Regime::NormalManagement, $gainEur, $year),
+            $mapper->guide(Regime::Speculative, $gainEur, $year),
+            $mapper->guide(Regime::Professional, $gainEur, $year),
+        ];
     }
 }

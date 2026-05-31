@@ -63,6 +63,26 @@ tax:
     subtitle: "Realized gains and what they might cost under each Belgian regime."
     empty_title: "Nothing to report yet"
     empty_body: "Once you record or import a sell, Koersa computes realized gains in EUR and shows what tax could apply under each regime."
+    how_to_declare_title: "How to declare (income year %year%)"
+    how_to_declare_tooltip: "For each regime, where on the Belgian declaration the amount goes — Cadre / Vak and code numbers. Codes can shift year to year; verify against SPF Finance / FOD Financiën before submitting."
+    how_to_declare_th_regime: "Regime"
+    how_to_declare_th_where: "Where on the declaration"
+    how_to_declare_th_amount: "Amount to enter (EUR)"
+    how_to_declare_no_box: "No declaration"
+    how_to_declare_no_amount: "—"
+    how_to_declare_disclaimer: "Verify codes against SPF Finance / FOD Financiën documentation before submitting. The declaration is filed via Tax-on-web (FR) / Tax-on-web (NL) on MyMinfin."
+
+tax_filing:
+    speculative:
+        box: "Box XV — Section 1.A (Bénéfices et profits occasionnels)"
+        codes: "Code 1440 / 2440 (gain) — Code 1441 / 2441 (deductible costs)"
+        note: "Enter the gain in EUR — the SPF applies the 33%. Codes 1440 / 1441 are for taxpayer 1; 2440 / 2441 are for taxpayer 2 (spouse) on a joint declaration."
+    normal_management:
+        note: "No declaration required for capital gains under normal management of private wealth."
+    professional:
+        note: "Where this lands on the declaration depends on your status (employee with a side activity, self-employed under 'bénéfices' or 'profits', company structure…) and the activity classification. Box XVII 'bénéfices et profits' is the usual starting point — ask your accountant for the right boxes."
+    unsupported_year:
+        note: "Koersa doesn't ship verified codes for this income year yet. Check SPF Finance / FOD Financiën documentation for the codes that apply."
 
 portfolio:
     page_title: "Portfolio · Koersa"

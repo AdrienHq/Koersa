@@ -64,6 +64,26 @@ tax:
     subtitle: "Plus-values réalisées et leur impact estimé sous chaque régime fiscal belge."
     empty_title: "Rien à déclarer pour l'instant"
     empty_body: "Dès que vous enregistrez ou importez une vente, Koersa calcule la plus-value en EUR et affiche l'impôt potentiel sous chaque régime."
+    how_to_declare_title: "Comment déclarer (revenus %year%)"
+    how_to_declare_tooltip: "Pour chaque régime, où inscrire le montant dans la déclaration belge — Cadre et codes. Les codes peuvent changer d'une année à l'autre ; vérifiez auprès du SPF Finances avant de soumettre."
+    how_to_declare_th_regime: "Régime"
+    how_to_declare_th_where: "Emplacement dans la déclaration"
+    how_to_declare_th_amount: "Montant à indiquer (EUR)"
+    how_to_declare_no_box: "Pas de déclaration"
+    how_to_declare_no_amount: "—"
+    how_to_declare_disclaimer: "Vérifiez les codes auprès de la documentation du SPF Finances avant de soumettre. La déclaration se fait via Tax-on-web sur MyMinfin."
+
+tax_filing:
+    speculative:
+        box: "Cadre XV — Section 1.A (Bénéfices et profits occasionnels)"
+        codes: "Code 1440 / 2440 (montant imposable) — Code 1441 / 2441 (frais déductibles)"
+        note: "Indiquez la plus-value en EUR — le SPF applique les 33 %. Les codes 1440 / 1441 concernent le contribuable 1 ; les codes 2440 / 2441 concernent le contribuable 2 (conjoint) en déclaration conjointe."
+    normal_management:
+        note: "Aucune déclaration n'est requise pour les plus-values relevant de la gestion normale du patrimoine privé."
+    professional:
+        note: "L'emplacement dans la déclaration dépend de votre statut (salarié avec activité accessoire, indépendant en ‘bénéfices’ ou ‘profits’, structure sociétaire…) et de la qualification de l'activité. Le Cadre XVII ‘bénéfices et profits’ est généralement le point de départ — demandez à votre comptable les bonnes cases."
+    unsupported_year:
+        note: "Koersa ne fournit pas encore de codes vérifiés pour cette année de revenus. Consultez la documentation du SPF Finances pour les codes applicables."
 
 portfolio:
     page_title: "Portefeuille · Koersa"

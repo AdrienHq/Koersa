@@ -64,6 +64,26 @@ tax:
     subtitle: "Gerealiseerde meerwaarden en hun geschatte fiscale impact onder elk Belgisch regime."
     empty_title: "Nog niets te rapporteren"
     empty_body: "Zodra u een verkoop registreert of importeert, berekent Koersa de meerwaarde in EUR en toont de mogelijke belasting onder elk regime."
+    how_to_declare_title: "Hoe aangeven (inkomstenjaar %year%)"
+    how_to_declare_tooltip: "Per regime: waar het bedrag in de Belgische aangifte komt — Vak en codes. Codes kunnen jaarlijks wijzigen; verifieer bij de FOD Financiën vóór indienen."
+    how_to_declare_th_regime: "Regime"
+    how_to_declare_th_where: "Plaats in de aangifte"
+    how_to_declare_th_amount: "In te vullen bedrag (EUR)"
+    how_to_declare_no_box: "Geen aangifte"
+    how_to_declare_no_amount: "—"
+    how_to_declare_disclaimer: "Controleer de codes met de documentatie van de FOD Financiën vóór indienen. De aangifte gebeurt via Tax-on-web op MyMinfin."
+
+tax_filing:
+    speculative:
+        box: "Vak XV — Afdeling 1.A (Occasionele baten en winsten)"
+        codes: "Code 1440 / 2440 (belastbaar bedrag) — Code 1441 / 2441 (aftrekbare kosten)"
+        note: "Vul de meerwaarde in EUR in — de FOD past de 33 % toe. Codes 1440 / 1441 gelden voor belastingplichtige 1; codes 2440 / 2441 voor belastingplichtige 2 (echtgenoot) bij een gezamenlijke aangifte."
+    normal_management:
+        note: "Geen aangifte vereist voor meerwaarden onder het normaal beheer van het privévermogen."
+    professional:
+        note: "Waar dit op de aangifte komt, hangt af van uw statuut (werknemer met bijberoep, zelfstandige onder ‘winsten’ of ‘baten’, vennootschapsstructuur…) en van de aard van de activiteit. Vak XVII ‘winsten en baten’ is doorgaans het startpunt — vraag uw accountant naar de juiste vakken."
+    unsupported_year:
+        note: "Koersa biedt voor dit inkomstenjaar nog geen geverifieerde codes. Raadpleeg de documentatie van de FOD Financiën voor de geldige codes."
 
 portfolio:
     page_title: "Portefeuille · Koersa"
