@@ -36,6 +36,8 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Historical EUR FX rates via the European Central Bank (`Shared\Market\FxRateProvider` + ECB adapter; cached daily)
 - Transaction events now carry the price and fee currency; the Kraken parser reads it from the pair (e.g. `XBT/USD` is settled in USD), and legacy events default to EUR
 - Belgian tax regime estimates on the dashboard: three scenarios (normal management 0%, speculative 33%, professional progressive) shown side by side with a persistent reminder that Koersa shows scenarios, not advice
+- Signed-in app split into three tabs (Overview / Portfolio / Tax); `/` now lands authenticated users on the Overview
+- Charts on the Overview tab: cumulative realized gain over time, current holdings composition, and last-12-months buy/sell activity (Chart.js via importmap, no Node build)
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`

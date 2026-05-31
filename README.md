@@ -27,6 +27,7 @@ What actually ships right now — the rest is on the roadmap.
 
 - Public landing page in French, Dutch, and English with beta signup; the rest of the UI follows the same three languages, switchable from the footer and remembered for the session
 - Account registration and password sign-in
+- Three-tab signed-in app: **Overview** (digestible recap with cumulative-gain, holdings and activity charts), **Portfolio** (operational view: holdings + transactions + import/record/edit modals), **Tax** (realized gains + regime estimates)
 - Record, amend, and remove portfolio transactions
 - Per-asset holdings dashboard with live EUR prices (CoinGecko, cached 5 minutes)
 - **Realized gains in EUR**, computed FIFO over the trade history, with every leg converted at the ECB reference rate of the trade date
