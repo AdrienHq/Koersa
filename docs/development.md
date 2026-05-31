@@ -55,6 +55,19 @@ This builds the PHP image, starts the stack, installs Composer dependencies, and
 runs the database migrations. When it finishes, the app is at
 **http://localhost:8080**.
 
+## Local secrets
+
+`APP_SECRET` is not committed. Generate your own and put it in `.env.local`
+(gitignored):
+
+```bash
+echo "APP_SECRET=$(openssl rand -hex 16)" >> .env.local
+```
+
+Tests use a fixed value from `.env.test`, so this is only for the dev env.
+Production secrets (Stripe keys, the prod `APP_SECRET`) will live in Symfony's
+secrets vault when we deploy — never in `.env*`.
+
 ## The stack
 
 | Service    | Role                         | Reachable at                          |
