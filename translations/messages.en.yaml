@@ -61,6 +61,7 @@ tax:
     page_title: "Tax · Koersa"
     title: "Tax"
     subtitle: "Realized gains and what they might cost under each Belgian regime."
+    download_pdf: "Download report (PDF)"
     empty_title: "Nothing to report yet"
     empty_body: "Once you record or import a sell, Koersa computes realized gains in EUR and shows what tax could apply under each regime."
     how_to_declare_title: "How to declare (income year %year%)"

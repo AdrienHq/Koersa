@@ -62,6 +62,7 @@ tax:
     page_title: "Belastingen · Koersa"
     title: "Belastingen"
     subtitle: "Gerealiseerde meerwaarden en hun geschatte fiscale impact onder elk Belgisch regime."
+    download_pdf: "Rapport downloaden (PDF)"
     empty_title: "Nog niets te rapporteren"
     empty_body: "Zodra u een verkoop registreert of importeert, berekent Koersa de meerwaarde in EUR en toont de mogelijke belasting onder elk regime."
     how_to_declare_title: "Hoe aangeven (inkomstenjaar %year%)"

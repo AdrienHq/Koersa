@@ -62,6 +62,7 @@ tax:
     page_title: "Impôts · Koersa"
     title: "Impôts"
     subtitle: "Plus-values réalisées et leur impact estimé sous chaque régime fiscal belge."
+    download_pdf: "Télécharger le rapport (PDF)"
     empty_title: "Rien à déclarer pour l'instant"
     empty_body: "Dès que vous enregistrez ou importez une vente, Koersa calcule la plus-value en EUR et affiche l'impôt potentiel sous chaque régime."
     how_to_declare_title: "Comment déclarer (revenus %year%)"

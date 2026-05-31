@@ -5,9 +5,17 @@
 
 {% block body %}
     <div class="space-y-8">
-        <div>
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'tax.title'|trans }}</h1>
-            <p class="mt-1 text-sm text-gray-500">{{ 'tax.subtitle'|trans }}</p>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'tax.title'|trans }}</h1>
+                <p class="mt-1 text-sm text-gray-500">{{ 'tax.subtitle'|trans }}</p>
+            </div>
+            {% if realizedGains is not null and realizedGains.perAsset|length > 0 %}
+                <a href="{{ path('tax_report_pdf') }}" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                    {{ 'tax.download_pdf'|trans }}
+                </a>
+            {% endif %}
         </div>
 
         {% if realizedGains is null or realizedGains.perAsset|length == 0 %}
