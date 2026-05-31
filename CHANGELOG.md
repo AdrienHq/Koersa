@@ -39,6 +39,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Signed-in app split into three tabs (Overview / Portfolio / Tax); `/` now lands authenticated users on the Overview
 - Charts on the Overview tab: cumulative realized gain over time, current holdings composition, and last-12-months buy/sell activity (Chart.js via importmap, no Node build)
 - "How to declare" guidance on the Tax tab: per regime, the Belgian Cadre / Vak and codes (1440-1441 / 2440-2441 for the speculative case) plus the amount to enter, with a verify-with-SPF disclaimer
+- One-page accountant-ready PDF tax report (Dompdf, pure PHP, no binary) — summary, per-asset gains, regime scenarios, filing guidance and methodology, in the user's current language; downloadable from the Tax tab
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`
