@@ -59,7 +59,9 @@ portfolio:
     realized_gains_th_cost: "Cost basis (EUR)"
     realized_gains_th_gain: "Gain (EUR)"
     realized_gains_hero_gain: "Realized gains %year%"
+    realized_gains_hero_gain_tooltip: "Net result in EUR from sells matched FIFO against earlier buys, for the most recent year that had sells. Each trade is converted at the ECB reference rate of its date."
     realized_gains_hero_cost: "Cost basis %year%"
+    realized_gains_hero_cost_tooltip: "Total EUR you originally paid for the assets you sold this year, summed from the matched buy lots (FIFO)."
     realized_gains_unmatched_note: "{1}1 sell exceeded the lots Koersa knows about — usually a missing import. The unmatched portion isn't counted in the total.|]1,Inf[%count% sells exceeded the lots Koersa knows about — usually a missing import. The unmatched portion isn't counted in the total."
     realized_gains_method_note: "FIFO matching, converted to EUR at ECB rates on the trade date."
 

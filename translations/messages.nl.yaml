@@ -60,7 +60,9 @@ portfolio:
     realized_gains_th_cost: "Kostprijs (EUR)"
     realized_gains_th_gain: "Meerwaarde (EUR)"
     realized_gains_hero_gain: "Gerealiseerde meerwaarden %year%"
+    realized_gains_hero_gain_tooltip: "Netto resultaat in EUR uit verkopen die FIFO aan eerdere aankopen werden gekoppeld, voor het meest recente jaar met verkopen. Elke transactie wordt omgerekend tegen de ECB-koers van haar datum."
     realized_gains_hero_cost: "Kostprijs %year%"
+    realized_gains_hero_cost_tooltip: "Totaal in EUR dat u oorspronkelijk betaalde voor de activa die u dit jaar verkocht, samengeteld uit de gekoppelde aankooplots (FIFO)."
     realized_gains_unmatched_note: "{1}1 verkoop overschrijdt de lots die Koersa kent — meestal een ontbrekende import. Het niet-gedekte deel telt niet mee in het totaal.|]1,Inf[%count% verkopen overschrijden de lots die Koersa kent — meestal een ontbrekende import. Het niet-gedekte deel telt niet mee in het totaal."
     realized_gains_method_note: "FIFO-methode, omgerekend naar EUR aan ECB-koersen op de transactiedatum."
 

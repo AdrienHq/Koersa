@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% import '_macros/info_tooltip.html.twig' as ui %}
 
 {% block title %}{{ 'portfolio.page_title'|trans }}{% endblock %}
 
@@ -29,13 +30,19 @@
         {% if realizedGains is not null and realizedGains.perAsset|length > 0 %}
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
-                    <p class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ 'portfolio.realized_gains_hero_gain'|trans({'%year%': realizedGainsYear}) }}</p>
+                    <p class="flex items-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                        <span>{{ 'portfolio.realized_gains_hero_gain'|trans({'%year%': realizedGainsYear}) }}</span>
+                        {{ ui.info_tooltip('portfolio.realized_gains_hero_gain_tooltip'|trans) }}
+                    </p>
                     <p class="mt-2 text-3xl font-semibold tabular-nums {{ realizedGains.totalGainEur.isNegative ? 'text-rose-600' : 'text-emerald-600' }}">
                         €{{ realizedGains.totalGainEur.amount|number_format(2, '.', '') }}
                     </p>
                 </div>
                 <div class="rounded-xl border border-gray-200 bg-white px-6 py-5 shadow-sm">
-                    <p class="text-xs font-medium uppercase tracking-wide text-gray-500">{{ 'portfolio.realized_gains_hero_cost'|trans({'%year%': realizedGainsYear}) }}</p>
+                    <p class="flex items-center text-xs font-medium uppercase tracking-wide text-gray-500">
+                        <span>{{ 'portfolio.realized_gains_hero_cost'|trans({'%year%': realizedGainsYear}) }}</span>
+                        {{ ui.info_tooltip('portfolio.realized_gains_hero_cost_tooltip'|trans) }}
+                    </p>
                     <p class="mt-2 text-3xl font-semibold tabular-nums text-gray-900">
                         €{{ realizedGains.totalCostBasisEur.amount|number_format(2, '.', '') }}
                     </p>

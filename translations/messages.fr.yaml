@@ -60,7 +60,9 @@ portfolio:
     realized_gains_th_cost: "Prix de revient (EUR)"
     realized_gains_th_gain: "Plus-value (EUR)"
     realized_gains_hero_gain: "Plus-values réalisées %year%"
+    realized_gains_hero_gain_tooltip: "Résultat net en EUR sur les ventes appariées en FIFO aux achats antérieurs, pour la dernière année avec des ventes. Chaque transaction est convertie au taux BCE de sa date."
     realized_gains_hero_cost: "Prix de revient %year%"
+    realized_gains_hero_cost_tooltip: "Total payé en EUR pour les actifs vendus cette année, calculé sur les lots d'achat appariés (FIFO)."
     realized_gains_unmatched_note: "{1}1 vente dépasse les lots connus par Koersa — souvent un import manquant. La portion non couverte n'entre pas dans le total.|]1,Inf[%count% ventes dépassent les lots connus par Koersa — souvent un import manquant. La portion non couverte n'entre pas dans le total."
     realized_gains_method_note: "Méthode FIFO, conversion en EUR au taux BCE de la date de la transaction."
 
