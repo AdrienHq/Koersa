@@ -29,6 +29,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Portfolio event store with optimistic concurrency, synchronous projectors, and a `portfolio:projections:rebuild` console command
 - Bilingual (French/Dutch) public landing page with a beta-access signup form
 - Internationalisation foundation (FR/NL message catalogs, locale-prefixed routing)
+- English UI alongside French and Dutch, with a footer toggle that remembers the visitor's choice for the rest of their session
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`
