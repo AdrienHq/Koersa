@@ -35,28 +35,44 @@ spreadsheet-driven workflow.
   - **Headless Chromium (Puppeteer / Browsershot)** — best rendering, but
     adds Chrome to every container we ship. Massive for one-page output.
 
-### A `Reporting` bounded context
+### A `Reporting` bounded context — first slice
 
 [ARCHITECTURE.md §2](../../ARCHITECTURE.md) lists `Reporting` as a planned
-context; this is the first slice that actually needs it. Three files:
+context; this is the first slice that actually needs it.
 
-- `Reporting\Application\TaxReportComposer` — pulls the realized-gains
-  report, regime estimates and filing guidances together into a single
-  structure for the template. Calls existing Portfolio and Shared
-  application services; no cross-context domain access.
-- `Reporting\Infrastructure\Pdf\DompdfPdfRenderer` — thin wrapper around
-  Dompdf: HTML in, binary PDF out. A `PdfRenderer` port lives next to it
-  so future renderers (different lib, headless Chrome for a fancier
-  template) can drop in without touching the composer or controller.
+The context introduces three files plus a template:
+
+- `Reporting\Application\PdfRenderer` — port. `render(string $html): string`.
+- `Reporting\Infrastructure\Pdf\DompdfPdfRenderer` — adapter behind the
+  port. Future renderers (different lib, headless Chrome for a fancier
+  template) drop in here without touching the call site.
 - `Reporting\UI\Controller\TaxReportPdfController` — route
   `/tax/report.pdf`. Same `IsGranted` + organisation membership checks
-  as the Tax page. Streams `application/pdf` with `Content-Disposition:
-  attachment; filename="koersa-tax-report-{year}.pdf"`.
+  as the Tax page. Streams `application/pdf` with
+  `Content-Disposition: attachment; filename="koersa-tax-report-{year}.pdf"`.
+- `templates/reporting/tax_report.html.twig` — HTML with inlined CSS,
+  handed to Dompdf as a self-contained document (Dompdf's
+  external-stylesheet loader is fiddly across filesystems).
 
-The report Twig template lives at `templates/reporting/tax_report.html.twig`
-and is rendered to HTML, then handed to Dompdf. CSS is inlined in the
-template because Dompdf's external-stylesheet loader is fiddly across
-filesystems.
+### `Reporting → Portfolio` allowed in deptrac
+
+Reporting is the cross-context aggregator. By design it reads from
+other contexts to compose reports; other contexts never read from it.
+The deptrac config is updated accordingly:
+
+```yaml
+Reporting: [Shared, Portfolio]   # downstream of Portfolio
+Portfolio: [Shared]              # Portfolio doesn't see Reporting
+```
+
+This is the correct DDD shape (downstream / upstream relationship) and
+matches the ARCHITECTURE.md intent. As more reports land that need data
+from IAM, MarketData, etc., the rule grows additional contexts on the
+right-hand side; the inverse stays empty forever.
+
+The compromise sketched earlier for `OverviewController` (keeping it in
+Portfolio because Shared can't reach into a context) does not apply
+here — Reporting is *allowed* to reach in; Shared still isn't.
 
 ### What goes in the report (one page, in this order)
 

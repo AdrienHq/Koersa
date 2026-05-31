@@ -73,6 +73,15 @@ tax:
     how_to_declare_no_amount: "—"
     how_to_declare_disclaimer: "Controleer de codes met de documentatie van de FOD Financiën vóór indienen. De aangifte gebeurt via Tax-on-web op MyMinfin."
 
+report:
+    title: "Belgisch fiscaal rapport — inkomstenjaar %year%"
+    account_label: "Account"
+    generated_label: "Gegenereerd"
+    summary_title: "Samenvatting"
+    methodology_title: "Methodologie"
+    methodology_body: "Gerealiseerde meerwaarden worden FIFO berekend over de transactiegeschiedenis. Elk leg wordt omgerekend naar EUR aan de referentiekoers van de Europese Centrale Bank op de transactiedatum. Verkopen die de bij Koersa bekende lots overstijgen worden gemarkeerd en uitgesloten van de totalen."
+    footer: "Gegenereerd door Koersa · koersa.be · %date%"
+
 tax_filing:
     speculative:
         box: "Vak XV — Afdeling 1.A (Occasionele baten en winsten)"

@@ -39,5 +39,9 @@ deptrac:
     MarketData: [Shared]
     Integration: [Shared]
     Billing: [Shared]
-    Reporting: [Shared]
+    # Reporting is the cross-context aggregator (see ARCHITECTURE.md §2). It
+    # reads from other contexts to compose reports; other contexts never read
+    # from it. Today it consumes Portfolio; add other contexts here as more
+    # reports land.
+    Reporting: [Shared, Portfolio]
     Shared: ~

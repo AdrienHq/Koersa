@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default('en') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ 'report.title'|trans({'%year%': year}) }}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'DejaVu Sans', sans-serif;
+            font-size: 10pt;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+        }
+        .page { padding: 24pt 32pt; }
+        .header { border-bottom: 1pt solid #d1d5db; padding-bottom: 12pt; margin-bottom: 16pt; }
+        .wordmark { font-size: 14pt; font-weight: bold; color: #4f46e5; }
+        .title { font-size: 16pt; font-weight: bold; margin-top: 6pt; color: #111827; }
+        .meta { color: #6b7280; font-size: 9pt; margin-top: 4pt; }
+        .section { margin-top: 16pt; }
+        .section-title {
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            font-weight: bold;
+            margin-bottom: 6pt;
+        }
+        .summary { width: 100%; border-collapse: collapse; }
+        .summary td {
+            padding: 8pt 10pt;
+            border: 1pt solid #e5e7eb;
+            width: 33%;
+        }
+        .summary .label { color: #6b7280; font-size: 8pt; text-transform: uppercase; }
+        .summary .value { font-size: 12pt; font-weight: bold; margin-top: 2pt; }
+        .value.positive { color: #047857; }
+        .value.negative { color: #be123c; }
+
+        table.data { width: 100%; border-collapse: collapse; margin-top: 6pt; }
+        table.data th, table.data td {
+            border: 1pt solid #e5e7eb;
+            padding: 5pt 8pt;
+            text-align: left;
+            vertical-align: top;
+        }
+        table.data th {
+            background: #f3f4f6;
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+        }
+        table.data td.num { text-align: right; font-variant-numeric: tabular-nums; }
+        td.positive { color: #047857; }
+        td.negative { color: #be123c; }
+        .regime-name { font-weight: bold; }
+        .regime-note { color: #6b7280; font-size: 8pt; margin-top: 2pt; }
+        .footnote { color: #6b7280; font-size: 8pt; margin-top: 4pt; }
+        .unmatched-note { color: #b45309; font-size: 8pt; margin-top: 4pt; }
+        .disclaimer { color: #6b7280; font-size: 8pt; margin-top: 4pt; font-style: italic; }
+        .page-footer {
+            margin-top: 18pt;
+            padding-top: 8pt;
+            border-top: 1pt solid #e5e7eb;
+            color: #6b7280;
+            font-size: 8pt;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="header">
+        <div class="wordmark">Koersa</div>
+        <div class="title">{{ 'report.title'|trans({'%year%': year}) }}</div>
+        <div class="meta">
+            {{ 'report.account_label'|trans }}: {{ accountEmail }}
+            · {{ 'report.generated_label'|trans }}: {{ generatedAt|date('Y-m-d H:i \\U\\T\\C') }}
+        </div>
+    </div>
+
+    {# Summary #}
+    <div class="section">
+        <div class="section-title">{{ 'report.summary_title'|trans }}</div>
+        <table class="summary">
+            <tr>
+                <td>
+                    <div class="label">{{ 'portfolio.realized_gains_th_proceeds'|trans }}</div>
+                    <div class="value">€{{ report.totalProceedsEur.amount|number_format(2, '.', '') }}</div>
+                </td>
+                <td>
+                    <div class="label">{{ 'portfolio.realized_gains_th_cost'|trans }}</div>
+                    <div class="value">€{{ report.totalCostBasisEur.amount|number_format(2, '.', '') }}</div>
+                </td>
+                <td>
+                    <div class="label">{{ 'portfolio.realized_gains_th_gain'|trans }}</div>
+                    <div class="value {{ realizedGainIsLoss ? 'negative' : 'positive' }}">€{{ report.totalGainEur.amount|number_format(2, '.', '') }}</div>
+                </td>
+            </tr>
+        </table>
+        {% if report.unmatchedSellCount > 0 %}
+            <p class="unmatched-note">{{ 'portfolio.realized_gains_unmatched_note'|trans({'%count%': report.unmatchedSellCount}) }}</p>
+        {% endif %}
+    </div>
+
+    {# Realized gains per asset #}
+    <div class="section">
+        <div class="section-title">{{ 'portfolio.realized_gains_title'|trans({'%year%': year}) }}</div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <th>{{ 'portfolio.realized_gains_th_asset'|trans }}</th>
+                    <th>{{ 'portfolio.realized_gains_th_proceeds'|trans }}</th>
+                    <th>{{ 'portfolio.realized_gains_th_cost'|trans }}</th>
+                    <th>{{ 'portfolio.realized_gains_th_gain'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in report.perAsset %}
+                    <tr>
+                        <td>{{ line.asset }}</td>
+                        <td class="num">€{{ line.proceedsEur.amount|number_format(2, '.', '') }}</td>
+                        <td class="num">€{{ line.costBasisEur.amount|number_format(2, '.', '') }}</td>
+                        <td class="num {{ line.gainEur.isNegative ? 'negative' : 'positive' }}">€{{ line.gainEur.amount|number_format(2, '.', '') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# Regime scenarios #}
+    <div class="section">
+        <div class="section-title">{{ 'portfolio.tax_estimates_title'|trans({'%year%': year}) }}</div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <th>{{ 'portfolio.tax_estimates_th_regime'|trans }}</th>
+                    <th>{{ 'portfolio.tax_estimates_th_rate'|trans }}</th>
+                    <th>{{ 'portfolio.tax_estimates_th_amount'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estimate in taxEstimates %}
+                    <tr>
+                        <td>
+                            <div class="regime-name">{{ ('portfolio.tax_regime_' ~ estimate.regime.value)|trans }}</div>
+                            <div class="regime-note">{{ ('portfolio.tax_regime_' ~ estimate.regime.value ~ '_who')|trans }}</div>
+                        </td>
+                        <td>{{ ('portfolio.tax_regime_' ~ estimate.regime.value ~ '_rate')|trans }}</td>
+                        <td class="num">
+                            {% if estimate.amountEur is null %}
+                                {{ 'portfolio.tax_estimates_amount_varies'|trans }}
+                            {% else %}
+                                €{{ estimate.amountEur.amount|number_format(2, '.', '') }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if realizedGainIsLoss %}
+            <p class="footnote">{{ 'portfolio.tax_estimates_loss_note'|trans({'%year%': year}) }}</p>
+        {% endif %}
+    </div>
+
+    {# Filing guidance #}
+    <div class="section">
+        <div class="section-title">{{ 'tax.how_to_declare_title'|trans({'%year%': year}) }}</div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <th>{{ 'tax.how_to_declare_th_regime'|trans }}</th>
+                    <th>{{ 'tax.how_to_declare_th_where'|trans }}</th>
+                    <th>{{ 'tax.how_to_declare_th_amount'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guidance in filingGuidances %}
+                    <tr>
+                        <td>
+                            <div class="regime-name">{{ ('portfolio.tax_regime_' ~ guidance.regime.value)|trans }}</div>
+                            <div class="regime-note">{{ guidance.noteKey|trans }}</div>
+                        </td>
+                        <td>
+                            {% if guidance.boxLabelKey is null %}
+                                {{ 'tax.how_to_declare_no_box'|trans }}
+                            {% else %}
+                                <div class="regime-name">{{ guidance.boxLabelKey|trans }}</div>
+                                {% if guidance.codeLabelKey is not null %}
+                                    <div class="regime-note">{{ guidance.codeLabelKey|trans }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="num">
+                            {% if guidance.amount is null %}
+                                {{ 'tax.how_to_declare_no_amount'|trans }}
+                            {% else %}
+                                €{{ guidance.amount.amount|number_format(2, '.', '') }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="footnote">{{ 'tax.how_to_declare_disclaimer'|trans }}</p>
+    </div>
+
+    {# Methodology #}
+    <div class="section">
+        <div class="section-title">{{ 'report.methodology_title'|trans }}</div>
+        <p class="disclaimer">{{ 'report.methodology_body'|trans }}</p>
+        <p class="disclaimer">{{ 'portfolio.tax_estimates_disclaimer'|trans }}</p>
+    </div>
+
+    <div class="page-footer">
+        {{ 'report.footer'|trans({'%date%': generatedAt|date('Y-m-d')}) }}
+    </div>
+
+</div>
+</body>
+</html>

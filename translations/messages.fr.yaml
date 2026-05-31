@@ -73,6 +73,15 @@ tax:
     how_to_declare_no_amount: "—"
     how_to_declare_disclaimer: "Vérifiez les codes auprès de la documentation du SPF Finances avant de soumettre. La déclaration se fait via Tax-on-web sur MyMinfin."
 
+report:
+    title: "Rapport fiscal belge — revenus %year%"
+    account_label: "Compte"
+    generated_label: "Généré"
+    summary_title: "Synthèse"
+    methodology_title: "Méthodologie"
+    methodology_body: "Les plus-values réalisées sont calculées en FIFO sur l'historique des transactions. Chaque opération est convertie en EUR au taux de référence publié par la Banque centrale européenne à la date de la transaction. Les ventes qui dépassent les lots connus par Koersa sont signalées et exclues des totaux."
+    footer: "Généré par Koersa · koersa.be · %date%"
+
 tax_filing:
     speculative:
         box: "Cadre XV — Section 1.A (Bénéfices et profits occasionnels)"
