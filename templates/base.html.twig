@@ -18,13 +18,6 @@
             <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
                 <a href="{{ path('home') }}" class="text-lg font-semibold tracking-tight text-indigo-600">Koersa</a>
                 <div class="flex items-center gap-4 text-sm">
-                    {% if app.request.attributes.get('_route') == 'landing' %}
-                        <div class="flex items-center gap-2 text-xs font-medium text-gray-400">
-                            <a href="{{ path('landing', {'_locale': 'fr'}) }}" class="{{ app.request.locale == 'fr' ? 'text-indigo-600' : 'hover:text-gray-600' }}">FR</a>
-                            <span aria-hidden="true">·</span>
-                            <a href="{{ path('landing', {'_locale': 'nl'}) }}" class="{{ app.request.locale == 'nl' ? 'text-indigo-600' : 'hover:text-gray-600' }}">NL</a>
-                        </div>
-                    {% endif %}
                     {% if app.user %}
                         <a href="{{ path('portfolio') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_portfolio'|trans }}</a>
                         <span class="hidden text-gray-500 sm:inline">{{ app.user.userIdentifier }}</span>
@@ -53,8 +46,15 @@
             </main>
         {% endblock %}
 
-        <footer class="border-t border-gray-200 py-6 text-center text-xs text-gray-400">
-            {{ 'layout.footer_tagline'|trans }}
+        <footer class="border-t border-gray-200 py-6 text-xs text-gray-400">
+            <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-2 px-4 sm:flex-row">
+                <p>{{ 'layout.footer_tagline'|trans }}</p>
+                <div class="flex items-center gap-2 font-medium">
+                    <a href="{{ path('landing', {'_locale': 'fr'}) }}" class="{{ app.request.locale == 'fr' ? 'text-indigo-600' : 'hover:text-gray-600' }}">FR</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="{{ path('landing', {'_locale': 'nl'}) }}" class="{{ app.request.locale == 'nl' ? 'text-indigo-600' : 'hover:text-gray-600' }}">NL</a>
+                </div>
+            </div>
         </footer>
     </body>
 </html>
