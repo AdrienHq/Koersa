@@ -40,7 +40,7 @@ final class RecordTransactionTest extends WebTestCase
         (new DoctrineMembershipRepository($entityManager, new MembershipMapper()))
             ->save(Membership::create(Uuid::generate(), $userId, $organizationId, Role::Owner, new DateTimeImmutable()));
 
-        $client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $organizationId));
+        $client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $organizationId, isAdmin: false, currentRole: Role::Owner));
 
         $client->request('GET', '/portfolio/transactions/new');
         self::assertResponseIsSuccessful();

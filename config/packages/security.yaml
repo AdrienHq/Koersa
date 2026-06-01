@@ -8,6 +8,13 @@ security:
         app_user_provider:
             id: Koersa\IAM\Infrastructure\Security\SecurityUserProvider
 
+    # Per ADR 0010: ROLE_ADMIN is platform-wide (you), ROLE_ORG_OWNER is the
+    # creator of an organisation, ROLE_ORG_ADMIN is a delegated org admin.
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_ORG_OWNER
+        ROLE_ORG_OWNER:   ROLE_ORG_ADMIN
+        ROLE_ORG_ADMIN:   ROLE_USER
+
     firewalls:
         dev:
             # Ensure dev tools and static assets are always allowed
@@ -20,12 +27,13 @@ security:
                 login_path: login
                 check_path: login
                 enable_csrf: true
-                default_target_path: portfolio
+                default_target_path: overview
             logout:
                 path: logout
                 target: home
 
-    access_control: []
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:

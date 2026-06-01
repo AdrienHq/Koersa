@@ -28,7 +28,7 @@ final class RegistrationAndLoginTest extends WebTestCase
             '_username' => 'jane@example.com',
             '_password' => 'secret-password',
         ]);
-        self::assertResponseRedirects('/portfolio');
+        self::assertResponseRedirects('/overview');
     }
 
     public function testRegisteringWithoutAnOrganizationSucceeds(): void

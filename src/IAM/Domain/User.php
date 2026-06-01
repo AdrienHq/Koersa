@@ -15,6 +15,7 @@ final class User
         private Email $email,
         private string $passwordHash,
         private readonly DateTimeImmutable $registeredAt,
+        private bool $isAdmin = false,
     ) {
     }
 
@@ -23,9 +24,9 @@ final class User
         return new self($id, $email, $passwordHash, $registeredAt);
     }
 
-    public static function reconstitute(Uuid $id, Email $email, string $passwordHash, DateTimeImmutable $registeredAt): self
+    public static function reconstitute(Uuid $id, Email $email, string $passwordHash, DateTimeImmutable $registeredAt, bool $isAdmin = false): self
     {
-        return new self($id, $email, $passwordHash, $registeredAt);
+        return new self($id, $email, $passwordHash, $registeredAt, $isAdmin);
     }
 
     public function changeEmail(Email $email): void
@@ -36,6 +37,16 @@ final class User
     public function changePassword(string $passwordHash): void
     {
         $this->passwordHash = $passwordHash;
+    }
+
+    public function promoteToAdmin(): void
+    {
+        $this->isAdmin = true;
+    }
+
+    public function demoteFromAdmin(): void
+    {
+        $this->isAdmin = false;
     }
 
     public function id(): Uuid
@@ -56,5 +67,10 @@ final class User
     public function registeredAt(): DateTimeImmutable
     {
         return $this->registeredAt;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->isAdmin;
     }
 }

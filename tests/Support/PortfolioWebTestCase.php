@@ -51,7 +51,16 @@ abstract class PortfolioWebTestCase extends WebTestCase
         (new DoctrineMembershipRepository($entityManager, new MembershipMapper()))
             ->save(Membership::create(Uuid::generate(), $userId, $this->organizationId, Role::Owner, new DateTimeImmutable()));
 
-        $this->client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $this->organizationId));
+        // Roles passed here MUST match what the provider would refresh into,
+        // otherwise ContextListener invalidates the session on the next
+        // request (token roles differ from refreshed roles -> logged out).
+        $this->client->loginUser(new SecurityUser(
+            'jane@example.com',
+            'hash',
+            (string) $this->organizationId,
+            isAdmin: false,
+            currentRole: Role::Owner,
+        ));
     }
 
     protected function recordTransaction(string $asset = 'BTC', Side $side = Side::Buy, string $quantity = '1', string $price = '100'): Uuid

@@ -18,6 +18,7 @@ final class UserMapper
             new Email($entity->email),
             $entity->passwordHash,
             $entity->registeredAt,
+            $entity->isAdmin,
         );
     }
 
@@ -28,6 +29,7 @@ final class UserMapper
         $entity->email = (string) $user->email();
         $entity->passwordHash = $user->passwordHash();
         $entity->registeredAt = $user->registeredAt();
+        $entity->isAdmin = $user->isAdmin();
 
         return $entity;
     }

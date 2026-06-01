@@ -24,4 +24,7 @@ class UserEntity
 
     #[ORM\Column(name: 'registered_at', type: 'datetime_immutable')]
     public DateTimeImmutable $registeredAt;
+
+    #[ORM\Column(name: 'is_admin', type: 'boolean', options: ['default' => false])]
+    public bool $isAdmin = false;
 }
