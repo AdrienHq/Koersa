@@ -41,6 +41,8 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - "How to declare" guidance on the Tax tab: per regime, the Belgian Cadre / Vak and codes (1440-1441 / 2440-2441 for the speculative case) plus the amount to enter, with a verify-with-SPF disclaimer
 - One-page accountant-ready PDF tax report (Dompdf, pure PHP, no binary) — summary, per-asset gains, regime scenarios, filing guidance and methodology, in the user's current language; downloadable from the Tax tab
 - Binance Spot Trade History CSV import; built against the documented legacy format, pending real-data validation
+- Two role levels: platform-wide `ROLE_ADMIN` (flag on User, granted via `iam:user:promote-admin` console command) and per-organisation `ROLE_ORG_ADMIN` (existing `Role::Admin` enum value on Membership), with a Symfony role hierarchy that cascades
+- Operator-only admin landing at `/admin` showing recent signups, users and organisations with counts; nav link visible only to platform admins
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`

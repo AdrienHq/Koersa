@@ -36,6 +36,7 @@ What actually ships right now — the rest is on the roadmap.
 - **Accountant-ready PDF report** — one page covering realized gains per asset, regime scenarios, filing guidance and methodology, in the user's language
 - Kraken CSV import — drop the export (CSV or the ZIP Kraken gives you); buy/sell trades are recorded, re-imports are idempotent, and the quote currency is read from the pair
 - Binance Spot Trade History CSV import — built from the documented format; first real export will validate any post-2023 layout drift
+- Two-tier role model: platform admin (operator) and per-organisation admin, with a read-only operator landing at `/admin`
 - Event-sourced Portfolio context (EventSauce) with rebuildable projections and a `portfolio:projections:rebuild` command
 
 ## Architecture
