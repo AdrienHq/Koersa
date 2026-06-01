@@ -14,4 +14,9 @@ interface UserRepository
     public function byId(Uuid $id): ?User;
 
     public function byEmail(Email $email): ?User;
+
+    public function count(): int;
+
+    /** @return list<User> most recent first */
+    public function recent(int $limit = 50): array;
 }

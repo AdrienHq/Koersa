@@ -13,4 +13,9 @@ interface OrganizationRepository
     public function byId(Uuid $id): ?Organization;
 
     public function bySlug(string $slug): ?Organization;
+
+    public function count(): int;
+
+    /** @return list<Organization> most recent first */
+    public function recent(int $limit = 50): array;
 }

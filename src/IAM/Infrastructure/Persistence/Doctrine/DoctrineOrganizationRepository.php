@@ -44,4 +44,23 @@ final class DoctrineOrganizationRepository implements OrganizationRepository
 
         return $entity instanceof OrganizationEntity ? $this->mapper->toDomain($entity) : null;
     }
+
+    public function count(): int
+    {
+        return (int) $this->entityManager
+            ->getRepository(OrganizationEntity::class)
+            ->count([]);
+    }
+
+    public function recent(int $limit = 50): array
+    {
+        $entities = $this->entityManager
+            ->getRepository(OrganizationEntity::class)
+            ->findBy([], ['createdAt' => 'DESC'], $limit);
+
+        return array_map(
+            fn (OrganizationEntity $entity): Organization => $this->mapper->toDomain($entity),
+            $entities,
+        );
+    }
 }

@@ -34,4 +34,23 @@ final class DoctrineSignupRepository implements SignupRepository
             ->getRepository(SignupEntity::class)
             ->findOneBy(['email' => strtolower(trim($email))]);
     }
+
+    public function count(): int
+    {
+        return (int) $this->entityManager
+            ->getRepository(SignupEntity::class)
+            ->count([]);
+    }
+
+    public function recent(int $limit = 50): array
+    {
+        $entities = $this->entityManager
+            ->getRepository(SignupEntity::class)
+            ->findBy([], ['signedUpAt' => 'DESC'], $limit);
+
+        return array_map(
+            fn (SignupEntity $entity): Signup => $this->mapper->toDomain($entity),
+            $entities,
+        );
+    }
 }

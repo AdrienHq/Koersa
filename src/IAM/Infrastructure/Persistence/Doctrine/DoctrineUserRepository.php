@@ -45,4 +45,23 @@ final class DoctrineUserRepository implements UserRepository
 
         return $entity instanceof UserEntity ? $this->mapper->toDomain($entity) : null;
     }
+
+    public function count(): int
+    {
+        return (int) $this->entityManager
+            ->getRepository(UserEntity::class)
+            ->count([]);
+    }
+
+    public function recent(int $limit = 50): array
+    {
+        $entities = $this->entityManager
+            ->getRepository(UserEntity::class)
+            ->findBy([], ['registeredAt' => 'DESC'], $limit);
+
+        return array_map(
+            fn (UserEntity $entity): User => $this->mapper->toDomain($entity),
+            $entities,
+        );
+    }
 }

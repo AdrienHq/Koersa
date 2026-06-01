@@ -23,6 +23,9 @@
                         <a href="{{ path('overview') }}" class="font-medium {{ _route == 'overview' ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_overview'|trans }}</a>
                         <a href="{{ path('portfolio') }}" class="font-medium {{ _route in ['portfolio', 'portfolio_transaction_new', 'portfolio_transaction_edit', 'portfolio_import'] ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_portfolio'|trans }}</a>
                         <a href="{{ path('tax') }}" class="font-medium {{ _route == 'tax' ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_tax'|trans }}</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('admin') }}" class="font-medium {{ _route == 'admin' ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900' }}">{{ 'layout.nav_admin'|trans }}</a>
+                        {% endif %}
                         <span class="hidden text-gray-500 sm:inline">{{ app.user.userIdentifier }}</span>
                         <a href="{{ path('logout') }}" class="font-medium text-gray-600 hover:text-gray-900">{{ 'layout.nav_log_out'|trans }}</a>
                     {% else %}
