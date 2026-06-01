@@ -3,11 +3,6 @@
 {% block title %}{{ 'admin.page_title'|trans }}{% endblock %}
 
 {% block body %}
-    {# Sideways red ribbon: visible cue that you're operating on every user's data #}
-    <div aria-label="Admin area" class="pointer-events-none fixed right-0 top-1/2 z-50 -translate-y-1/2 bg-red-600 px-2 py-6 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-lg" style="writing-mode: vertical-rl;">
-        Admin
-    </div>
-
     <div class="space-y-8">
         <div>
             <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'admin.title'|trans }}</h1>
