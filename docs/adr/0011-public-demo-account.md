@@ -1,7 +1,7 @@
 # ADR 0011 — Public demo: one shared read-only account, writes visibly locked
 
 **Date:** 2026-06-01
-**Status:** Accepted
+**Status:** Superseded by [ADR 0012](0012-register-then-seed-freemium.md)
 
 ## Context
 
