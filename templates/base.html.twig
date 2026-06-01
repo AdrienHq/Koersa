@@ -16,7 +16,7 @@
     <body class="flex min-h-full flex-col bg-gray-50 text-gray-900 antialiased">
         {% if is_granted('ROLE_ADMIN') %}
             {# Sideways red ribbon on the right edge: identity cue (you are admin) and entry point into /admin in one element. #}
-            <a href="{{ path('admin') }}" aria-label="{{ 'layout.nav_admin'|trans }}" class="fixed right-0 top-1/2 z-50 -translate-y-1/2 bg-red-600 px-2 py-6 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-lg transition hover:bg-red-700" style="writing-mode: vertical-rl;">
+            <a href="{{ path('admin') }}" aria-label="{{ 'layout.nav_admin'|trans }}" class="fixed right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-red-600 py-7 pl-4 pr-2 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-lg transition hover:bg-red-700" style="writing-mode: vertical-rl;">
                 {{ 'layout.nav_admin'|trans }}
             </a>
         {% endif %}
