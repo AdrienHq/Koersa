@@ -40,8 +40,8 @@ deptrac:
     Integration: [Shared]
     Billing: [Shared]
     # Reporting is the cross-context aggregator (see ARCHITECTURE.md §2). It
-    # reads from other contexts to compose reports; other contexts never read
-    # from it. Today it consumes Portfolio; add other contexts here as more
-    # reports land.
-    Reporting: [Shared, Portfolio]
+    # reads from other contexts to compose reports and operator tooling that
+    # spans contexts (PDF reports, demo seeding). Other contexts never read
+    # from it.
+    Reporting: [Shared, Portfolio, IAM]
     Shared: ~
