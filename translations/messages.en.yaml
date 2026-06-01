@@ -35,6 +35,15 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Log out"
 
+demo:
+    banner_label: "Demo mode"
+    banner_body: "You're exploring with sample data."
+    banner_cta: "Sign up to use your own"
+    locked_title: "Sign up to unlock this"
+    locked_body: "Recording, importing and downloading are only available with a real account. It's free and takes a minute."
+    locked_cta: "Sign up free"
+    locked_cancel: "Keep exploring the demo"
+
 admin:
     page_title: "Admin · Koersa"
     title: "Admin"

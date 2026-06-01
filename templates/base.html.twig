@@ -14,6 +14,18 @@
         {% endblock %}
     </head>
     <body class="flex min-h-full flex-col bg-gray-50 text-gray-900 antialiased">
+        {% if is_demo_user(app.user) %}
+            {# Persistent demo banner above the nav. Always visible in demo mode. #}
+            <div class="bg-indigo-600 text-white">
+                <div class="mx-auto flex max-w-5xl flex-col gap-1 px-4 py-2 text-sm sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <span class="font-semibold">{{ 'demo.banner_label'|trans }}</span>
+                        <span class="ml-2 text-indigo-100">{{ 'demo.banner_body'|trans }}</span>
+                    </div>
+                    <a href="{{ path('register') }}" class="font-semibold underline-offset-2 hover:underline">{{ 'demo.banner_cta'|trans }} →</a>
+                </div>
+            </div>
+        {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
             {# Sideways red ribbon on the right edge: identity cue (you are admin) and entry point into /admin in one element. #}
             <a href="{{ path('admin') }}" aria-label="{{ 'layout.nav_admin'|trans }}" class="fixed right-0 top-1/2 z-50 flex min-h-64 -translate-y-1/2 items-center justify-center rounded-l-2xl bg-red-600 pl-3 pr-2 text-xs font-semibold uppercase tracking-[0.25em] text-white shadow-lg transition hover:bg-red-700">

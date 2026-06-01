@@ -12,6 +12,7 @@ use Koersa\IAM\Domain\UserRepository;
 use Koersa\IAM\Domain\ValueObject\Email;
 use Koersa\Portfolio\Application\ImportTransactions;
 use Koersa\Portfolio\Application\StatementParserRegistry;
+use Koersa\Shared\Security\IsDemoUser;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,6 @@ use Symfony\Component\Messenger\MessageBusInterface;
 )]
 final class SeedDemoUserCommand extends Command
 {
-    public const string DEMO_EMAIL = 'demo@koersa.local';
     private const string DEMO_PASSWORD = 'demo-locked-account';
     private const string DEMO_ORGANIZATION = 'Demo';
     private const string DEMO_CSV_PATH = __DIR__.'/../../../../tests/Fixtures/Import/kraken_trades_demo.csv';
@@ -48,10 +48,10 @@ final class SeedDemoUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $email = new Email(self::DEMO_EMAIL);
+        $email = new Email(IsDemoUser::EMAIL);
         $created = false;
         try {
-            ($this->registerUser)(new RegisterUser(self::DEMO_EMAIL, self::DEMO_PASSWORD, self::DEMO_ORGANIZATION));
+            ($this->registerUser)(new RegisterUser(IsDemoUser::EMAIL, self::DEMO_PASSWORD, self::DEMO_ORGANIZATION));
             $created = true;
         } catch (EmailAlreadyInUse) {
             // Idempotent: the user already exists from a previous seed run.
@@ -59,7 +59,7 @@ final class SeedDemoUserCommand extends Command
 
         $user = $this->users->byEmail($email);
         if (null === $user) {
-            $io->error(\sprintf('Demo user "%s" could not be located after registration.', self::DEMO_EMAIL));
+            $io->error(\sprintf('Demo user "%s" could not be located after registration.', IsDemoUser::EMAIL));
 
             return Command::FAILURE;
         }
@@ -85,7 +85,7 @@ final class SeedDemoUserCommand extends Command
         $io->success(\sprintf(
             '%s demo account "%s" with %d trade(s) from the Kraken demo CSV.',
             $created ? 'Created' : 'Refreshed',
-            self::DEMO_EMAIL,
+            IsDemoUser::EMAIL,
             \count($trades),
         ));
 

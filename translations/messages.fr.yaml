@@ -36,6 +36,15 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Se déconnecter"
 
+demo:
+    banner_label: "Mode démo"
+    banner_body: "Vous explorez des données d'exemple."
+    banner_cta: "Inscrivez-vous pour utiliser les vôtres"
+    locked_title: "Inscrivez-vous pour débloquer"
+    locked_body: "Enregistrer, importer et télécharger ne sont disponibles qu'avec un vrai compte. C'est gratuit et ça prend une minute."
+    locked_cta: "Créer un compte gratuit"
+    locked_cancel: "Continuer à explorer la démo"
+
 admin:
     page_title: "Admin · Koersa"
     title: "Admin"

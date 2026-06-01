@@ -36,6 +36,15 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Afmelden"
 
+demo:
+    banner_label: "Demomodus"
+    banner_body: "U verkent met voorbeelddata."
+    banner_cta: "Registreer u om eigen data te gebruiken"
+    locked_title: "Registreer u om dit te ontgrendelen"
+    locked_body: "Registreren, importeren en downloaden zijn alleen beschikbaar met een echt account. Het is gratis en duurt een minuut."
+    locked_cta: "Gratis account aanmaken"
+    locked_cancel: "De demo blijven verkennen"
+
 admin:
     page_title: "Admin · Koersa"
     title: "Admin"
