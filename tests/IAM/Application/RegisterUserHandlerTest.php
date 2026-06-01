@@ -17,6 +17,7 @@ use Koersa\IAM\Domain\User;
 use Koersa\IAM\Domain\UserRepository;
 use Koersa\IAM\Domain\ValueObject\Email;
 use Koersa\IAM\Domain\ValueObject\Role;
+use Koersa\Shared\Application\OrganizationSeeder;
 use Koersa\Shared\Domain\Uuid;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Clock\MockClock;
@@ -44,7 +45,7 @@ final class RegisterUserHandlerTest extends TestCase
         $hasher = $this->createStub(PasswordHasher::class);
         $hasher->method('hash')->willReturn('hashed-password');
 
-        $handler = new RegisterUserHandler($users, $organizations, $memberships, $hasher, new MockClock());
+        $handler = new RegisterUserHandler($users, $organizations, $memberships, $hasher, new MockClock(), $this->createStub(OrganizationSeeder::class));
         $handler(new RegisterUser('jane@example.com', 'secret-password', 'Acme Corp'));
     }
 
@@ -64,8 +65,29 @@ final class RegisterUserHandlerTest extends TestCase
         $hasher = $this->createStub(PasswordHasher::class);
         $hasher->method('hash')->willReturn('hashed-password');
 
-        $handler = new RegisterUserHandler($users, $organizations, $memberships, $hasher, new MockClock());
+        $handler = new RegisterUserHandler($users, $organizations, $memberships, $hasher, new MockClock(), $this->createStub(OrganizationSeeder::class));
         $handler(new RegisterUser('jane@example.com', 'secret-password', '   '));
+    }
+
+    public function testSeedsTheNewOrganizationOnceRegistrationSucceeds(): void
+    {
+        $users = $this->createStub(UserRepository::class);
+        $users->method('byEmail')->willReturn(null);
+        $hasher = $this->createStub(PasswordHasher::class);
+        $hasher->method('hash')->willReturn('hash');
+
+        $seeder = $this->createMock(OrganizationSeeder::class);
+        $seeder->expects(self::once())->method('seed');
+
+        $handler = new RegisterUserHandler(
+            $users,
+            $this->createStub(OrganizationRepository::class),
+            $this->createStub(MembershipRepository::class),
+            $hasher,
+            new MockClock(),
+            $seeder,
+        );
+        $handler(new RegisterUser('seeded@example.com', 'secret-password', 'Acme'));
     }
 
     public function testRejectsAnAlreadyRegisteredEmail(): void
@@ -87,6 +109,7 @@ final class RegisterUserHandlerTest extends TestCase
             $memberships,
             $this->createStub(PasswordHasher::class),
             new MockClock(),
+            $this->createStub(OrganizationSeeder::class),
         );
 
         $this->expectException(EmailAlreadyInUse::class);

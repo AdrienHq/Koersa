@@ -12,6 +12,7 @@ use Koersa\IAM\Domain\User;
 use Koersa\IAM\Domain\UserRepository;
 use Koersa\IAM\Domain\ValueObject\Email;
 use Koersa\IAM\Domain\ValueObject\Role;
+use Koersa\Shared\Application\OrganizationSeeder;
 use Koersa\Shared\Domain\Uuid;
 use Psr\Clock\ClockInterface;
 
@@ -23,6 +24,7 @@ final class RegisterUserHandler
         private readonly MembershipRepository $memberships,
         private readonly PasswordHasher $passwordHasher,
         private readonly ClockInterface $clock,
+        private readonly OrganizationSeeder $seeder,
     ) {
     }
 
@@ -51,5 +53,10 @@ final class RegisterUserHandler
         $this->users->save($user);
         $this->organizations->save($organization);
         $this->memberships->save($membership);
+
+        // Side effect: fill the new org with demo data (ADR 0012). The seeder
+        // is best-effort and swallows its own failures; registration commits
+        // regardless.
+        $this->seeder->seed($organization->id());
     }
 }
