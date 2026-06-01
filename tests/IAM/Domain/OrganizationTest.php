@@ -12,25 +12,29 @@ use PHPUnit\Framework\TestCase;
 
 final class OrganizationTest extends TestCase
 {
-    public function testCreateDerivesASlugFromTheName(): void
+    public function testCreateDerivesASlugFromTheNameWithUuidSuffix(): void
     {
-        $organization = Organization::create(Uuid::generate(), 'Acme Corp', new DateTimeImmutable());
+        $id = Uuid::generate();
+        $organization = Organization::create($id, 'Acme Corp', new DateTimeImmutable());
 
         self::assertSame('Acme Corp', $organization->name());
-        self::assertSame('acme-corp', $organization->slug());
+        // The slug prefix is human-readable, the suffix disambiguates so two
+        // orgs that share a name (e.g. both default 'Personal') don't collide.
+        self::assertSame('acme-corp-'.substr($id->value, 0, 8), $organization->slug());
     }
 
-    public function testRenameUpdatesNameAndSlug(): void
+    public function testRenameUpdatesNameAndKeepsTheSameUuidSuffix(): void
     {
-        $organization = Organization::create(Uuid::generate(), 'Acme Corp', new DateTimeImmutable());
+        $id = Uuid::generate();
+        $organization = Organization::create($id, 'Acme Corp', new DateTimeImmutable());
 
         $organization->rename('Globex Belgium');
 
         self::assertSame('Globex Belgium', $organization->name());
-        self::assertSame('globex-belgium', $organization->slug());
+        self::assertSame('globex-belgium-'.substr($id->value, 0, 8), $organization->slug());
     }
 
-    public function testRejectsANameThatProducesAnEmptySlug(): void
+    public function testRejectsANameThatProducesAnEmptyPrefix(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

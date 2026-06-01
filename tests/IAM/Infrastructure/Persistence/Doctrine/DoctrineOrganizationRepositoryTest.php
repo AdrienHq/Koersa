@@ -28,12 +28,14 @@ final class DoctrineOrganizationRepositoryTest extends DatabaseTestCase
         $this->repository->save(Organization::create($id, 'Acme Corp', new DateTimeImmutable('2026-05-25 09:00:00')));
         $this->entityManager->clear();
 
+        $expectedSlug = 'acme-corp-'.substr($id->value, 0, 8);
+
         $byId = $this->repository->byId($id);
         self::assertNotNull($byId);
         self::assertSame('Acme Corp', $byId->name());
-        self::assertSame('acme-corp', $byId->slug());
+        self::assertSame($expectedSlug, $byId->slug());
 
-        self::assertNotNull($this->repository->bySlug('acme-corp'));
+        self::assertNotNull($this->repository->bySlug($expectedSlug));
     }
 
     public function testReturnsNullWhenMissing(): void

@@ -20,7 +20,7 @@ final class Organization
 
     public static function create(Uuid $id, string $name, DateTimeImmutable $createdAt): self
     {
-        return new self($id, $name, self::slugify($name), $createdAt);
+        return new self($id, $name, self::slugify($name, $id), $createdAt);
     }
 
     public static function reconstitute(Uuid $id, string $name, string $slug, DateTimeImmutable $createdAt): self
@@ -31,7 +31,7 @@ final class Organization
     public function rename(string $name): void
     {
         $this->name = $name;
-        $this->slug = self::slugify($name);
+        $this->slug = self::slugify($name, $this->id);
     }
 
     public function id(): Uuid
@@ -54,7 +54,10 @@ final class Organization
         return $this->createdAt;
     }
 
-    private static function slugify(string $name): string
+    // Slug = name-derived prefix + 8-char UUID suffix. The suffix guarantees
+    // uniqueness across orgs that happen to share a name (the default
+    // 'Personal' otherwise collides for every new account).
+    private static function slugify(string $name, Uuid $id): string
     {
         $slug = strtolower(trim($name));
         $slug = preg_replace('/[^a-z0-9]+/', '-', $slug) ?? '';
@@ -64,6 +67,6 @@ final class Organization
             throw new InvalidArgumentException(\sprintf('Organization name "%s" produces an empty slug.', $name));
         }
 
-        return $slug;
+        return $slug.'-'.substr($id->value, 0, 8);
     }
 }

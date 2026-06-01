@@ -19,16 +19,17 @@ final class OrganizationMapperTest extends TestCase
         $createdAt = new DateTimeImmutable('2026-05-24 10:00:00');
 
         $entity = $mapper->toEntity(Organization::create($id, 'Acme Corp', $createdAt));
+        $expectedSlug = 'acme-corp-'.substr($id->value, 0, 8);
 
         self::assertSame((string) $id, $entity->id);
         self::assertSame('Acme Corp', $entity->name);
-        self::assertSame('acme-corp', $entity->slug);
+        self::assertSame($expectedSlug, $entity->slug);
 
         $restored = $mapper->toDomain($entity);
 
         self::assertTrue($restored->id()->equals($id));
         self::assertSame('Acme Corp', $restored->name());
-        self::assertSame('acme-corp', $restored->slug());
+        self::assertSame($expectedSlug, $restored->slug());
         self::assertEquals($createdAt, $restored->createdAt());
     }
 }
