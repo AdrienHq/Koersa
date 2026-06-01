@@ -36,14 +36,12 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Afmelden"
 
-demo:
-    banner_label: "Demomodus"
-    banner_body: "U verkent met voorbeelddata."
-    banner_cta: "Registreer u om eigen data te gebruiken"
-    locked_title: "Registreer u om dit te ontgrendelen"
-    locked_body: "Registreren, importeren en downloaden zijn alleen beschikbaar met een echt account. Het is gratis en duurt een minuut."
-    locked_cta: "Gratis account aanmaken"
-    locked_cancel: "De demo blijven verkennen"
+paywall:
+    title: "Ontgrendel de Belgische belastingtools"
+    body: "CSV-imports, gerealiseerde meerwaarden, regime-ramingen en het belastingrapport horen bij het betaalde plan. Laat uw e-mail achter — we laten u weten wanneer het beschikbaar wordt."
+    cta_notify: "Houd me op de hoogte"
+    cta_cancel: "Misschien later"
+    success: "Bedankt — we laten u weten."
 
 admin:
     page_title: "Admin · Koersa"
@@ -72,6 +70,9 @@ overview:
     page_title: "Overzicht · Koersa"
     title: "Overzicht"
     subtitle: "Uw portefeuille in één oogopslag."
+    sample_data_hint_title: "U begint met voorbeelddata"
+    sample_data_hint_body: "Bewerk, verwijder of voeg uw eigen transacties toe — dit dashboard is van u. Imports en belastingtools zijn betaalde functies; u ziet de upgrade-prompt zodra u ze gebruikt."
+    sample_data_hint_dismiss: "Sluiten"
     portfolio_value_label: "Waarde portefeuille"
     portfolio_value_empty: "Nog geen posities."
     realized_gain_label: "Gerealiseerde meerwaarden %year%"

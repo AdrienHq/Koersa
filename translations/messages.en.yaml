@@ -35,14 +35,12 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Log out"
 
-demo:
-    banner_label: "Demo mode"
-    banner_body: "You're exploring with sample data."
-    banner_cta: "Sign up to use your own"
-    locked_title: "Sign up to unlock this"
-    locked_body: "Recording, importing and downloading are only available with a real account. It's free and takes a minute."
-    locked_cta: "Sign up free"
-    locked_cancel: "Keep exploring the demo"
+paywall:
+    title: "Unlock the Belgian tax tools"
+    body: "CSV imports, realized gains, regime estimates and the tax report are part of the paid plan. Leave your email and we'll let you know when it goes live."
+    cta_notify: "Notify me"
+    cta_cancel: "Maybe later"
+    success: "Thanks — we'll let you know."
 
 admin:
     page_title: "Admin · Koersa"
@@ -71,6 +69,9 @@ overview:
     page_title: "Overview · Koersa"
     title: "Overview"
     subtitle: "Your portfolio at a glance."
+    sample_data_hint_title: "You're starting with sample data"
+    sample_data_hint_body: "Edit, delete or add your own trades — this dashboard is yours. Imports and tax tools are paid features; you'll see the upgrade prompt when you tap them."
+    sample_data_hint_dismiss: "Dismiss"
     portfolio_value_label: "Portfolio value"
     portfolio_value_empty: "No holdings tracked yet."
     realized_gain_label: "Realized gains %year%"

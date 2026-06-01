@@ -36,14 +36,12 @@ layout:
     nav_admin: "Admin"
     nav_log_out: "Se déconnecter"
 
-demo:
-    banner_label: "Mode démo"
-    banner_body: "Vous explorez des données d'exemple."
-    banner_cta: "Inscrivez-vous pour utiliser les vôtres"
-    locked_title: "Inscrivez-vous pour débloquer"
-    locked_body: "Enregistrer, importer et télécharger ne sont disponibles qu'avec un vrai compte. C'est gratuit et ça prend une minute."
-    locked_cta: "Créer un compte gratuit"
-    locked_cancel: "Continuer à explorer la démo"
+paywall:
+    title: "Débloquez les outils fiscaux belges"
+    body: "Les imports CSV, les plus-values réalisées, les estimations par régime et le rapport fiscal font partie de l'offre payante. Laissez votre e-mail, on vous prévient à l'ouverture."
+    cta_notify: "Me prévenir"
+    cta_cancel: "Plus tard"
+    success: "Merci — on vous prévient."
 
 admin:
     page_title: "Admin · Koersa"
@@ -72,6 +70,9 @@ overview:
     page_title: "Vue d'ensemble · Koersa"
     title: "Vue d'ensemble"
     subtitle: "Votre portefeuille en un coup d'œil."
+    sample_data_hint_title: "Vous commencez avec des données d'exemple"
+    sample_data_hint_body: "Modifiez, supprimez ou ajoutez vos propres transactions — ce tableau de bord est à vous. Les imports et les outils fiscaux sont des fonctions payantes ; vous verrez l'invitation lorsque vous y toucherez."
+    sample_data_hint_dismiss: "Fermer"
     portfolio_value_label: "Valeur du portefeuille"
     portfolio_value_empty: "Aucune position pour l'instant."
     realized_gain_label: "Plus-values réalisées %year%"
