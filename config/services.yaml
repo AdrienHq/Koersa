@@ -27,3 +27,14 @@ services:
         class: EventSauce\EventSourcing\SynchronousMessageDispatcher
         arguments:
             - '@Koersa\Portfolio\Infrastructure\Projection\TransactionProjector'
+
+when@test:
+    services:
+        # Tests need to flip the paid-user gate per test. Stripe isn't wired
+        # yet so there's no DB-side fixture to set up; we substitute the
+        # whole IsPaidUser service with a mutable test switch instead.
+        Koersa\Tests\Support\PaidUserSwitch:
+            public: true
+        Koersa\Shared\Security\IsPaidUser:
+            alias: Koersa\Tests\Support\PaidUserSwitch
+            public: true

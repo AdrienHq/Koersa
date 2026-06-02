@@ -10,8 +10,20 @@ use ZipArchive;
 
 final class ImportTransactionsControllerTest extends PortfolioWebTestCase
 {
-    public function testRendersTheImportForm(): void
+    public function testFreeUserIsRedirectedAwayFromImport(): void
     {
+        // ADR 0012: CSV import is a paid feature. The front-end shows a
+        // padlock button that opens the paywall; the controller redirect
+        // is the defence-in-depth for direct GETs.
+        $this->client->request('GET', '/portfolio/import');
+
+        self::assertResponseRedirects('/portfolio');
+    }
+
+    public function testPaidUserRendersTheImportForm(): void
+    {
+        $this->actAsPaidUser();
+
         $this->client->request('GET', '/portfolio/import');
 
         self::assertResponseIsSuccessful();
@@ -20,6 +32,8 @@ final class ImportTransactionsControllerTest extends PortfolioWebTestCase
 
     public function testImportingAKrakenExportRecordsTheTrades(): void
     {
+        $this->actAsPaidUser();
+
         $crawler = $this->client->request('GET', '/portfolio/import');
         self::assertResponseIsSuccessful();
 
@@ -38,6 +52,8 @@ final class ImportTransactionsControllerTest extends PortfolioWebTestCase
 
     public function testImportingAZippedKrakenExportRecordsTheTrades(): void
     {
+        $this->actAsPaidUser();
+
         $zipPath = sys_get_temp_dir().'/koersa_kraken_'.uniqid().'.zip';
         $zip = new ZipArchive();
         $zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);

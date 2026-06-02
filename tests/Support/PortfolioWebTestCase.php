@@ -23,6 +23,7 @@ use Koersa\Portfolio\Domain\Transaction;
 use Koersa\Portfolio\Domain\TransactionRepository;
 use Koersa\Portfolio\Domain\ValueObject\Side;
 use Koersa\Shared\Domain\Uuid;
+use Koersa\Shared\Security\IsPaidUser;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -36,6 +37,10 @@ abstract class PortfolioWebTestCase extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        // Keep the container across requests within a test so the
+        // PaidUserSwitch (and any other per-test state) survives a GET->POST
+        // flow. Each test still gets a fresh kernel because of createClient.
+        $this->client->disableReboot();
 
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $entityManager->getConnection()->executeStatement(
@@ -51,6 +56,10 @@ abstract class PortfolioWebTestCase extends WebTestCase
         (new DoctrineMembershipRepository($entityManager, new MembershipMapper()))
             ->save(Membership::create(Uuid::generate(), $userId, $this->organizationId, Role::Owner, new DateTimeImmutable()));
 
+        // Reset the paywall switch so per-test state doesn't leak across the
+        // shared kernel between tests.
+        $this->actAsFreeUser();
+
         // Roles passed here MUST match what the provider would refresh into,
         // otherwise ContextListener invalidates the session on the next
         // request (token roles differ from refreshed roles -> logged out).
@@ -61,6 +70,23 @@ abstract class PortfolioWebTestCase extends WebTestCase
             isAdmin: false,
             currentRole: Role::Owner,
         ));
+    }
+
+    // Flip the test paywall switch so paid-tier paths can be exercised.
+    // Backed by config/services.yaml when@test: IsPaidUser is aliased to
+    // PaidUserSwitch which holds a mutable boolean.
+    protected function actAsPaidUser(): void
+    {
+        $switch = static::getContainer()->get(IsPaidUser::class);
+        \assert($switch instanceof PaidUserSwitch);
+        $switch->allow = true;
+    }
+
+    protected function actAsFreeUser(): void
+    {
+        $switch = static::getContainer()->get(IsPaidUser::class);
+        \assert($switch instanceof PaidUserSwitch);
+        $switch->allow = false;
     }
 
     protected function recordTransaction(string $asset = 'BTC', Side $side = Side::Buy, string $quantity = '1', string $price = '100'): Uuid

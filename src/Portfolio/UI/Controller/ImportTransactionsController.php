@@ -10,6 +10,7 @@ use Koersa\Portfolio\Application\StatementReader;
 use Koersa\Portfolio\UI\Form\ImportForm;
 use Koersa\Portfolio\UI\Form\ImportFormData;
 use Koersa\Shared\Security\HasOrganization;
+use Koersa\Shared\Security\IsPaidUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +31,19 @@ final class ImportTransactionsController extends AbstractController
         StatementParserRegistry $parsers,
         StatementReader $reader,
         TranslatorInterface $translator,
+        IsPaidUser $isPaidUser,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
             throw $this->createAccessDeniedException();
+        }
+
+        // Paid feature (ADR 0012). Defence in depth: the button on the
+        // Portfolio tab opens the paywall dialog instead of this route,
+        // but a direct GET / form-POST still ends up here, so the server
+        // enforces the gate too.
+        if (!$isPaidUser($this->getUser())) {
+            return $this->redirectToRoute('portfolio');
         }
 
         $form = $this->createForm(ImportForm::class, new ImportFormData());
