@@ -26,7 +26,7 @@ The product targets traders who want auditable records, accurate P&L, and tax re
 What actually ships right now — the rest is on the roadmap.
 
 - Public landing page in French, Dutch, and English with beta signup; the rest of the UI follows the same three languages, switchable from the footer and remembered for the session
-- Account registration and password sign-in
+- Account registration and password sign-in — every new account is auto-seeded with a realistic 18-trade demo portfolio so first-time users land in a populated dashboard and can explore the full app before adding their own data
 - Three-tab signed-in app: **Overview** (digestible recap with cumulative-gain, holdings and activity charts), **Portfolio** (operational view: holdings + transactions + import/record/edit modals), **Tax** (realized gains + regime estimates)
 - Record, amend, and remove portfolio transactions
 - Per-asset holdings dashboard with live EUR prices (CoinGecko, cached 5 minutes)
