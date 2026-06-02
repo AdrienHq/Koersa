@@ -39,9 +39,13 @@ layout:
 paywall:
     title: "Débloquez les outils fiscaux belges"
     body: "Les imports CSV, les plus-values réalisées, les estimations par régime et le rapport fiscal font partie de l'offre payante. Laissez votre e-mail, on vous prévient à l'ouverture."
+    email_placeholder: "vous@exemple.be"
     cta_notify: "Me prévenir"
     cta_cancel: "Plus tard"
     success: "Merci — on vous prévient."
+    invalid_email: "Cette adresse e-mail ne semble pas valide."
+    tax_locked_title: "L'onglet Impôts fait partie de l'offre payante"
+    tax_locked_body: "Les plus-values réalisées, les estimations par régime, l'aide à la déclaration et le PDF pour votre comptable arrivent en version payante. Laissez votre e-mail, on vous prévient à l'ouverture."
 
 admin:
     page_title: "Admin · Koersa"

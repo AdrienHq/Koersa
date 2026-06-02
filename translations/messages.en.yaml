@@ -38,9 +38,13 @@ layout:
 paywall:
     title: "Unlock the Belgian tax tools"
     body: "CSV imports, realized gains, regime estimates and the tax report are part of the paid plan. Leave your email and we'll let you know when it goes live."
+    email_placeholder: "you@example.com"
     cta_notify: "Notify me"
     cta_cancel: "Maybe later"
     success: "Thanks — we'll let you know."
+    invalid_email: "That doesn't look like a valid email address."
+    tax_locked_title: "The Tax tab is part of the paid plan"
+    tax_locked_body: "Realized gains, regime estimates, the how-to-declare guidance and the accountant-ready PDF are coming as a paid feature. Leave your email and we'll let you know when it goes live."
 
 admin:
     page_title: "Admin · Koersa"

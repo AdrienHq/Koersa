@@ -1,0 +1,30 @@
+{# Paywall dialog (ADR 0012). Rendered once in base.html.twig when the
+   current user isn't paid. Opened by any element with
+   data-action="paywall#open"; the originating action (e.g. "Import",
+   "Download PDF") is prevented and replaced with this. #}
+<dialog data-paywall-target="dialog" class="fixed inset-0 m-auto h-fit max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-gray-200 bg-white p-0 shadow-xl backdrop:bg-gray-900/40 backdrop:backdrop-blur-sm">
+    <div class="flex items-center justify-end border-b border-gray-100 px-4 py-3">
+        <button type="button" data-action="paywall#close" aria-label="{{ 'paywall.cta_cancel'|trans }}" class="rounded text-gray-400 hover:text-gray-600">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    <div class="px-6 pb-6">
+        <h2 class="text-xl font-semibold text-gray-900">{{ 'paywall.title'|trans }}</h2>
+        <p class="mt-2 text-sm text-gray-600">{{ 'paywall.body'|trans }}</p>
+
+        <form action="{{ path('waitlist_notify') }}" method="post" class="mt-5 space-y-3" data-turbo="false">
+            <input
+                type="email"
+                name="email"
+                required
+                value="{{ app.user ? app.user.userIdentifier : '' }}"
+                placeholder="{{ 'paywall.email_placeholder'|trans }}"
+                class="block w-full rounded-md border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            >
+            <div class="flex items-center justify-end gap-2">
+                <button type="button" data-action="paywall#close" class="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900">{{ 'paywall.cta_cancel'|trans }}</button>
+                <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500">{{ 'paywall.cta_notify'|trans }}</button>
+            </div>
+        </form>
+    </div>
+</dialog>

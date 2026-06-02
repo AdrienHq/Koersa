@@ -39,9 +39,13 @@ layout:
 paywall:
     title: "Ontgrendel de Belgische belastingtools"
     body: "CSV-imports, gerealiseerde meerwaarden, regime-ramingen en het belastingrapport horen bij het betaalde plan. Laat uw e-mail achter — we laten u weten wanneer het beschikbaar wordt."
+    email_placeholder: "u@voorbeeld.be"
     cta_notify: "Houd me op de hoogte"
     cta_cancel: "Misschien later"
     success: "Bedankt — we laten u weten."
+    invalid_email: "Dit e-mailadres lijkt niet geldig."
+    tax_locked_title: "Het tabblad Belastingen hoort bij het betaalde plan"
+    tax_locked_body: "Gerealiseerde meerwaarden, regime-ramingen, de aangifte-hulp en het PDF-rapport voor uw accountant komen als betaalde functies. Laat uw e-mail achter — we laten u weten wanneer het beschikbaar wordt."
 
 admin:
     page_title: "Admin · Koersa"
