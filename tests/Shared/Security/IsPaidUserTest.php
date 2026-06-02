@@ -10,19 +10,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class IsPaidUserTest extends TestCase
 {
-    public function testReturnsFalseForEveryoneWhileStripeIsntWiredYet(): void
-    {
-        $check = new IsPaidUser();
-        $user = $this->createStub(UserInterface::class);
-
-        // Until Stripe lands, the paywall always triggers — even for the
-        // operator. When this changes, swap the implementation and update
-        // this expectation.
-        self::assertFalse($check($user));
-    }
-
     public function testReturnsFalseForAnonymous(): void
     {
         self::assertFalse((new IsPaidUser())(null));
+    }
+
+    public function testReturnsFalseForARegularUser(): void
+    {
+        $user = $this->createStub(UserInterface::class);
+        $user->method('getRoles')->willReturn(['ROLE_USER']);
+
+        self::assertFalse((new IsPaidUser())($user));
+    }
+
+    public function testReturnsTrueForPlatformAdmin(): void
+    {
+        // The operator always sees the full app — otherwise the paywall
+        // locks them out of their own product.
+        $user = $this->createStub(UserInterface::class);
+        $user->method('getRoles')->willReturn(['ROLE_USER', 'ROLE_ADMIN']);
+
+        self::assertTrue((new IsPaidUser())($user));
     }
 }
