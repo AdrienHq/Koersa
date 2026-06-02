@@ -11,36 +11,24 @@
     <meta property="og:locale" content="{{ app.request.locale == 'nl' ? 'nl_BE' : 'fr_BE' }}">
     <link rel="alternate" hreflang="fr" href="{{ url('landing', {'_locale': 'fr'}) }}">
     <link rel="alternate" hreflang="nl" href="{{ url('landing', {'_locale': 'nl'}) }}">
+    <link rel="alternate" hreflang="en" href="{{ url('landing', {'_locale': 'en'}) }}">
     <link rel="alternate" hreflang="x-default" href="{{ url('landing', {'_locale': 'fr'}) }}">
 {% endblock %}
 
 {% block main %}
     <main class="flex-1">
-        {% block flashes %}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="mx-auto mt-4 max-w-xl rounded-md border px-4 py-3 text-center text-sm {{ label == 'success' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endblock %}
-
         {# Hero #}
         <section class="bg-gradient-to-b from-indigo-50 via-white to-gray-50">
             <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:py-28">
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">{{ 'landing.headline'|trans }}</h1>
                 <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-600">{{ 'landing.subheadline'|trans }}</p>
 
-                {{ form_start(signupForm, {'attr': {'data-turbo': 'false', 'class': 'mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row sm:items-start'}}) }}
-                    <div class="flex-1 text-left">
-                        {{ form_widget(signupForm.email, {'attr': {'placeholder': 'landing.email_placeholder'|trans}}) }}
-                        {{ form_errors(signupForm.email) }}
-                    </div>
-                    <button type="submit" class="shrink-0 rounded-md bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500">{{ 'landing.cta'|trans }}</button>
-                {{ form_end(signupForm) }}
+                <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                    <a href="{{ path('register') }}" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-500">{{ 'landing.cta_register'|trans }}</a>
+                    <a href="{{ path('login') }}" class="inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-semibold text-gray-700 hover:text-gray-900">{{ 'landing.cta_signin'|trans }} →</a>
+                </div>
 
-                <p class="mt-3 text-xs text-gray-400">{{ 'landing.reassurance'|trans }}</p>
+                <p class="mt-4 text-xs text-gray-400">{{ 'landing.reassurance'|trans }}</p>
             </div>
         </section>
 
