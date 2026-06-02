@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'tax.page_title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ 'tax.title'|trans }}</h1>
+            <p class="mt-1 text-sm text-gray-500">{{ 'tax.subtitle'|trans }}</p>
+        </div>
+
+        <div class="rounded-xl border border-indigo-200 bg-white px-6 py-12 text-center shadow-sm">
+            <div class="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-indigo-600" aria-hidden="true">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm-7 7v-2a4 4 0 014-4h6a4 4 0 014 4v2"/></svg>
+            </div>
+            <h2 class="mt-4 text-xl font-semibold text-gray-900">{{ 'paywall.tax_locked_title'|trans }}</h2>
+            <p class="mx-auto mt-2 max-w-md text-sm text-gray-600">{{ 'paywall.tax_locked_body'|trans }}</p>
+            <button type="button" data-action="paywall#open" class="mt-6 inline-flex items-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-500">
+                {{ 'paywall.cta_notify'|trans }}
+            </button>
+        </div>
+    </div>
+{% endblock %}

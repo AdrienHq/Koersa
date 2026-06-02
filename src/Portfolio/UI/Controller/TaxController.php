@@ -11,6 +11,7 @@ use Koersa\Shared\Domain\Money;
 use Koersa\Shared\Domain\Tax\FilingGuidance;
 use Koersa\Shared\Domain\Tax\Regime;
 use Koersa\Shared\Security\HasOrganization;
+use Koersa\Shared\Security\IsPaidUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,11 +26,20 @@ final class TaxController extends AbstractController
         GetRealizedGains $getRealizedGains,
         BelgianTaxEstimator $taxEstimator,
         BelgianBoxMapper $boxMapper,
+        IsPaidUser $isPaidUser,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
             throw $this->createAccessDeniedException();
         }
+
+        // Paid feature (ADR 0012). The page still renders — with a locked
+        // card explaining what the tab is and a notify-me CTA — so free
+        // users discover the value rather than hitting a 403.
+        if (!$isPaidUser($this->getUser())) {
+            return $this->render('tax/locked.html.twig');
+        }
+
         $organizationId = $user->organizationId();
 
         // ECB fetch can fail; let the page render without the report in that case.

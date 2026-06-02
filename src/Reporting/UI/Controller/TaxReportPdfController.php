@@ -14,6 +14,7 @@ use Koersa\Shared\Domain\Money;
 use Koersa\Shared\Domain\Tax\FilingGuidance;
 use Koersa\Shared\Domain\Tax\Regime;
 use Koersa\Shared\Security\HasOrganization;
+use Koersa\Shared\Security\IsPaidUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,11 +29,20 @@ final class TaxReportPdfController extends AbstractController
         BelgianTaxEstimator $taxEstimator,
         BelgianBoxMapper $boxMapper,
         PdfRenderer $pdfRenderer,
+        IsPaidUser $isPaidUser,
     ): Response {
         $user = $this->getUser();
         if (!$user instanceof HasOrganization) {
             throw $this->createAccessDeniedException();
         }
+
+        // Paid feature (ADR 0012). Defence in depth: the Tax page hides
+        // the download button for free users, but a direct GET still ends
+        // up here, so the server enforces the gate too.
+        if (!$isPaidUser($this->getUser())) {
+            return $this->redirectToRoute('tax');
+        }
+
         $organizationId = $user->organizationId();
 
         [$report, $year] = $getRealizedGains->forMostRecentYear($organizationId);
