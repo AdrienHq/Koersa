@@ -45,12 +45,14 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Operator-only admin landing at `/admin` showing recent signups, users and organisations with counts; nav link visible only to platform admins
 - Each new registration is auto-seeded with a realistic 18-trade demo portfolio so first-time users land in a populated dashboard — edit, delete or add your own trades anytime; demo and your data live in the same account (ADR 0012)
 - Dismissible "you're starting with sample data" hint on the Overview tab, cookie-dismissed so it never reappears
+- Paid feature gates on CSV import, the Tax tab, and the PDF report — free users see a padlock + a "Notify me" paywall dialog instead of an error; emails captured during the waitlist period until Stripe lands (ADR 0012)
 - SEO metadata on the landing (description, Open Graph, hreflang) and an XML sitemap
 - Baseline security response headers and a `security.txt` disclosure contact
 - Health-check endpoint at `/health`
 
 ### Changed
 - Portfolio is now event-sourced with EventSauce: trades are recorded, amended, and removed as events through a command bus, and the holdings/transactions read models are rebuildable projections over the event stream (ADR 0002)
+- Landing page pivots from a beta-signup waitlist form to a direct "Sign up free" / "Sign in" CTA pair; pricing stays hidden until the visitor hits a paid feature (ADR 0012)
 
 ### Fixed
 - Transaction quantities, prices, and fees no longer render with trailing zeros from the NUMERIC column
