@@ -19,6 +19,7 @@ final class UserMapper
             $entity->passwordHash,
             $entity->registeredAt,
             $entity->isAdmin,
+            $entity->isPaid,
         );
     }
 
@@ -30,6 +31,7 @@ final class UserMapper
         $entity->passwordHash = $user->passwordHash();
         $entity->registeredAt = $user->registeredAt();
         $entity->isAdmin = $user->isAdmin();
+        $entity->isPaid = $user->isPaid();
 
         return $entity;
     }

@@ -10,8 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 // Composed of (in order):
 //   1. ROLE_ADMIN — the operator always sees the full app, otherwise the
 //      paywall locks them out of their own product.
-//   2. (future) per-user is_paid flag granted via the CLI for beta testers
-//      and friends, before Stripe is wired.
+//   2. is_paid flag on the user, granted via `iam:user:promote-paid` for
+//      beta testers and friends before Stripe is wired.
 //   3. (future) active subscription row from the Billing context, when
 //      Stripe lands.
 //
@@ -26,6 +26,10 @@ class IsPaidUser
         }
 
         if (\in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+            return true;
+        }
+
+        if ($user instanceof HasPaidAccess && $user->isPaid()) {
             return true;
         }
 

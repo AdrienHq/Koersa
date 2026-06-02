@@ -27,4 +27,7 @@ class UserEntity
 
     #[ORM\Column(name: 'is_admin', type: 'boolean', options: ['default' => false])]
     public bool $isAdmin = false;
+
+    #[ORM\Column(name: 'is_paid', type: 'boolean', options: ['default' => false])]
+    public bool $isPaid = false;
 }

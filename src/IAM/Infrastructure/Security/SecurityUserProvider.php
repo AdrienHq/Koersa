@@ -51,6 +51,7 @@ final class SecurityUserProvider implements UserProviderInterface
             (string) $memberships[0]->organizationId(),
             $user->isAdmin(),
             $memberships[0]->role(),
+            $user->isPaid(),
         );
     }
 

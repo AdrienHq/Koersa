@@ -16,6 +16,7 @@ final class User
         private string $passwordHash,
         private readonly DateTimeImmutable $registeredAt,
         private bool $isAdmin = false,
+        private bool $isPaid = false,
     ) {
     }
 
@@ -24,9 +25,9 @@ final class User
         return new self($id, $email, $passwordHash, $registeredAt);
     }
 
-    public static function reconstitute(Uuid $id, Email $email, string $passwordHash, DateTimeImmutable $registeredAt, bool $isAdmin = false): self
+    public static function reconstitute(Uuid $id, Email $email, string $passwordHash, DateTimeImmutable $registeredAt, bool $isAdmin = false, bool $isPaid = false): self
     {
-        return new self($id, $email, $passwordHash, $registeredAt, $isAdmin);
+        return new self($id, $email, $passwordHash, $registeredAt, $isAdmin, $isPaid);
     }
 
     public function changeEmail(Email $email): void
@@ -47,6 +48,16 @@ final class User
     public function demoteFromAdmin(): void
     {
         $this->isAdmin = false;
+    }
+
+    public function promoteToPaid(): void
+    {
+        $this->isPaid = true;
+    }
+
+    public function demoteFromPaid(): void
+    {
+        $this->isPaid = false;
     }
 
     public function id(): Uuid
@@ -72,5 +83,10 @@ final class User
     public function isAdmin(): bool
     {
         return $this->isAdmin;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->isPaid;
     }
 }
