@@ -54,3 +54,5 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 - Transaction quantities, prices, and fees no longer render with trailing zeros from the NUMERIC column
+- Organisation slug uniqueness — two users registering without a name both defaulted to "Personal" and collided on `iam_organizations.slug`; slugs now carry a short UUID suffix so they stay unique
+- Activity chart and "most recent year" detection stay accurate as time passes — the demo seeder rebases trade dates on the fly so the latest seeded trade always lands ~30 days before now, with relative spacing preserved
