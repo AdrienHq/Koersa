@@ -14,8 +14,11 @@ final class EditTransactionTest extends PortfolioWebTestCase
     {
         $id = $this->recordTransaction('BTC', Side::Buy, '1', '100');
 
-        $this->client->request('GET', '/portfolio/transactions/'.$id.'/edit');
+        $crawler = $this->client->request('GET', '/portfolio/transactions/'.$id.'/edit');
         self::assertResponseIsSuccessful();
+        // Explicit form action — the form is injected into a modal on /portfolio,
+        // so an empty action would POST to the listing (405 Method Not Allowed).
+        self::assertSame('/portfolio/transactions/'.$id.'/edit', $crawler->filter('form[name="transaction_form"]')->attr('action'));
 
         $this->client->submitForm('Save changes', [
             'transaction_form[quantity]' => '5',

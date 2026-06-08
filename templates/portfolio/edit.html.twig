@@ -10,7 +10,9 @@
             <h1 class="text-xl font-semibold text-gray-900">{{ 'portfolio.edit_title'|trans }}</h1>
 
             <div class="rounded-lg border border-gray-200 bg-white p-6">
-                {{ form_start(transactionForm, {'attr': {'data-turbo': 'false'}}) }}
+                {# Explicit action: the form is injected into a modal on /portfolio,
+                   so an empty action would post to /portfolio (the listing route). #}
+                {{ form_start(transactionForm, {action: path('portfolio_transaction_edit', {id: transaction.id}), 'attr': {'data-turbo': 'false'}}) }}
                     {{ form_row(transactionForm.asset) }}
                     {{ form_row(transactionForm.side) }}
                     {{ form_row(transactionForm.quantity) }}

@@ -36,6 +36,9 @@ final class ImportTransactionsControllerTest extends PortfolioWebTestCase
 
         $crawler = $this->client->request('GET', '/portfolio/import');
         self::assertResponseIsSuccessful();
+        // Explicit form action — the form is injected into a modal on /portfolio,
+        // so an empty action would POST to the listing (405 Method Not Allowed).
+        self::assertSame('/portfolio/import', $crawler->filter('form[name="import_form"]')->attr('action'));
 
         $form = $crawler->filter('form')->form();
         $form['import_form[exchange]'] = 'kraken';

@@ -42,8 +42,11 @@ final class RecordTransactionTest extends WebTestCase
 
         $client->loginUser(new SecurityUser('jane@example.com', 'hash', (string) $organizationId, isAdmin: false, currentRole: Role::Owner));
 
-        $client->request('GET', '/portfolio/transactions/new');
+        $crawler = $client->request('GET', '/portfolio/transactions/new');
         self::assertResponseIsSuccessful();
+        // Explicit form action — the form is injected into a modal on /portfolio,
+        // so an empty action would POST to the listing (405 Method Not Allowed).
+        self::assertSame('/portfolio/transactions/new', $crawler->filter('form[name="transaction_form"]')->attr('action'));
 
         $client->submitForm('Record', [
             'transaction_form[asset]' => 'BTC',
