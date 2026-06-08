@@ -254,6 +254,8 @@ auth:
     login_submit: "Aanmelden"
     login_no_account: "Nog geen account?"
     login_register_link: "Registreren"
+    login_invalid_credentials: "E-mailadres of wachtwoord onjuist."
+    login_form_has_errors: "Corrigeer de gemarkeerde velden."
     register_page_title: "Registreren · Koersa"
     register_title: "Maak uw account aan"
     register_intro: "Begin met het opvolgen van uw portefeuille."

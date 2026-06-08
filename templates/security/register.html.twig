@@ -10,6 +10,14 @@
 
             {# Auth flows use full-page navigation; Turbo would swallow the 302 redirect. #}
             {{ form_start(registrationForm, {'attr': {'data-turbo': 'false', 'class': 'mt-6'}}) }}
+                {% if registrationForm.vars.submitted and not registrationForm.vars.valid %}
+                    <div class="mb-4 flex items-start gap-3 rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm font-medium text-red-800" role="alert">
+                        <svg class="mt-0.5 h-5 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5zM10 15a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                        <span>{{ 'auth.login_form_has_errors'|trans }}</span>
+                    </div>
+                {% endif %}
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.organizationName) }}
                 {{ form_row(registrationForm.plainPassword.first) }}

@@ -8,8 +8,13 @@
             <h1 class="text-2xl font-semibold text-gray-900">{{ 'auth.login_title'|trans }}</h1>
 
             {% if error %}
-                <div class="mt-4 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                {# Generic message regardless of which exception fired (no
+                   user-enumeration via differing errors). #}
+                <div class="mt-4 flex items-start gap-3 rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm font-medium text-red-800" role="alert">
+                    <svg class="mt-0.5 h-5 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5zM10 15a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                    </svg>
+                    <span>{{ 'auth.login_invalid_credentials'|trans }}</span>
                 </div>
             {% endif %}
 

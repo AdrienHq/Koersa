@@ -17,7 +17,15 @@ final class ChangeLocaleController extends AbstractController
         $request->getSession()->set('_locale', $_locale);
 
         $referer = $request->headers->get('referer');
+        if (null === $referer || '' === $referer) {
+            return new RedirectResponse($this->generateUrl('home'));
+        }
 
-        return new RedirectResponse($referer ?: $this->generateUrl('home'));
+        // The landing route bakes the locale into the URL (/{_locale}), so a
+        // plain redirect back to Referer would re-trigger the old locale on
+        // the next request. Rewrite the prefix when present.
+        $rewritten = preg_replace('#^(https?://[^/]+)?/(fr|nl|en)(/|$)#', '$1/'.$_locale.'$3', $referer, 1);
+
+        return new RedirectResponse($rewritten ?? $referer);
     }
 }

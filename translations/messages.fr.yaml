@@ -254,6 +254,8 @@ auth:
     login_submit: "Se connecter"
     login_no_account: "Pas encore de compte ?"
     login_register_link: "S'inscrire"
+    login_invalid_credentials: "Email ou mot de passe incorrect."
+    login_form_has_errors: "Corrigez les champs en surbrillance."
     register_page_title: "Inscription · Koersa"
     register_title: "Créer votre compte"
     register_intro: "Commencez à suivre votre portefeuille."
