@@ -25,8 +25,8 @@
                 {% else %}
                     {# Paid feature (ADR 0012): amber padlock + paywall trigger. The amber
                        tint signals "different / paid" at a glance — plain-grey was invisible. #}
-                    <button type="button" data-action="paywall#open" class="inline-flex items-center gap-2 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-900 shadow-sm hover:bg-amber-100">
-                        <svg class="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm-7 7v-2a4 4 0 014-4h6a4 4 0 014 4v2"/></svg>
+                    <button type="button" data-action="paywall#open" class="inline-flex items-center gap-2 rounded-md border border-amber-300 bg-amber-100 px-4 py-2 text-sm font-medium text-amber-900 shadow-sm hover:bg-amber-200">
+                        <svg class="h-4 w-4 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
                         {{ 'portfolio.cta_import'|trans }}
                     </button>
                 {% endif %}
