@@ -62,6 +62,45 @@ final class RegistrationAndLoginTest extends WebTestCase
         self::assertStringContainsString('already registered', (string) $client->getResponse()->getContent());
     }
 
+    public function testFailedLoginShowsAGenericInvalidCredentialsMessage(): void
+    {
+        $client = static::createClient(server: ['HTTP_ACCEPT_LANGUAGE' => 'en']);
+        $this->clearIamTables();
+
+        // No such user — we still want a generic message (no user enumeration)
+        // rendered as a visible banner, not the small Security-bundle string.
+        $client->request('GET', '/login');
+        $client->submitForm('Sign in', [
+            '_username' => 'nope@example.com',
+            '_password' => 'wrong',
+        ]);
+        $client->followRedirect();
+
+        self::assertStringContainsString('Invalid email or password.', (string) $client->getResponse()->getContent());
+        // The technical Security-bundle message must never leak through, otherwise
+        // an attacker can enumerate which emails exist.
+        self::assertStringNotContainsString('Username could not be found', (string) $client->getResponse()->getContent());
+    }
+
+    public function testAnInvalidRegisterSubmissionShowsTheSummaryBanner(): void
+    {
+        $client = static::createClient(server: ['HTTP_ACCEPT_LANGUAGE' => 'en']);
+        $this->clearIamTables();
+
+        // Mismatched passwords: binds successfully, fails the constraint —
+        // exactly the path that should render the top-of-form summary banner
+        // so the user sees a loud signal next to the (easy-to-miss) field errors.
+        $client->request('GET', '/register');
+        $client->submitForm('Register', [
+            'registration_form[email]' => 'jane@example.com',
+            'registration_form[organizationName]' => 'Acme',
+            'registration_form[plainPassword][first]' => 'secret-password',
+            'registration_form[plainPassword][second]' => 'different-password',
+        ]);
+
+        self::assertStringContainsString('Please correct the highlighted fields.', (string) $client->getResponse()->getContent());
+    }
+
     private function register(KernelBrowser $client, string $email): void
     {
         $client->request('GET', '/register');
