@@ -41,15 +41,7 @@
 
         {% block main %}
             <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-                {% block flashes %}
-                    {% for label, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div class="mb-4 rounded-md border px-4 py-3 text-sm {{ label == 'success' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                {% endblock %}
+                {% block flashes %}{% endblock %}
 
                 {% block body %}{% endblock %}
             </main>
@@ -57,6 +49,30 @@
 
         {% if app.user and not is_paid_user(app.user) %}
             {% include '_paywall/dialog.html.twig' %}
+        {% endif %}
+
+        {# Toast stack — fixed bottom-right, each toast auto-dismisses. #}
+        {% if app.flashes is not empty %}
+            <div class="pointer-events-none fixed bottom-4 right-4 z-50 flex w-full max-w-sm flex-col gap-2">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div data-controller="toast"
+                             class="pointer-events-auto flex items-start gap-3 rounded-lg border px-4 py-3 text-sm shadow-lg transition duration-200 ease-out {{ label == 'success' ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800' }}">
+                            <svg class="mt-0.5 h-5 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                {% if label == 'success' %}
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                                {% else %}
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5zM10 15a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                {% endif %}
+                            </svg>
+                            <span class="flex-1">{{ message }}</span>
+                            <button type="button" data-action="toast#dismiss" class="-mr-1 -mt-0.5 rounded p-0.5 text-current opacity-60 hover:opacity-100" aria-label="Dismiss">
+                                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
         {% endif %}
 
         <footer class="border-t border-gray-200 py-6 text-xs text-gray-400">

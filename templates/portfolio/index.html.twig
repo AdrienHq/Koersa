@@ -23,9 +23,10 @@
                 {% if is_paid_user(app.user) %}
                     <a href="{{ path('portfolio_import') }}" data-action="form-modal#open" class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">{{ 'portfolio.cta_import'|trans }}</a>
                 {% else %}
-                    {# Paid feature (ADR 0012): same button shape, padlock + paywall trigger. #}
-                    <button type="button" data-action="paywall#open" class="inline-flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm-7 7v-2a4 4 0 014-4h6a4 4 0 014 4v2"/></svg>
+                    {# Paid feature (ADR 0012): amber padlock + paywall trigger. The amber
+                       tint signals "different / paid" at a glance — plain-grey was invisible. #}
+                    <button type="button" data-action="paywall#open" class="inline-flex items-center gap-2 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-900 shadow-sm hover:bg-amber-100">
+                        <svg class="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm-7 7v-2a4 4 0 014-4h6a4 4 0 014 4v2"/></svg>
                         {{ 'portfolio.cta_import'|trans }}
                     </button>
                 {% endif %}
